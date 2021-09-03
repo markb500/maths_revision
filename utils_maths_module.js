@@ -72,6 +72,11 @@ function dp(sum, dp, fix) {
   }
 }
 
+function thouSep(value, sep) {
+    //Adds chosen 1 000's separator
+    return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, sep);
+}
+
 function gcd2(a, b) {
   // Greatest common divisor of 2 integers
   if(!b) return b===0 ? a : NaN;
