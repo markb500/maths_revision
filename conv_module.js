@@ -33,7 +33,7 @@ function conv() {
             
             suma += "$$\\begin{aligned}Expected\\ KE&=\\frac{1}{2}mv^2\\\\[5pt]";
             suma += "&=\\frac{1}{2}\\times" + m + "\\times" + v + "\\\\[5pt]";
-            suma += "&=" + ke + "J\\\\[25pt]";
+            suma += "&=" + ke + "\\ J\\\\[25pt]";
             suma += "Max\\ value\\ mass&=" + m + "\\times\\left(1+\\frac{" + merr + "}{100}\\right)=" + 
                     mmax + "\\ kg\\\\[5pt]";
             suma += "Max\\ value\\ velocity&=" + v + "\\times\\left(1+\\frac{" + verr + "}{100}\\right)=" + 
