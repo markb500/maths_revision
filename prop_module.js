@@ -22,7 +22,7 @@ function prop() {
         case 1:     //y prop root x
             y1 = rndgen(2, 10, 0, 1, -1);
             x1 = rndgen(y1 + 5, 25, 0, 1, -1);
-            k = dp(y1 / Math.sqrt(x1), 5, 3);
+            k = dp(y1 / Math.sqrt(x1), 3, 3);
             if(rndgen(1, 2, 0, 1, -1) === 1) {     //For y prop root x, find x given y
                 y2 = y1 + rndgen(3, 8, 0, 1, -1);
                 x2 = dp(Math.pow(y2 / k, 2), 4, 2);
