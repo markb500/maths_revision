@@ -72,7 +72,7 @@ function areavol() {
                             b + "\\times" + f + "+" + b + "\\times" + (d - c) + "\\\\[5pt]";
             suma += "&=" + satri + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ total&=" + sacub + "+" + satri + "=\\underline{\\mathbf{" + 
-                        dp(Number(sacub) + Number(satri), 2, 1) + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
+                        dp(Number(sacub) + Number(satri), 3, 1) + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
             suma += "V\\ of\\ cuboid&=length\\times width\\times height\\\\[5pt]";
             suma += "&=" + a + "\\times" + b + "\\times" + c + "\\\\[5pt]";
             suma += "&=" + vcub + unitsmath + "^3\\\\[5pt]";
@@ -80,7 +80,7 @@ function areavol() {
             suma += "&=\\frac{1}{2}\\times" + (a - e) + "\\times" + (d - c) + "\\times" + b + "\\\\[5pt]";
             suma += "&=" + vtri + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ total&=" + vcub + "+" + vtri + "=\\underline{\\mathbf{" + 
-                        dp(Number(vcub) +  Number(vtri), 2, 1) + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
+                        dp(Number(vcub) +  Number(vtri), 3, 1) + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
             break;
         case 2:     //cubtritube
             do {
@@ -131,7 +131,7 @@ function areavol() {
             suma += "&=2\\times \\pi \\times" + (g / 2) + "^2\\\\[5pt]";
             suma += "&=" + saend + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ total&=" + sacub + "+" + satri + "+" + satube + "-" + saend + "=\\underline{\\mathbf{" + 
-                        dp(Number(sacub) + Number(satri) + Number(satube) - Number(saend), 2, 1) + 
+                        dp(Number(sacub) + Number(satri) + Number(satube) - Number(saend), 3, 1) + 
                         unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
             suma += "V\\ of\\ cuboid&=length\\times width\\times height\\\\[5pt]";
             suma += "&=" + a + "\\times" + b + "\\times" + c + "\\\\[5pt]";
@@ -143,7 +143,7 @@ function areavol() {
             suma += "&=\\pi\\times" + (g / 2) + "^2\\times" + a + "\\\\[5pt]";
             suma += "&=" + vtube + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ total&=" + vcub + "+" + vtri + "-" + vtube + "=\\underline{\\mathbf{" + 
-                        dp(Number(vcub) + Number(vtri) - Number(vtube), 2, 1) + 
+                        dp(Number(vcub) + Number(vtri) - Number(vtube), 3, 1) + 
                         unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$";
             break;
         case 3:     //2cyl
@@ -174,7 +174,7 @@ function areavol() {
             suma += "&=\\pi \\times" + c + "\\times" + b + "\\\\[5pt]";
             suma += "&=" + sasmcyl + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ total&=" + salgcyl + "+" + sasmcyl + "=\\underline{\\mathbf{" + 
-                        dp(Number(salgcyl) + Number(sasmcyl), 2, 1) + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]";
+                        dp(Number(salgcyl) + Number(sasmcyl), 3, 1) + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]";
             suma += "V\\ of\\ large\\ cyclinder&=area\\ of\\ large\\ circle\\times length\\\\[5pt]";
             suma += "&=\\pi \\times" + (d / 2) + "^2\\times" + a + "\\\\[5pt]";
             suma += "&=" + vlgcyl + unitsmath + "^3\\\\[5pt]";
@@ -182,7 +182,7 @@ function areavol() {
             suma += "&=\\pi \\times" + (c / 2) + "^2\\times" + b + "\\\\[5pt]";
             suma += "&=" + vsmcyl + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ total&=" + vlgcyl + "+" + vsmcyl + "=\\underline{\\mathbf{" + 
-                        dp(Number(vlgcyl) + Number(vsmcyl), 2, 1) + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$";
+                        dp(Number(vlgcyl) + Number(vsmcyl), 3, 1) + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$";
             break;
         case 4:     //tritube
             do {
@@ -222,7 +222,7 @@ function areavol() {
             suma += "&=2\\times \\pi \\times" + (d / 2) + "^2\\\\[5pt]";
             suma += "&=" + saend + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ total&=" + satri + "+" + satube + "-" + saend + "=\\underline{\\mathbf{" + 
-                        dp(Number(satri) + Number(satube) - Number(saend), 2, 1) + unitsmath + "^2\\ (1\\ dp)}}\\\\[20pt]";
+                        dp(Number(satri) + Number(satube) - Number(saend), 3, 1) + unitsmath + "^2\\ (1\\ dp)}}\\\\[20pt]";
             suma += "V\\ of\\ triangular\\ prism&=area\\ of\\ trangular\\ end\\times length\\\\[5pt]";
             suma += "&=\\frac{1}{2}\\times" + b + "\\times" + c + "\\times" + a + "\\\\[5pt]";
             suma += "&=" + vtri + unitsmath + "^3\\\\[5pt]";
@@ -230,7 +230,7 @@ function areavol() {
             suma += "&=\\pi \\times" + (d / 2) + "^2\\times" + a + "\\\\[5pt]";
             suma += "&=" + vtube + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ total&=" + vtri + "-" + vtube + "=\\underline{\\mathbf{" + 
-                        dp(Number(vtri) - Number(vtube), 2, 1) + unitsmath + "^3\\ (1\\ dp)}}\\end{aligned}$$";
+                        dp(Number(vtri) - Number(vtube), 3, 1) + unitsmath + "^3\\ (1\\ dp)}}\\end{aligned}$$";
             break;
     }
     suma += "";
