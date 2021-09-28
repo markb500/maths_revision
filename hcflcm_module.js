@@ -21,6 +21,7 @@ function hcflcm() {
         term2[0] = hcf[0] * rndgen(1, 8, 0, 1, -1);
         term3[0] = hcf[0] * rndgen(1, 8, 0, 1, -1);
         lcm[0] = lcm([term1[0], term2[0], term3[0]]);
+        hcf[0] = gcd([term1[0], term2[0], term3[0]]);   //Ensures hcf is highest possible for the 3 terms
     } while(term1[0] === term2[0] || term1[0] === term3[0] || term2[0] === term3[0] ||
             hcf[0] === term1[0] || hcf[0] === term2[0] || hcf[0] === term3[0] ||
             hcf[0] === 10)  //Ensures 3 different terms, none equal to hcf and hcf not 10 (far too easy)
