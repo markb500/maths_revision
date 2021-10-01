@@ -32,7 +32,7 @@ function conv() {
                     "percentage of the kinetic energy, rounding each to 2 decimal places.";
             
             suma += "$$\\begin{aligned}Expected\\ KE&=\\frac{1}{2}mv^2\\\\[5pt]";
-            suma += "&=\\frac{1}{2}\\times" + m + "\\times" + v + "\\\\[5pt]";
+            suma += "&=\\frac{1}{2}\\times" + m + "\\times" + v + "^2\\\\[5pt]";
             suma += "&=" + ke + "\\ J\\\\[25pt]";
             suma += "Max\\ value\\ mass&=" + m + "\\times\\left(1+\\frac{" + merr + "}{100}\\right)=" + 
                     mmax + "\\ kg\\\\[5pt]";
