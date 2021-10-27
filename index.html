@@ -118,19 +118,19 @@
       <p>
         <a id="noteslink" style="visibility:hidden" href="#">Link to Training Notes</a>
       </p>
-      <div class="float-right">
-        <canvas id="myCanvas" width="0.5" height="0.5" style="border:none"> <!--border:1px solid #000000;-->
-        </canvas>
-      </div>
-      <h4 id="a", style="color:red"></h4>
+      <!-- 'views' variable managed in the eqnformat() function in maths_utils_module -->
       <button 
         id="btnSoln" 
         tabIndex="0" 
         class="btn btn-outline-primary m-3" 
         style="visibility:hidden" 
-        onclick="getElementById('a').innerHTML = suma; eqnformat('a'); 
-        document.getElementById('btnSoln').style.visibility='hidden'">Solution
+        onclick="getElementById('a').innerHTML = suma; eqnformat('a')"><span class='font-weight-bold'>Show/Hide Solution</span><br />Views : 0
       </button>
+      <div class="float-right">
+        <canvas id="myCanvas" width="0.5" height="0.5" style="border:none"> <!--border:1px solid #000000;-->
+        </canvas>
+      </div>
+      <h4 id="a", style="color:red; visibility:hidden"></h4>
       <img id="cubtri" style="visibility:hidden" width="400" height="250" src="images\cubtri.png" alt="cubtri">
       <img id="cubtritube" style="visibility:hidden" width="400" height="250" src="images\cubtritube.png" alt="cubtritube">
       <img id="2cyl" style="visibility:hidden" width="400" height="250" src="images\2cyl.png" alt="2cyl">

@@ -1,4 +1,6 @@
-//Various functions used in sum functions as described in each below.
+//Various functions used in sum functions, as described in each below.
+
+var views = 0;  //Used to count solution views
 
 function op(sign) {
 //Used in solve1 to convert random number (0 or 1) to sign string.
@@ -32,8 +34,25 @@ function cfchk(num, ltr, not1, notplus) {
 }
 
 function eqnformat(id) {
-  //re-runs mathjax rendering on text with given id. Used in all sum functions.
+  //Re-runs mathjax rendering on text with given id. Used in all sum functions.
+  //Also toggles visibility of the 'a' element each time soln btn clicked, increments the views
+  //count each time 'a' is made visible and re-sets views to zero each time a question button is clicked.
   MathJax.Hub.Queue(["Typeset",MathJax.Hub, id]);
+  if(id === "q") {
+    //Initialisation for new Q; reset number of views in soln btn and ensure 'a' element is hidden.
+    views = 0;
+    document.getElementById("btnSoln").innerHTML = "<span class='font-weight-bold'>Show/Hide Solution</span><br />Views : " + views;
+    document.getElementById("a").style.visibility="hidden";
+  }
+  if(id === "a") {      //soln btn clicked
+    if(window.getComputedStyle(document.getElementById("a")).visibility === "visible") {
+        document.getElementById("a").style.visibility="hidden";
+    } else {
+        document.getElementById("a").style.visibility="visible";
+        views += 1;
+        document.getElementById("btnSoln").innerHTML = "<span class='font-weight-bold'>Show/Hide Solution</span><br />Views : " + views
+    }
+  }
 }
 
 function rndgen(lower, upper, dp, step, fix) {
@@ -63,7 +82,7 @@ function dp(sum, dp, fix) {
   //Rounds 'sum' to selected number of decimal places. Decimal places can be fixed.
   //sum = number to be rounded
   //dp = number of dec places
-  //dp = number of dp's fixed. -1 if no trailing zeros wanted.
+  //fix = number of dp's fixed. -1 if no trailing zeros wanted.
   if(fix === -1) {
     return Math.round((sum + Number.EPSILON) * Math.pow(10, dp)) / Math.pow(10, dp);
   } else {
