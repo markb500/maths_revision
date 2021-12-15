@@ -1,8 +1,8 @@
-var a, b, c, d, e, f, g;
+var prevsum = 0, prev2sum = 0, sumq, suma, a, b, c, d, e, f, g;
 var units, unitsmath, sacub, satri, satube, saend, salgcyl, sasmcyl, vcub, vtri, vtube, vlgcyl, vsmcyl;
 function areavol() {
     //Uses 1 of 4 shapes with random dimensions added. Surface area & volume to be calculated.
-    var left = 75, top = 25, right = left + 350, bottom = top + 200;
+    var sum, left = 75, top = 25, right = left + 350, bottom = top + 200;
     sumq = "";
     suma = "";
     suma+= "<br>".repeat(13);
@@ -34,7 +34,12 @@ function areavol() {
     sumq += "Find the surface area and volume of the object shown, " + 
                 "rounding your answers to 1 decimal place. Drawing is not to scale. <br><br>";
     
-    switch(rndgen(1, 4, 0, 1, -1)) {
+    do {
+        sum = rndgen(1, 4, 0, 1, -1);
+    } while(sum === prevsum || sum === prev2sum)
+    prev2sum = prevsum;
+    prevsum = sum;
+    switch(sum) {
         case 1:     //cubtri
             do {
                 a = rndgen(8, 21, 0, 1, -1);   //a int 8 to 21
@@ -66,21 +71,21 @@ function areavol() {
             suma += "$$\\begin{aligned}SA\\ of\\ Cuboid&=2\\times side+2\\times end+base+top\\\\[5pt]";
             suma += "&=2\\times" + a + "\\times" + c + "+2\\times" + b + "\\times" + c + "+" + a + 
                         "\\times" + b + "+" + e + "\\times" + b + "\\\\[5pt]";
-            suma += "&=" + sacub + unitsmath + "^2\\\\[5pt]";
+            suma += "&=" + thouSep(sacub, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ of\\ triangular\\ prism&=2\\times triangular\\ ends+slope+side\\\\[5pt]";
             suma += "&=2\\times \\frac{1}{2}\\times" + (a - e) + "\\times" + (d - c) + "+" + 
                             b + "\\times" + f + "+" + b + "\\times" + (d - c) + "\\\\[5pt]";
-            suma += "&=" + satri + unitsmath + "^2\\\\[5pt]";
-            suma += "SA\\ total&=" + sacub + "+" + satri + "=\\underline{\\mathbf{" + 
-                        dp(Number(sacub) + Number(satri), 3, 1) + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
+            suma += "&=" + thouSep(satri, "\\ ") + unitsmath + "^2\\\\[5pt]";
+            suma += "SA\\ total&=" + thouSep(sacub, "\\ ") + "+" + thouSep(satri, "\\ ") + "=\\underline{\\mathbf{" + 
+                    thouSep(dp(Number(sacub) + Number(satri), 3, 1), "\\ ") + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
             suma += "V\\ of\\ cuboid&=length\\times width\\times height\\\\[5pt]";
             suma += "&=" + a + "\\times" + b + "\\times" + c + "\\\\[5pt]";
-            suma += "&=" + vcub + unitsmath + "^3\\\\[5pt]";
+            suma += "&=" + thouSep(vcub, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ of\\ triangular\\ prism&=area\\ of\\ triangle\\times length\\ of\\ prism\\\\[5pt]";
             suma += "&=\\frac{1}{2}\\times" + (a - e) + "\\times" + (d - c) + "\\times" + b + "\\\\[5pt]";
-            suma += "&=" + vtri + unitsmath + "^3\\\\[5pt]";
-            suma += "V\\ total&=" + vcub + "+" + vtri + "=\\underline{\\mathbf{" + 
-                        dp(Number(vcub) +  Number(vtri), 3, 1) + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
+            suma += "&=" + thouSep(vtri, "\\ ") + unitsmath + "^3\\\\[5pt]";
+            suma += "V\\ total&=" + thouSep(vcub, "\\ ") + "+" + thouSep(vtri, "\\ ") + "=\\underline{\\mathbf{" + 
+                    thouSep(dp(Number(vcub) +  Number(vtri), 3, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
             break;
         case 2:     //cubtritube
             do {
@@ -119,31 +124,31 @@ function areavol() {
             suma += "$$\\begin{aligned}SA\\ of\\ Cuboid&=2\\times side+2\\times end+base+top\\\\[5pt]";
             suma += "&=2\\times" + a + "\\times" + c + "+2\\times" + b + "\\times" + c + "+" + a + 
                         "\\times" + b + "+" + e + "\\times" + b + "\\\\[5pt]";
-            suma += "&=" + sacub + unitsmath + "^2\\\\[5pt]";
+            suma += "&=" + thouSep(sacub, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ of\\ triangular\\ prism&=2\\times triangular\\ ends+slope+side\\\\[5pt]";
             suma += "&=2\\times \\frac{1}{2}\\times" + (a - e) + "\\times" + (d - c) + "+" + 
                             b + "\\times" + f + "+" + b + "\\times" + (d - c) + "\\\\[5pt]";
-            suma += "&=" + satri + unitsmath + "^2\\\\[5pt]";
+            suma += "&=" + thouSep(satri, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ of\\ tube&=\\pi \\times diameter\\times length\\\\[5pt]";
             suma += "&=\\pi \\times" + g + "\\times" + a + "\\\\[5pt]";
-            suma += "&=" + satube + unitsmath + "^2\\\\[5pt]";
+            suma += "&=" + thouSep(satube, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ of\\ end\\ caps&=2\\times \\pi \\times radius^2\\\\[5pt]";
             suma += "&=2\\times \\pi \\times" + (g / 2) + "^2\\\\[5pt]";
-            suma += "&=" + saend + unitsmath + "^2\\\\[5pt]";
-            suma += "SA\\ total&=" + sacub + "+" + satri + "+" + satube + "-" + saend + "=\\underline{\\mathbf{" + 
-                        dp(Number(sacub) + Number(satri) + Number(satube) - Number(saend), 3, 1) + 
+            suma += "&=" + thouSep(saend, "\\ ") + unitsmath + "^2\\\\[5pt]";
+            suma += "SA\\ total&=" + thouSep(sacub, "\\ ") + "+" + satri + "+" + satube + "-" + saend + "=\\underline{\\mathbf{" + 
+                        thouSep(dp(Number(sacub) + Number(satri) + Number(satube) - Number(saend), 3, 1), "\\ ") + 
                         unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
             suma += "V\\ of\\ cuboid&=length\\times width\\times height\\\\[5pt]";
             suma += "&=" + a + "\\times" + b + "\\times" + c + "\\\\[5pt]";
-            suma += "&=" + vcub + unitsmath + "^3\\\\[5pt]";
+            suma += "&=" + thouSep(vcub, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ of\\ triangular\\ prism&=area\\ of\\ triangle\\times length\\ of\\ prism\\\\[5pt]";
             suma += "&=\\frac{1}{2}\\times" + (a - e) + "\\times" + (d - c) + "\\times" + b + "\\\\[5pt]";
-            suma += "&=" + vtri + unitsmath + "^3\\\\[5pt]";
+            suma += "&=" + thouSep(vtri, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ of\\ tube&=\\pi \\times radius^2\\times length\\\\[5pt]";
             suma += "&=\\pi\\times" + (g / 2) + "^2\\times" + a + "\\\\[5pt]";
-            suma += "&=" + vtube + unitsmath + "^3\\\\[5pt]";
-            suma += "V\\ total&=" + vcub + "+" + vtri + "-" + vtube + "=\\underline{\\mathbf{" + 
-                        dp(Number(vcub) + Number(vtri) - Number(vtube), 3, 1) + 
+            suma += "&=" + thouSep(vtube, "\\ ") + unitsmath + "^3\\\\[5pt]";
+            suma += "V\\ total&=" + thouSep(vcub, "\\ ") + "+" + thouSep(vtri, "\\ ") + "-" + thouSep(vtube, "\\ ") + 
+                        "=\\underline{\\mathbf{" + thouSep(dp(Number(vcub) + Number(vtri) - Number(vtube), 3, 1), "\\ ") + 
                         unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$";
             break;
         case 3:     //2cyl
@@ -168,21 +173,21 @@ function areavol() {
             ctx.fillText(d + units, left - 2, top + 105);  //d
             suma += "$$\\begin{aligned}SA\\ of\\ large\\ cylinder&=2\\times end\\ caps+tube\\\\[5pt]";
             suma += "&=2\\times \\pi \\times" + (d / 2) + "^2+\\pi \\times" + d + "\\times" + a + "\\\\[5pt]";
-            suma += "&=" + salgcyl + unitsmath + "^2\\\\[5pt]";
+            suma += "&=" + thouSep(salgcyl, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ of\\ small\\ cyclinder&=small\\ tube\\ (area\\ of\\ 2\\ small\\ end\\ caps\\ " + 
                         "hidden\\ in\\ joint)\\\\[5pt]";
             suma += "&=\\pi \\times" + c + "\\times" + b + "\\\\[5pt]";
-            suma += "&=" + sasmcyl + unitsmath + "^2\\\\[5pt]";
-            suma += "SA\\ total&=" + salgcyl + "+" + sasmcyl + "=\\underline{\\mathbf{" + 
-                        dp(Number(salgcyl) + Number(sasmcyl), 3, 1) + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]";
+            suma += "&=" + thouSep(sasmcyl, "\\ ") + unitsmath + "^2\\\\[5pt]";
+            suma += "SA\\ total&=" + thouSep(salgcyl, "\\ ") + "+" + sasmcyl + "=\\underline{\\mathbf{" + 
+                    thouSep(dp(Number(salgcyl) + Number(sasmcyl), 3, 1), "\\ ") + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]";
             suma += "V\\ of\\ large\\ cyclinder&=area\\ of\\ large\\ circle\\times length\\\\[5pt]";
             suma += "&=\\pi \\times" + (d / 2) + "^2\\times" + a + "\\\\[5pt]";
-            suma += "&=" + vlgcyl + unitsmath + "^3\\\\[5pt]";
+            suma += "&=" + thouSep(vlgcyl, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ of\\ small\\ cyclinder&=area\\ of\\ small\\ circle\\times length\\\\[5pt]";
             suma += "&=\\pi \\times" + (c / 2) + "^2\\times" + b + "\\\\[5pt]";
-            suma += "&=" + vsmcyl + unitsmath + "^3\\\\[5pt]";
-            suma += "V\\ total&=" + vlgcyl + "+" + vsmcyl + "=\\underline{\\mathbf{" + 
-                        dp(Number(vlgcyl) + Number(vsmcyl), 3, 1) + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$";
+            suma += "&=" + thouSep(vsmcyl, "\\ ") + unitsmath + "^3\\\\[5pt]";
+            suma += "V\\ total&=" + thouSep(vlgcyl, "\\ ") + "+" + thouSep(vsmcyl, "\\ ") + "=\\underline{\\mathbf{" + 
+                    thouSep(dp(Number(vlgcyl) + Number(vsmcyl), 3, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$";
             break;
         case 4:     //tritube
             do {
@@ -214,23 +219,23 @@ function areavol() {
                         "sloping\\ sides+base\\\\[5pt]";
             suma += "&=2\\times \\frac{1}{2}\\times" + b + "\\times" + c + "+2\\times" + a + "\\times" + e + 
                         "+" + a + "\\times" + b + "\\\\[5pt]";
-            suma += "&=" + satri + unitsmath + "^2\\\\[5pt]";
+            suma += "&=" + thouSep(satri, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ of\\ tube&=\\pi \\times diameter\\times length\\\\[5pt]";
             suma += "&=\\pi \\times" + d + "\\times" + a + "\\\\[5pt]";
-            suma += "&=" + satube + unitsmath + "^2\\\\[5pt]";
+            suma += "&=" + thouSep(satube, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ of\\ end\\ caps&=2\\times \\pi \\times radius^2\\\\[5pt]";
             suma += "&=2\\times \\pi \\times" + (d / 2) + "^2\\\\[5pt]";
-            suma += "&=" + saend + unitsmath + "^2\\\\[5pt]";
-            suma += "SA\\ total&=" + satri + "+" + satube + "-" + saend + "=\\underline{\\mathbf{" + 
-                        dp(Number(satri) + Number(satube) - Number(saend), 3, 1) + unitsmath + "^2\\ (1\\ dp)}}\\\\[20pt]";
+            suma += "&=" + thouSep(saend, "\\ ") + unitsmath + "^2\\\\[5pt]";
+            suma += "SA\\ total&=" + thouSep(satri, "\\ ") + "+" + thouSep(satube, "\\ ") + "-" + thouSep(saend, "\\ ") + "=\\underline{\\mathbf{" + 
+                        thouSep(dp(Number(satri) + Number(satube) - Number(saend), 3, 1), "\\ ") + unitsmath + "^2\\ (1\\ dp)}}\\\\[20pt]";
             suma += "V\\ of\\ triangular\\ prism&=area\\ of\\ trangular\\ end\\times length\\\\[5pt]";
             suma += "&=\\frac{1}{2}\\times" + b + "\\times" + c + "\\times" + a + "\\\\[5pt]";
-            suma += "&=" + vtri + unitsmath + "^3\\\\[5pt]";
+            suma += "&=" + thouSep(vtri, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ of\\ tube&=\\pi \\times radius^2\\times length\\\\[5pt]";
             suma += "&=\\pi \\times" + (d / 2) + "^2\\times" + a + "\\\\[5pt]";
-            suma += "&=" + vtube + unitsmath + "^3\\\\[5pt]";
-            suma += "V\\ total&=" + vtri + "-" + vtube + "=\\underline{\\mathbf{" + 
-                        dp(Number(vtri) - Number(vtube), 3, 1) + unitsmath + "^3\\ (1\\ dp)}}\\end{aligned}$$";
+            suma += "&=" + thouSep(vtube, "\\ ") + unitsmath + "^3\\\\[5pt]";
+            suma += "V\\ total&=" + thouSep(vtri, "\\ ") + "-" + thouSep(vtube, "\\ ") + "=\\underline{\\mathbf{" + 
+                        thouSep(dp(Number(vtri) - Number(vtube), 3, 1), "\\ ") + unitsmath + "^3\\ (1\\ dp)}}\\end{aligned}$$";
             break;
     }
     suma += "";

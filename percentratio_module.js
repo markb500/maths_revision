@@ -1,7 +1,8 @@
-var num1, num2, pct, rat1, rat2, rat3, ratunits = [" m", " N", " kg", "£", "\\ m", "\\ N", "\\ kg", "£"], iratunit;
+var prevsum = 0, prev2sum = 0, sumq, suma, num1, num2, pct, rat1, rat2, rat3;
+var ratunits = [" m", " N", " kg", "£", "\\ m", "\\ N", "\\ kg", "£"], iratunit;
 function percentratio() {
     //Randomly selects from 6 questions (5 percent & 1 ratio). Units randomly changed in ration question.
-    var qtype, comdenom;
+    var sum, comdenom;
     document.getElementById("myCanvas");
     myCanvas.height = "0.5";
     myCanvas.width = "0.5";
@@ -13,7 +14,12 @@ function percentratio() {
     document.getElementById("noteslink").onclick = function() {
         window.open("images/20200504-MathsBook4HCFLCMFactv1_5-APO.pdf#page=3", "_blank")
     }
-    switch(rndgen(1, 6, 0, 1, -1)) {
+    // do {
+        sum = 6//rndgen(1, 6, 0, 1, -1);
+    // } while(sum === prevsum || sum === prev2sum)
+    // prev2sum = prevsum;
+    // prevsum = sum;
+    switch(sum) {
         case 1://Without using a calculator, express num1 as a percentage of num2 to 1 dp.
             document.getElementById("noteslink").onclick = function() {
                 window.open("images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50", "_blank")
@@ -84,12 +90,13 @@ function percentratio() {
                 sumq += "Without using a calculator, divide " + num1 + ratunits[iratunit] + 
                             " in the ratio " + rat1 + ":" + rat2 + ":" + rat3 + ".";
                 suma += "$$" + rat1 + "+" + rat2 + "+" + rat3 + "=" + (rat1 + rat2 + rat3) + "$$";
+                // suma += "$$" + dp(10.32, 0, -1) + 10.32.toFixed() + "$$";
                 suma += "$$" + num1 + "\\times \\frac{" + rat1 + "}{" + (rat1 + rat2 + rat3) + "}=" + 
-                            dp(num1 * (rat1 / (rat1 + rat2 + rat3)), 1, 0) + ratunits[iratunit + 4] + "$$";
+                            dp(num1 * (rat1 / (rat1 + rat2 + rat3)), 0, -1) + ratunits[iratunit + 4] + "$$";
                 suma += "$$" + num1 + "\\times \\frac{" + rat2 + "}{" + (rat1 + rat2 + rat3) + "}=" + 
-                            dp(num1 * (rat2 / (rat1 + rat2 + rat3)), 1, 0) + ratunits[iratunit + 4] + "$$";
+                            dp(num1 * (rat2 / (rat1 + rat2 + rat3)), 0, -1) + ratunits[iratunit + 4] + "$$";
                 suma += "$$" + num1 + "\\times \\frac{" + rat3 + "}{" + (rat1 + rat2 + rat3) + "}=" + 
-                            dp(num1 * (rat3 / (rat1 + rat2 + rat3)), 1, 0) + ratunits[iratunit + 4] + "$$";
+                            dp(num1 * (rat3 / (rat1 + rat2 + rat3)), 0, -1) + ratunits[iratunit + 4] + "$$";
             } else {
                 sumq += "Without using a calculator, divide " + ratunits[iratunit] + num1.toFixed(2) + 
                             " in the ratio " + rat1 + ":" + rat2 + ":" + rat3 + ".";

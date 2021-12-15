@@ -1,4 +1,4 @@
-var m, v, merr, mmax, vmax, verr, ke, keerr, qdata, sel, qty, rd;
+var prevsum = 0, prev2sum = 0, sumq, suma, m, v, merr, mmax, vmax, verr, ke, keerr, qdata, sel, qty, rd;
 function conv() {
     //Produces randomly selected problems in either error calculation or conversion
     var sum;
@@ -13,7 +13,11 @@ function conv() {
     document.getElementById("noteslink").onclick = function() {
         window.open("images/20200505-MathsBook8Proportionv1_3-APO.pdf#page=4", "_blank")
     }
-    sum = rndgen(1, 2, 0, 1, -1);
+    do {
+        sum = rndgen(1, 6, 0, 1, -1);
+    } while(sum === prevsum || sum === prev2sum)
+    prev2sum = prevsum;
+    prevsum = sum;
     switch(sum) {
         case 1:     //Absolute & relative error
             m = rndgen(10, 30, 0, 1, -1);
@@ -47,6 +51,10 @@ function conv() {
                     dp(((keerr-ke)/ke)*100, 3, 2) + "\\ \\%\\ (2\\ dp)}}\\end{aligned}$$";
             break;
         case 2:     //Conversion, quantity to mass, mass to quantity, mass to mass or quantity to quantity
+        case 3:
+        case 4:
+        case 5:
+        case 6:
             qdata = [   //Units convert from, units convert to, min qty, max qty, conversion factor, rd role in calc
                 ["Gallons(UK)", "Pounds", 500, 1500, 10.02, "mult"],
                 ["Pounds", "Gallons(UK)", 4000, 12000, 0.0998, "divide"],

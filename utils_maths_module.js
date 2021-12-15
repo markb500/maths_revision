@@ -55,6 +55,13 @@ function eqnformat(id) {
   }
 }
 
+function countDecimals(value) {
+    //Counts number of decimal places. Used in rndgen() and dp()
+    if (Math.floor(value) !== value)
+        return value.toString().split(".")[1].length || 0;
+    return 0;
+}
+
 function rndgen(lower, upper, dp, step, fix) {
   //Produces random numbers between limits, with set number of decimal places and selectable steps. Also,
   //decimal places can be fixed.
@@ -69,19 +76,13 @@ function rndgen(lower, upper, dp, step, fix) {
       var tmp =  (Math.floor(Math.random() * ((upper * Math.pow(10, dp) / step) - 
           (lower * Math.pow(10, dp) / step) + 1) + (lower * Math.pow(10, dp) / step)) / 
           Math.pow(10, dp) * step);
-    } while((tmp * Math.pow(10, dp)) % step !== 0) //Solves occasional float point maths error
+    } while(countDecimals(tmp) > dp) //Solves occasional float point maths error
     return tmp;
   } else {
     return (Math.floor(Math.random() * (upper * Math.pow(10, dp) / step - 
           lower * Math.pow(10, dp) / step + 1) + lower * Math.pow(10, dp) / step) / 
           Math.pow(10, dp) * step).toFixed(fix);
   }
-}
-
-function countDecimals(value) {
-    if (Math.floor(value) !== value)
-        return value.toString().split(".")[1].length || 0;
-    return 0;
 }
 
 function dp(sum, dp, fix) {
@@ -92,12 +93,14 @@ function dp(sum, dp, fix) {
     var temp = 0, cnt = 0;
     do {
         if(fix === -1) {
-        cnt = dp;
-        temp = Math.round((sum + Number.EPSILON) * Math.pow(10, dp)) / Math.pow(10, dp);
+            cnt = dp;
+            temp = Math.round((sum + Number.EPSILON) * Math.pow(10, dp)) / Math.pow(10, dp);
         } else {
-        // dp = fix + 2;
-        cnt = fix;
-        temp = (Math.round((sum + Number.EPSILON) * Math.pow(10, dp)) / Math.pow(10, dp)).toFixed(fix);
+            cnt = fix;
+            temp = (Math.round((sum + Number.EPSILON) * Math.pow(10, dp + 2)) / Math.pow(10, dp + 2)).toFixed(fix);
+        }
+        if(countDecimals(temp) > cnt) {
+            sum += Number.EPSILON;
         }
     } while(countDecimals(temp) > cnt);  //Avoids occasional float point errors
     return temp;
