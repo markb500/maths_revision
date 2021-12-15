@@ -14,11 +14,11 @@ function percentratio() {
     document.getElementById("noteslink").onclick = function() {
         window.open("images/20200504-MathsBook4HCFLCMFactv1_5-APO.pdf#page=3", "_blank")
     }
-    // do {
-        sum = 6//rndgen(1, 6, 0, 1, -1);
-    // } while(sum === prevsum || sum === prev2sum)
-    // prev2sum = prevsum;
-    // prevsum = sum;
+    do {
+        sum = rndgen(1, 6, 0, 1, -1);
+    } while(sum === prevsum || sum === prev2sum)
+    prev2sum = prevsum;
+    prevsum = sum;
     switch(sum) {
         case 1://Without using a calculator, express num1 as a percentage of num2 to 1 dp.
             document.getElementById("noteslink").onclick = function() {
