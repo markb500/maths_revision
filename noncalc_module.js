@@ -69,7 +69,8 @@ function noncalc2() {
             b * (c + d) === 0 ||
             b * (c + d) / e === 0 ||
             b * (c + d) - dp(b *(c + d), 2, -1) !== 0 ||
-            b * (c + d) / e - dp(b *(c + d) / e, 2, -1) !== 0)
+            b * (c + d) / e - dp(b *(c + d) / e, 2, -1) !== 0 ||
+            (c + d) / e - dp((c + d) / e, 2, -1) !== 0)
 
     sumq += "Calculate the following, without using a calculator. Show all your working.<br />";
     sumq += "$$" + a + cfchk(b, "", 0, 0) + "(" + c + cfchk(d, "", 0, 0) + ")\\div" + e + "$$<br />";
