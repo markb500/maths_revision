@@ -60,9 +60,7 @@ function noncalc2() {
         b = rndgen(-10, 10, 0, 1, -1);
         c = rndgen(1, 10, 2, 0.01, -1);
         d = rndgen(-10, 10, 2, 0.01, -1);
-        do {
-            e = rndgen(-0.99, 0.99, 2, 0.01, -1);
-        } while(Math.abs(e) <= 1)       
+        e = rndgen(-0.99, 0.99, 2, 0.01, -1);
     }
     while (a * b * c * d * e === 0 ||
             c + d === 0 ||
