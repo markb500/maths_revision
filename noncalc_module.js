@@ -63,6 +63,7 @@ function noncalc2() {
         e = rndgen(-0.99, 0.99, 2, 0.01, -1);
     }
     while (a * b * c * d * e === 0 ||
+            b === 1 ||
             c + d === 0 ||
             b * (c + d) === 0 ||
             b * (c + d) / e === 0 ||
