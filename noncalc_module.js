@@ -27,7 +27,7 @@ function noncalc1() {
         a = rndgen(-10, 10, 2, 0.01, -1);
         b = rndgen(0.1, 9.9, 2, 0.01, -1);
         c = rndgen(-10, 10, 2, 0.01, -1);
-        d = rndgen(-10, 10, 2, 0.01, -1);
+        d = rndgen(-0.99, 0.99, 2, 0.01, -1);
     }
     while (a * b * c * d === 0 ||
         Math.abs(d) === 1 ||
