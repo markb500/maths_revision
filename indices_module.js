@@ -52,11 +52,8 @@ function indices() {
         xd = p1d * r1 * p2d * r2 * p3d * r3;
     }while(Math.abs(xn) > 35 || Math.abs(xd) > 10 || Math.abs(xn) === Math.abs(xd) || xn === 0 || xd === 0 || 
             (p1d * r1) === (p2d * r2) || (r1 === r3 && p1n === p3n && p1d === p3d) || (r1 === r2 && p1n === p2n && p1d === p2d))
-                                        //Sets difficulty level (max numerator & max denominator),
-                                        //avoids same numerator & denominator or either being 0,
-                                        //avoids term1 & term2 denoms being same,
-                                        //avoids term1 & term3 being the same and
-                                        //avoids term1 & term 2 being the same.
+            //Sets difficulty level (max numerator & max denominator), avoids same numerator & denominator or either being 0,
+            //avoids term1 & term2 denoms being same, avoids term1 & term3 being the same and avoids term1 & term 2 being the same.
 
     comfac = gcd2(xn, xd);      //Ensures the solution index fraction is in the simplest form
     while(comfac !== 1) {
