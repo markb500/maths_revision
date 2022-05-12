@@ -103,7 +103,7 @@ function prop() {
         if(rndgen(1, 2, 0, 1, -1) === 1) {  //For y prop x^3, find x given y
             y2 = y1 + rndgen(3, 8, 0, 1, -1);
             x2 = dp(Math.cbrt(y2 / k), 4, 2);
-            sumq += "Given that y is proportional to x^3 and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1;
+            sumq += "Given that y is proportional to x<sup>3</sup> and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1;
             sumq += ", find the constant of proportionality (to 3 decimal places) and use it to find the ";
             sumq += "value of x (to 2 decimal places) when y&nbsp;=&nbsp;" + y2;
 
