@@ -120,7 +120,7 @@ function prop() {
         } else {                            //For y prop x^3, find y given x
             x2 = x1 + rndgen(3, 8, 0, 1, -1);
             y2 = dp(k * Math.pow(x2, 3), 4, 2);
-            sumq += "Given that y is proportional to x^3 and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1;
+            sumq += "Given that y is proportional to x<sup>3</sup> and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1;
             sumq += ", find the constant of proportionality (to 3 decimal places) and use it to find the ";
             sumq += "value of y (to 2 decimal places) when x&nbsp;=&nbsp;" + x2;
 
@@ -174,7 +174,6 @@ function prop() {
             }
             break;
     }
-
     document.getElementById("q").innerHTML = sumq;
     document.getElementById("btnSoln").style.visibility="visible";
 }
