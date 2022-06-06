@@ -1,4 +1,7 @@
 function numform() {
+    //Generates 2 numbers with x10 exponents. These must either be multiplied or divided
+    //and then given in both sci and eng notation form. No calculator.
+    //Uses sciengnot & pwrzero functions in utils_maths_module
     document.getElementById("myCanvas");
     myCanvas.height = "0.5";
     myCanvas.width = "0.5";
