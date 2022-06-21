@@ -29,10 +29,10 @@ function conv() {
             ke = dp(0.5 * m * Math.pow(v, 2), 3, -1);
             keerr = dp(0.5 * (m * (1 + merr / 100)) * Math.pow(v * (1 + verr / 100), 2), 3, -1);
             sumq += "Kinetic Energy can be calculated using the formula KE=&#189mv<sup>2</sup><br>";
-            sumq += "where m = mass (kg) and v = velocity (m/s).<br>";
-            sumq += "If the mass of " + m + " kg is known with an accuracy of &#177 " + merr + 
-                    " % and the velocity of " + v + " m/s is known with an accuracy of &#177 " + verr + 
-                    " %, calculate the maximum possible absolute error and the maximum possible relative error " + 
+            sumq += "where m&nbsp;=&nbsp;mass&nbsp;(kg) and v&nbsp;=&nbsp;velocity&nbsp;(m/s).<br>";
+            sumq += "If the mass of " + m + "&nbsp;kg is known with an accuracy of &#177&nbsp;" + merr + 
+                    "&nbsp;% and the velocity of " + v + "&nbsp;m/s is known with an accuracy of &#177&nbsp;" + verr + 
+                    "&nbsp;%, calculate the maximum possible absolute error and the maximum possible relative error " + 
                     "percentage of the kinetic energy, rounding each to 2 decimal places.";
             
             suma += "$$\\begin{aligned}Expected\\ KE&=\\frac{1}{2}mv^2\\\\[5pt]";
@@ -76,7 +76,7 @@ function conv() {
             sel = rndgen(0, 15, 0, 1, -1);      //Selects row of qdata to use for question
             qty = rndgen(qdata[sel][2], qdata[sel][3], 0, 1, -1);
             rd = rndgen(0.78, 0.82, 2, 0.01, -1);
-            sumq += "Convert " + thouSep(qty, " ") + " " + qdata[sel][0] + 
+            sumq += "Convert " + thouSep(qty, " ") + "&nbsp;" + qdata[sel][0] + 
                     " of fuel with a specific gravity (relative density) of " + rd + " to " + qdata[sel][1] + 
                     " given that the conversion factor is " + qdata[sel][4] + " Round your answer to 1 decimal places.";
 
