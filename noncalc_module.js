@@ -26,6 +26,7 @@ function noncalc() {
 }
 
 function noncalc1() {
+    //a x b + c / d
     sumq = "";
     suma = "";
     document.getElementById("a").innerHTML = "";
@@ -37,9 +38,8 @@ function noncalc1() {
         a = rndgen(-10, 10, 2, 0.01, -1);
         b = rndgen(0.1, 9.9, 2, 0.01, -1);
         c = rndgen(-10, 10, 2, 0.01, -1);
-        d = rndgen(-0.99, 0.99, 2, 0.01, -1);
+        d = rndgen(-0.9, 0.9, 1, 0.1, -1);
     }while (a * b * c * d === 0 ||
-        Math.abs(d) === 0.01 ||
         Math.abs(d) === 0.1 ||
         Math.abs(b + c) === Math.abs(d) ||
         (b + c) / d - dp((b + c) / d, 3, -1) !== 0 ||
@@ -57,6 +57,7 @@ function noncalc1() {
 }
 
 function noncalc2() {
+    //a + b / c x d
     sumq = "";
     suma = "";
     document.getElementById("a").innerHTML = "";
@@ -67,10 +68,9 @@ function noncalc2() {
     do {
         a = rndgen(0.1, 9.9, 2, 0.01, -1);
         b = rndgen(-10, 10, 2, 0.01, -1);
-        c = rndgen(-0.99, 0.99, 2, 0.01, -1);
+        c = rndgen(-0.9, 0.9, 1, 0.1, -1);
         d = rndgen(-10, 10, 2, 0.01, -1);
     }while (a * b * c * d === 0 ||
-        Math.abs(c) === 0.01 ||
         Math.abs(c) === 0.1 ||
         Math.abs(a + b) === Math.abs(c) ||
         (a + b) / c - dp((a + b) / c, 3, -1) !== 0 ||
@@ -88,6 +88,7 @@ function noncalc2() {
 }
 
 function noncalc3() {
+    //a / b + c x d
     sumq = "";
     suma = "";
     document.getElementById("a").innerHTML = "";
@@ -97,11 +98,10 @@ function noncalc3() {
     }
     do {
         a = rndgen(0.1, 9.9, 2, 0.01, -1);
-        b = rndgen(-10, 10, 2, 0.01, -1);
-        c = rndgen(-0.99, 0.99, 2, 0.01, -1);
+        b = rndgen(-10, 10, 1, 0.1, -1);
+        c = rndgen(-0.9, 0.9, 1, 0.1, -1);
         d = rndgen(-10, 10, 2, 0.01, -1);
     }while (a * b * c * d === 0 ||
-        Math.abs(b + c) === 0.01 ||
         Math.abs(b + c) === 0.1 ||
         Math.abs(b + c) === 1 ||
         Math.abs(a) === Math.abs(b + c) ||
@@ -120,6 +120,7 @@ function noncalc3() {
 }
 
 function noncalc4() {
+    //a + b(c + d) / e
     sumq = "";
     suma = "";
     document.getElementById("a").innerHTML = "";
@@ -159,6 +160,7 @@ function noncalc4() {
 }
 
 function noncalc5() {
+    //a / b + c(d + e)
     sumq = "";
     suma = "";
     document.getElementById("a").innerHTML = "";
