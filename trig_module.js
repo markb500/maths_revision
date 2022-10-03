@@ -204,8 +204,8 @@ function trig() {
                         "rounding your answers to 2 decimal places.<br><br>";
             suma += "$$\\begin{aligned}Cos(\\theta)&=\\frac{Adj}{Hyp}\\\\[5pt]";
             suma += "Hyp\\times Cos(\\theta)&=Adj\\\\[5pt]";
-            suma += hyp + "\\times Tan(" + ang + ")&=Adj\\\\[5pt]";
-            suma += "\\underline{\\mathbf{" + dp(hyp * Math.tan(ang * Math.PI / 180), 3, 2) + 
+            suma += hyp + "\\times Cos(" + ang + ")&=Adj\\\\[5pt]";
+            suma += "\\underline{\\mathbf{" + dp(hyp * Math.cos(ang * Math.PI / 180), 3, 2) + 
                         unitsmath + "\\ (2\\ dp)}}&=Adj\\end{aligned}$$";
             suma += "$$\\begin{aligned}\\\\[5pt]";
             suma += "Sin(\\theta)&=\\frac{Opp}{Hyp}\\\\[5pt]";
