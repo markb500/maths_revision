@@ -85,26 +85,47 @@ function rndgen(lower, upper, dp, step, fix) {
   }
 }
 
-function dp(sum, dp, fix) {
-    //Rounds 'sum' to selected number of decimal places. Decimal places can be fixed.
-    //sum = number to be rounded
-    //dp = number of dec places
-    //fix = number of dp's fixed. -1 if no trailing zeros wanted.
-    var temp = 0, cnt = 0;
-    do {
-        if(fix === -1) {
-            cnt = dp;
-            temp = Math.round((sum + Number.EPSILON) * Math.pow(10, dp)) / Math.pow(10, dp);
-        } else {
-            cnt = fix;
-            temp = (Math.round((sum + Number.EPSILON) * Math.pow(10, dp + 2)) / Math.pow(10, dp + 2)).toFixed(fix);
-        }
-        if(countDecimals(temp) > cnt) {
-            sum += Number.EPSILON;
-        }
-    } while(countDecimals(temp) > cnt);  //Avoids occasional float point errors
-    return temp;
-}
+function dp(num, scale, fix) {
+    if(!("" + num).includes("e")) {
+      if(fix === -1) {
+        return +(Math.round(num + "e+" + scale)  + "e-" + scale);
+      } else {
+        return (+(Math.round(num + "e+" + scale)  + "e-" + scale)).toFixed(fix);
+      }
+    } else {
+      var arr = ("" + num).split("e");
+      var sig = ""
+      if(+arr[1] + scale > 0) {
+        sig = "+";
+      }
+      if(fix === -1) {
+        return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
+      } else {
+        return (+(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale)).toFixed(fix);
+      }
+    }
+  }
+
+// function dp(sum, dp, fix) {
+//     //Rounds 'sum' to selected number of decimal places. Decimal places can be fixed.
+//     //sum = number to be rounded
+//     //dp = number of dec places
+//     //fix = number of dp's fixed. -1 if no trailing zeros wanted.
+//     var temp = 0, cnt = 0;
+//     do {
+//         if(fix === -1) {
+//             cnt = dp;
+//             temp = Math.round((sum + Number.EPSILON) * Math.pow(10, dp)) / Math.pow(10, dp);
+//         } else {
+//             cnt = fix;
+//             temp = (Math.round((sum + Number.EPSILON) * Math.pow(10, dp + 2)) / Math.pow(10, dp + 2)).toFixed(fix);
+//         }
+//         if(countDecimals(temp) > cnt) {
+//             sum += Number.EPSILON;
+//         }
+//     } while(countDecimals(temp) > cnt);  //Avoids occasional float point errors
+//     return temp;
+// }
 
 function thouSep(value, sep) {
     //Adds chosen 1 000's separator
@@ -226,25 +247,5 @@ function sumpwrs(p1n, p1d, r1, p2n, p2d, r2, sign) {
     return "\\frac{" + p1n + "}{" + p1d + "}" + sign + "\\frac{" + p2n + "}{" + p2d * r2 + "}";
   } else {                                              //0000  
     return "\\frac{" + p1n + "}{" + p1d * r1 + "}" + sign + "\\frac{" + p2n + "}{" + p2d * r2 + "}";
-  }
-}
-
-function sciengnot(num, pwr) {
-  //Used in numform to convert num & pwr to sci and eng forms
-  var logten = Math.floor(Math.log10(Math.abs(num)));
-  var scinum = dp(num / Math.pow(10, logten), 5, -1);
-  var scipwr = pwr + logten;
-  var scimod = scipwr - 3 * Math.floor(scipwr / 3); //excel version of modulus calc different to js % operator for -ve nums
-  var engnum = dp(scinum * Math.pow(10, scimod), 5, -1);
-  var engpwr = scipwr - scimod;
-  return [scinum, scipwr, engnum, engpwr];
-}
-
-function pwrzero(num, pwr) {
-  //Used in numform to show just the num if pwr is 0
-  if (pwr === 0) {
-    return num
-  } else {
-    return num + "\\times 10^{" + pwr + "}"
   }
 }
