@@ -83,7 +83,7 @@ function trig() {
             suma += "$$\\begin{aligned}Hyp^2&=Adj^2+Opp^2\\\\[5pt]";
             suma += "Hyp&=\\sqrt{Adj^2+Opp^2}\\\\[5pt]";
             suma += "&=\\sqrt{" + adj + "^2+" + opp + "^2}\\\\[5pt]";
-            suma += "&=\\underline{\\mathbf{" + dp(Math.sqrt(Math.pow(adj, 2) + Math.pow(opp, 2)), 3, 2)  + 
+            suma += "&=\\underline{\\mathbf{" + dp(Math.sqrt(Math.pow(adj, 2) + Math.pow(opp, 2)), 2, 2)  + 
                             unitsmath + "\\ (2\\ dp)}}\\end{aligned}$$";
             suma += "$$\\begin{aligned}\\\\[5pt]";
             suma += "Tan(\\theta)&=\\frac{Opp}{Adj}\\\\[5pt]";
@@ -108,7 +108,7 @@ function trig() {
             suma += "Hyp^2-Adj^2&=Opp^2\\\\[5pt]";
             suma += "\\sqrt{Hyp^2-Adj^2}&=Opp\\\\[5pt]";
             suma += "\\sqrt{" + hyp + "^2-" + adj + "^2}&=Opp\\\\[5pt]";
-            suma += "\\underline{\\mathbf{" + dp(Math.sqrt(Math.pow(hyp, 2) - Math.pow(adj, 2)), 3, 2)  + 
+            suma += "\\underline{\\mathbf{" + dp(Math.sqrt(Math.pow(hyp, 2) - Math.pow(adj, 2)), 2, 2)  + 
                         unitsmath + "\\ (2\\ dp)}}&=Opp\\end{aligned}$$";
             suma += "$$\\begin{aligned}\\\\[10pt]";
             suma += "Cos(\\theta)&=\\frac{Adj}{Hyp}\\\\[5pt]";
@@ -133,7 +133,7 @@ function trig() {
             suma += "Hyp^2-Opp^2&=Adj^2\\\\[5pt]";
             suma += "\\sqrt{Hyp^2-Opp^2}&=Adj\\\\[5pt]";
             suma += "\\sqrt{" + hyp + "^2-" + opp + "^2}&=Adj\\\\[5pt]";
-            suma += "\\underline{\\mathbf{" + dp(Math.sqrt(Math.pow(hyp, 2) - Math.pow(opp, 2)), 3, 2)  + 
+            suma += "\\underline{\\mathbf{" + dp(Math.sqrt(Math.pow(hyp, 2) - Math.pow(opp, 2)), 2, 2)  + 
                         unitsmath + "\\ (2\\ dp)}}&=Adj\\end{aligned}$$";
             suma += "$$\\begin{aligned}\\\\[10pt]";
             suma += "Sin(\\theta)&=\\frac{Opp}{Hyp}\\\\[5pt]";
@@ -157,13 +157,13 @@ function trig() {
             suma += "$$\\begin{aligned}Tan(\\theta)&=\\frac{Opp}{Adj}\\\\[5pt]";
             suma += "Adj\\times Tan(\\theta)&=Opp\\\\[5pt]";
             suma += adj + "\\times Tan(" + ang + ")&=Opp\\\\[5pt]";
-            suma += "\\underline{\\mathbf{" + dp(adj * Math.tan(ang * Math.PI / 180), 3, 2) + 
+            suma += "\\underline{\\mathbf{" + dp(adj * Math.tan(ang * Math.PI / 180), 2, 2) + 
                         unitsmath + "\\ (2\\ dp)}}&=Opp\\end{aligned}$$";
             suma += "$$\\begin{aligned}\\\\[5pt]";
             suma += "Cos(\\theta)&=\\frac{Adj}{Hyp}\\\\[5pt]";
             suma += "Hyp&=\\frac{Adj}{Cos(\\theta)}\\\\[5pt]";
             suma += "&=\\frac{" + adj + "}{Cos(" + ang + ")}\\\\[5pt]";
-            suma += "&=\\underline{\\mathbf{" + dp(adj / Math.cos(ang * Math.PI / 180), 3, 2) + 
+            suma += "&=\\underline{\\mathbf{" + dp(adj / Math.cos(ang * Math.PI / 180), 2, 2) + 
                         unitsmath + "\\ (2\\ dp)}}\\end{aligned}$$";
             break;
         case 5:     //5-ang opp
@@ -181,13 +181,13 @@ function trig() {
             suma += "$$\\begin{aligned}Tan(\\theta)&=\\frac{Opp}{Adj}\\\\[5pt]";
             suma += "Adj&=\\frac{Opp}{Tan(\\theta)}\\\\[5pt]";
             suma += "&=\\frac{" + opp + "}{Tan(" + ang + ")}\\\\[5pt]";
-            suma += "&=\\underline{\\mathbf{" + dp(opp / Math.tan(ang * Math.PI / 180), 3, 2) + 
+            suma += "&=\\underline{\\mathbf{" + dp(opp / Math.tan(ang * Math.PI / 180), 2, 2) + 
                         unitsmath + "\\ (2\\ dp)}}\\end{aligned}$$";
             suma += "$$\\begin{aligned}\\\\[5pt]";
             suma += "Sin(\\theta)&=\\frac{Opp}{Hyp}\\\\[5pt]";
             suma += "Hyp&=\\frac{Opp}{Sin(\\theta)}\\\\[5pt]";
             suma += "&=\\frac{" + opp + "}{Sin(" + ang + ")}\\\\[5pt]";
-            suma += "&=\\underline{\\mathbf{" + dp(opp / Math.sin(ang * Math.PI / 180), 3, 2) + 
+            suma += "&=\\underline{\\mathbf{" + dp(opp / Math.sin(ang * Math.PI / 180), 2, 2) + 
                         unitsmath + "\\ (2\\ dp)}}\\end{aligned}$$";
             break;
         case 6:     //6-ang hyp
@@ -205,13 +205,13 @@ function trig() {
             suma += "$$\\begin{aligned}Cos(\\theta)&=\\frac{Adj}{Hyp}\\\\[5pt]";
             suma += "Hyp\\times Cos(\\theta)&=Adj\\\\[5pt]";
             suma += hyp + "\\times Cos(" + ang + ")&=Adj\\\\[5pt]";
-            suma += "\\underline{\\mathbf{" + dp(hyp * Math.cos(ang * Math.PI / 180), 3, 2) + 
+            suma += "\\underline{\\mathbf{" + dp(hyp * Math.cos(ang * Math.PI / 180), 2, 2) + 
                         unitsmath + "\\ (2\\ dp)}}&=Adj\\end{aligned}$$";
             suma += "$$\\begin{aligned}\\\\[5pt]";
             suma += "Sin(\\theta)&=\\frac{Opp}{Hyp}\\\\[5pt]";
             suma += "Hyp\\times Sin(\\theta)&=Opp\\\\[5pt]";
             suma += hyp + "\\times Sin(" + ang + ")&=Opp\\\\[5pt]";
-            suma += "\\underline{\\mathbf{" + dp(hyp * Math.sin(ang * Math.PI / 180), 3, 2) + 
+            suma += "\\underline{\\mathbf{" + dp(hyp * Math.sin(ang * Math.PI / 180), 2, 2) + 
                         unitsmath + "\\ (2\\ dp)}}&=Opp\\end{aligned}$$";
             break;
     }

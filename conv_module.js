@@ -29,10 +29,10 @@ function conv() {
             ke = dp(0.5 * m * Math.pow(v, 2), 3, -1);
             keerr = dp(0.5 * (m * (1 + merr / 100)) * Math.pow(v * (1 + verr / 100), 2), 3, -1);
             sumq += "Kinetic Energy can be calculated using the formula KE=&#189mv<sup>2</sup><br>";
-            sumq += "where m&nbsp;=&nbsp;mass&nbsp;(kg) and v&nbsp;=&nbsp;velocity&nbsp;(m/s).<br>";
-            sumq += "If the mass of " + m + "&nbsp;kg is known with an accuracy of &#177&nbsp;" + merr + 
-                    "&nbsp;% and the velocity of " + v + "&nbsp;m/s is known with an accuracy of &#177&nbsp;" + verr + 
-                    "&nbsp;%, calculate the maximum possible absolute error and the maximum possible relative error " + 
+            sumq += "where m = mass (kg) and v = velocity (m/s).<br>";
+            sumq += "If the mass of " + m + " kg is known with an accuracy of &#177 " + merr + 
+                    " % and the velocity of " + v + " m/s is known with an accuracy of &#177 " + verr + 
+                    " %, calculate the maximum possible absolute error and the maximum possible relative error " + 
                     "percentage of the kinetic energy, rounding each to 2 decimal places.";
             
             suma += "$$\\begin{aligned}Expected\\ KE&=\\frac{1}{2}mv^2\\\\[5pt]";
@@ -45,10 +45,10 @@ function conv() {
             suma += "Max\\ possible\\ KE&=\\frac{1}{2}mv^2=\\frac{1}{2}\\times" + mmax + "\\times" + 
                     vmax + "^2=" + keerr + "\\ J\\\\[25pt]";
             suma += "Absolute\\ error&=Actual-Expected=" + keerr + "-" + ke + "=\\underline{\\mathbf{" + 
-                    dp(keerr-ke, 2, -1) + "\\ J\\ (2\\ dp)}}\\\\[10pt]";
+                    dp(keerr-ke, 2, 2) + "\\ J\\ (2\\ dp)}}\\\\[10pt]";
             suma += "Relative\\ error&=\\frac{Actual-Expected}{Expected}\\times100=\\frac{" + 
                     keerr + "-" + ke + "}{" + ke + "}\\times100=\\underline{\\mathbf{" + 
-                    dp(((keerr-ke)/ke)*100, 3, 2) + "\\ \\%\\ (2\\ dp)}}\\end{aligned}$$";
+                    dp(((keerr-ke)/ke)*100, 2, 2) + "\\ \\%\\ (2\\ dp)}}\\end{aligned}$$";
             break;
         case 2:     //Conversion, quantity to mass, mass to quantity, mass to mass or quantity to quantity
         case 3:
@@ -76,24 +76,24 @@ function conv() {
             sel = rndgen(0, 15, 0, 1, -1);      //Selects row of qdata to use for question
             qty = rndgen(qdata[sel][2], qdata[sel][3], 0, 1, -1);
             rd = rndgen(0.78, 0.82, 2, 0.01, -1);
-            sumq += "Convert " + thouSep(qty, " ") + "&nbsp;" + qdata[sel][0] + 
+            sumq += "Convert " + thouSep(qty, " ") + " " + qdata[sel][0] + 
                     " of fuel with a specific gravity (relative density) of " + rd + " to " + qdata[sel][1] + 
                     " given that the conversion factor is " + qdata[sel][4] + " Round your answer to 1 decimal places.";
 
             if(qdata[sel][5] === "mult") {      //qty to mass
                 suma += "$$\\begin{aligned}quantity\\times conversion\\ factor\\times relative\\ density&=\\\\[5pt]";
                 suma += thouSep(qty, "\\ ") + "\\times" + qdata[sel][4] + "\\times" + rd + "&=\\\\[5pt]";
-                suma += "\\underline{\\mathbf{" + thouSep(dp(qty * qdata[sel][4] * rd, 3, 1), "\\ ") + "\\ " + 
+                suma += "\\underline{\\mathbf{" + thouSep(dp(qty * qdata[sel][4] * rd, 1, 1), "\\ ") + "\\ " + 
                         qdata[sel][1] + "\\ (1\\ dp)}}\\end{aligned}$$";
             } else if(qdata[sel][5] === "divide") {     //mass to qty
                 suma += "$$\\begin{aligned}quantity\\times conversion\\ factor\\div relative\\ density&=\\\\[5pt]";
                 suma += thouSep(qty, "\\ ") + "\\times" + qdata[sel][4] + "\\div" + rd + "&=\\\\[5pt]";
-                suma += "\\underline{\\mathbf{" + thouSep(dp(qty * qdata[sel][4] / rd, 3, 1), "\\ ") + "\\ " + 
+                suma += "\\underline{\\mathbf{" + thouSep(dp(qty * qdata[sel][4] / rd, 1, 1), "\\ ") + "\\ " + 
                         qdata[sel][1] + "\\ (1\\ dp)}}\\end{aligned}$$";
             } else if(qdata[sel][5] === "nil") {    //mass to mass or qty to qty
                 suma += "$$\\begin{aligned}quantity\\times conversion\\ factor&=\\\\[5pt]";
                 suma += thouSep(qty, "\\ ") + "\\times" + qdata[sel][4] + "&=\\\\[5pt]";
-                suma += "\\underline{\\mathbf{" + thouSep(dp(qty * qdata[sel][4], 3, 1), "\\ ") + "\\ " + 
+                suma += "\\underline{\\mathbf{" + thouSep(dp(qty * qdata[sel][4], 1, 1), "\\ ") + "\\ " + 
                         qdata[sel][1] + "\\ (1\\ dp)}}\\end{aligned}$$";
             }
             break;
