@@ -171,7 +171,7 @@ function fracs() {
                 gcd = gcd2(f2[1], f2[2]);
                 anscx = true;
             }
-            gcd = gcd2(f1[1], f1[2]);
+            gcd = gcd2(f3[1], f3[2]);
             while(gcd > 1) {
                 f3[1] = f3[1] / gcd;
                 f3[2] = f3[2] / gcd;
