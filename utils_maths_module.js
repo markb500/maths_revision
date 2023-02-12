@@ -155,27 +155,26 @@ function chkpwr(ltr, pwr) {
 function indchk(ltr, r, n, d, type) {
 //Used in Indices to format each term's index, depending on values of
 //radical, numerator and denominator.
+//'type' selects where used: 1 = question, 2 = initial answer breakdown, 3 = final answer breakdown
   if (type === 1) {
-   if(r === 1 && n  === 1 && d === 1) {        //if no root or indices
-    return ltr;
-    } else if(r === 1 && n === 0) {              //if numerator 0, ignore denominator
-      return ltr + "^0";
-    } else if(r === 1 && d === 1) {              //just ltr with integer power, no root
-      return ltr + "^{" + n + "}";
-    } else if(r === 1) {                          //ltr with fraction power, no root
-      return ltr + "^\\frac{" + n + "}{" + d + "}";
-    } else if(r == 2 && n === 1 && d === 1) {   //square root over just ltr
-      return "\\sqrt{" + ltr + "}"; 
-    } else if(n === 1 && d === 1) {             //'>2' root over ltr
-      return "\\sqrt[" + r + "]{" + ltr + "}";
-    } else if(r === 2 && d === 1) {              //square root over ltr with integer power
-      return "\\sqrt{" + ltr + "^{" + n + "}}";
-    } else if(d === 1) {                         //'>2' root over ltr with integer power
-      return "\\sqrt[" + r + "]{" + ltr + "^{" + n + "}}";
-    } else if(r === 2) {                          //square root over ltr with fractional power
-        return "\\sqrt{" + ltr + "^\\frac{" + n + "}{" + d + "}}";
-    } else {                                      //'2' root over ltr with fraction power
-      return "\\sqrt[" + r + "]{" + ltr + "^\\frac{" + n + "}{" + d + "}}";
+    if (r === 1) {
+      if (d === 1) {
+        return ltr + "^{" + n + "}";
+      } else if (d > 1) {
+        return ltr + "^{\\frac{" + n + "}{" + d + "}}";
+      }
+    } else if (r === 2) {
+      if (d === 1) {
+        return "\\sqrt{" + ltr + "^{" + n + "}}";
+      } else if (d > 1) {
+        return "\\sqrt{" + ltr + "^{\\frac{" + n + "}{" + d + "}}}";
+      }
+    } else if (r > 2) {
+      if (d === 1) {
+        return "\\sqrt[" + r + "]{" + ltr + "^{" + n + "}}";
+      } else if (d > 1) {
+        return "\\sqrt[" + r + "]{" + ltr + "^{\\frac{" + n + "}{" + d + "}}}";
+      }
     }
   } else if (type === 2) {
     if (d > 1) {
