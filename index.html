@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TYB3CN9H15"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-TYB3CN9H15');
-</script>
 <title>Maths Revision App</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +35,7 @@
         SolnWin = window.open('SolnWin.html','SolnWin','resizable=yes,scrollbars=yes');
     }
   });
-  
+
   function solutionwin() {
     //Displays solution on 2nd window (SolnWin)
     SolnWin.document.getElementById('a2').innerHTML = suma;
@@ -59,7 +50,7 @@
       <button
         id="noncalc" 
         class="btn btn-outline-primary btn-block" 
-        onclick="noncalc(); eqnformat('q'); solutionwin()">Non-Calculator Maths
+        onclick="noncalc(); eqnformat('q'); solutionwin(); rounding()">Non-Calculator Maths
       </button>
       <button
         id="solve1" 
@@ -132,6 +123,11 @@
         onclick="prop(); eqnformat('q'); solutionwin()">Proportionality
       </button>
       <button
+        id="numform" 
+        class="btn btn-outline-primary btn-block" 
+        onclick="numform(); eqnformat('q'); solutionwin()">Number Form
+      </button>
+      <button
         id="conv" 
         class="btn btn-outline-primary btn-block" 
         onclick="conv(); eqnformat('q'); solutionwin()">Errors & Conversions
@@ -191,6 +187,7 @@
 <script src="areavol_module.js"></script>
 <script src="percentratio_module.js"></script>
 <script src="prop_module.js"></script>
+<script src="numform_module.js"></script>
 <script src="conv_module.js"></script>
 <script src="utils_maths_module.js"></script>
 </body>

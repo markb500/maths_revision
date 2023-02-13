@@ -207,3 +207,23 @@ function indchk(ltr, r, n, d, type) {
     }
   }
 }
+
+function sciengnot(num, pwr) {
+  //Used in numform to convert num & pwr to sci and eng forms
+  var logten = Math.floor(Math.log10(Math.abs(num)));
+  var scinum = dp(num / Math.pow(10, logten), 5, -1);
+  var scipwr = pwr + logten;
+  var scimod = scipwr - 3 * Math.floor(scipwr / 3); //excel version of modulus calc different to js % operator for -ve nums
+  var engnum = dp(scinum * Math.pow(10, scimod), 5, -1);
+  var engpwr = scipwr - scimod;
+  return [scinum, scipwr, engnum, engpwr];
+}
+
+function pwrzero(num, pwr) {
+  //Used in numform to show just the num if pwr is 0
+  if (pwr === 0) {
+    return num
+  } else {
+    return num + "\\times 10^{" + pwr + "}"
+  }
+}
