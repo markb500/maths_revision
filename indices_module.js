@@ -28,7 +28,8 @@ function indices() {
             ltr = "&#969";  //omega
             break;
     }
-    var sumtype = rndgen(1, 2, 0, 1, -1);   //1 = (a x b) / c   2 = a / (b x c)
+    //var sumtype = rndgen(1, 2, 0, 1, -1);   //1 = (a x b) / c   2 = a / (b x c)
+    sumtype = 1;
     do {
         r1 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
         do {
