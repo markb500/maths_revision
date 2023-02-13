@@ -48,7 +48,7 @@ function indices() {
         if (sumtype === 1) {
             nsoln = n1 * (d2 * r2 * d3 * r3) + n2 * (d1 * r1 * d3 * r3) - n3 * (d1 * r1 * d2 * r2);
         } else {
-            nsoln = n1 * (d2 * r2 * d3 * r3) - n2 * (d1 * r1 * d3 * r3) + n3 * (d1 * r1 * d2 * r2);
+            nsoln = ((n1*d2*r2*d3*r3)/(d1*r1*d2*r2*d3*r3))-((n2*d3*r3+n3*d2*r2)/(d2*r2*d3*r3));
         }
         dsoln = d1 * r1 * d2 * r2 * d3 * r3;
     } while(Math.abs(nsoln) > 35 || Math.abs(dsoln) > 10 || Math.abs(nsoln) === Math.abs(dsoln) || nsoln === 0 || dsoln === 0 || 
@@ -83,7 +83,7 @@ function indices() {
         } else {
             suma += "$$\\begin{aligned}";
         }
-        suma += "&=" + ltr + "^{" + indchk(ltr, r1, n1, d1, 3) + "-" + indchk(ltr, r2, n2, d2, 3) + "+" + indchk(ltr, r3, n3, d3, 3) + "}\\\\[5pt]";
+        suma += "&=" + ltr + "^{" + indchk(ltr, r1, n1, d1, 3) + "-(" + indchk(ltr, r2, n2, d2, 3) + "+" + indchk(ltr, r3, n3, d3, 3) + ")}\\\\[5pt]";
     }
     if(dsoln === 1) {
         suma += "&=" + ltr + "^{" + nsoln + "}\\end{aligned}$$";
