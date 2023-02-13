@@ -28,8 +28,7 @@ function indices() {
             ltr = "&#969";  //omega
             break;
     }
-    //var sumtype = rndgen(1, 2, 0, 1, -1);   //1 = (a x b) / c   2 = a / (b x c)
-    sumtype = 1;
+    var sumtype = rndgen(1, 2, 0, 1, -1);   //1 = (a x b) / c   2 = a / (b x c)
     do {
         r1 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
         do {
@@ -50,8 +49,8 @@ function indices() {
             nsoln = n1 * (d2 * r2 * d3 * r3) + n2 * (d1 * r1 * d3 * r3) - n3 * (d1 * r1 * d2 * r2);
             dsoln = d1 * r1 * d2 * r2 * d3 * r3;
         } else {
-            nsoln = ((n1 * d2 * r2 * d3 * r3) / (d1 * r1 * d2 * r2 * d3 * r3)) - ((n2 * d3 * r3 + n3 * d2 * r2) / (d2 * r2 * d3 * r3));
-            dsoln = (d1 * r1 * d2 * r2 * d3 * r3) - (d2 * r2 * d3 * r3)
+            nsoln = (n1 * d2 * r2 * d3 * r3) - (n2 * d1 * r1 * d3 * r3 + n3 * d1 * r1 * d2 * r2);
+            dsoln = (d1 * r1 * d2 * r2 * d3 * r3);
         }
     } while(Math.abs(nsoln) > 35 || Math.abs(dsoln) > 10 || Math.abs(nsoln) === Math.abs(dsoln) || nsoln === 0 || dsoln === 0 || 
             (d1 * r1) === (d2 * r2))  //Sets difficulty level (max numerator & max denominator),
