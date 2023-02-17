@@ -70,8 +70,8 @@ function fracs() {
             f2[2] = rndgen(2, 9, 0, 1, -1);
             f3[2] = rndgen(2, 9, 0, 1, -1);
             f1[1] = rndgen(1, f1[2] - 1, 0, 1, -1);   //3 numerators 1 to < denom
-            f2[1] = rndgen(1, f1[2] - 1, 0, 1, -1);
-            f3[1] = rndgen(1, f1[2] - 1, 0, 1, -1);
+            f2[1] = rndgen(1, f2[2] - 1, 0, 1, -1);
+            f3[1] = rndgen(1, f3[2] - 1, 0, 1, -1);
         } while(gcd2(f1[1], f1[2]) !== 1 ||
                 gcd2(f2[1], f2[2]) !== 1 ||
                 gcd2(f3[1], f3[2]) !== 1 ||
