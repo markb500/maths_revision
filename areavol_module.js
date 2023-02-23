@@ -1,7 +1,7 @@
 var prevsum = 0, prev2sum = 0, sumq, suma, a, b, c, d, e, f, g;
-var units, unitsmath, sacub, satri, satube, saend, salgcyl, sasmcyl, vcub, vtri, vtube, vlgcyl, vsmcyl;
+var units, unitsmath, sacub, satri, satube, saend, salgcyl, sasmcyl, sahd, vcub, vtri, vtube, vlgcyl, vsmcyl, vhd;
 function areavol() {
-    //Uses 1 of 4 shapes with random dimensions added. Surface area & volume to be calculated.
+    //Uses 1 of 5 shapes with random dimensions added. Surface area & volume to be calculated.
     var sum, left = 75, top = 25, right = left + 350, bottom = top + 200;
     sumq = "";
     suma = "";
@@ -35,7 +35,7 @@ function areavol() {
                 "rounding your answers to 1 decimal place. Drawing is not to scale. <br><br>";
     
     do {
-        sum = rndgen(1, 4, 0, 1, -1);
+        sum = rndgen(1, 5, 0, 1, -1);
     } while(sum === prevsum || sum === prev2sum)
     prev2sum = prevsum;
     prevsum = sum;
@@ -50,10 +50,10 @@ function areavol() {
                 f = (Math.floor(Math.sqrt((Math.pow((a - e), 2) + 
                             Math.pow((d - c), 2))) * 2) * 5) / 10;//f sqrt((a - e)^2 + (d - c)^2) in 0.5's
             } while(a === b || a === d || b === d || e === d || f === d)
-            sacub = dp(2 * a * c + 2 * b * c + a * b + e * b, 2, 2);
-            satri = dp((a - e) * (d - c) + b * f + b * (d - c), 2, 2);
-            vcub = dp(a * b * c, 2, 2);
-            vtri = dp(0.5 * (a - e) * (d - c) * b, 2, 2);
+            sacub = dp(2 * a * c + 2 * b * c + a * b + e * b, 3, 2);
+            satri = dp((a - e) * (d - c) + b * f + b * (d - c), 3, 2);
+            vcub = dp(a * b * c, 3, 2);
+            vtri = dp(0.5 * (a - e) * (d - c) * b, 3, 2);
             var img = document.getElementById("cubtri");
             ctx.drawImage(img, left, top, 350, 200);
             ctx.textAlign = "center";
@@ -77,7 +77,7 @@ function areavol() {
                             b + "\\times" + f + "+" + b + "\\times" + (d - c) + "\\\\[5pt]";
             suma += "&=" + thouSep(satri, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ total&=" + thouSep(sacub, "\\ ") + "+" + thouSep(satri, "\\ ") + "=\\underline{\\mathbf{" + 
-                    thouSep(dp(Number(sacub) + Number(satri), 1, 1), "\\ ") + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
+                    thouSep(dp(Number(sacub) + Number(satri), 3, 1), "\\ ") + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
             suma += "V\\ of\\ cuboid&=length\\times width\\times height\\\\[5pt]";
             suma += "&=" + a + "\\times" + b + "\\times" + c + "\\\\[5pt]";
             suma += "&=" + thouSep(vcub, "\\ ") + unitsmath + "^3\\\\[5pt]";
@@ -85,7 +85,7 @@ function areavol() {
             suma += "&=\\frac{1}{2}\\times" + (a - e) + "\\times" + (d - c) + "\\times" + b + "\\\\[5pt]";
             suma += "&=" + thouSep(vtri, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ total&=" + thouSep(vcub, "\\ ") + "+" + thouSep(vtri, "\\ ") + "=\\underline{\\mathbf{" + 
-                    thouSep(dp(Number(vcub) +  Number(vtri), 1, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
+                    thouSep(dp(Number(vcub) +  Number(vtri), 3, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
             break;
         case 2:     //cubtritube
             do {
@@ -98,13 +98,13 @@ function areavol() {
                             Math.pow((d - c), 2))) * 2) * 5) / 10;//f sqrt((a - e)^2 + (d - c)^2) in 0.5's
                 g = rndgen(2, c - 1, 1, 0.5, -1);//g (2 to (c - 1) in 0.5's)
             } while(a === b || a === d || b === d || e === d || f === d)
-            sacub = dp(2 * a * c + 2 * b * c + a * b + e * b, 2, 2);
-            satri = dp((a - e) * (d - c) + b * f + b * (d - c), 2, 2);
-            satube = dp(Math.PI * g * a, 2, 2);
-            saend = dp(2 * Math.PI * Math.pow(g / 2, 2), 2, 2);
+            sacub = dp(2 * a * c + 2 * b * c + a * b + e * b, 3, 2);
+            satri = dp((a - e) * (d - c) + b * f + b * (d - c), 3, 2);
+            satube = dp(Math.PI * g * a, 3, 2);
+            saend = dp(2 * Math.PI * Math.pow(g / 2, 2), 3, 2);
             vcub = dp(a * b * c, 3, 2);
-            vtri = dp(0.5 * (a - e) * (d - c) * b, 2, 2);
-            vtube = dp(Math.PI * Math.pow((g / 2), 2) * a, 2, 2);
+            vtri = dp(0.5 * (a - e) * (d - c) * b, 3, 2);
+            vtube = dp(Math.PI * Math.pow((g / 2), 2) * a, 3, 2);
             var img = document.getElementById("cubtritube");
             ctx.drawImage(img, left, top, 350, 200);
             ctx.textAlign = "center";
@@ -136,7 +136,7 @@ function areavol() {
             suma += "&=2\\times \\pi \\times" + (g / 2) + "^2\\\\[5pt]";
             suma += "&=" + thouSep(saend, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ total&=" + thouSep(sacub, "\\ ") + "+" + satri + "+" + satube + "-" + saend + "=\\underline{\\mathbf{" + 
-                        thouSep(dp(Number(sacub) + Number(satri) + Number(satube) - Number(saend), 1, 1), "\\ ") + 
+                        thouSep(dp(Number(sacub) + Number(satri) + Number(satube) - Number(saend), 3, 1), "\\ ") + 
                         unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
             suma += "V\\ of\\ cuboid&=length\\times width\\times height\\\\[5pt]";
             suma += "&=" + a + "\\times" + b + "\\times" + c + "\\\\[5pt]";
@@ -148,7 +148,7 @@ function areavol() {
             suma += "&=\\pi\\times" + (g / 2) + "^2\\times" + a + "\\\\[5pt]";
             suma += "&=" + thouSep(vtube, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ total&=" + thouSep(vcub, "\\ ") + "+" + thouSep(vtri, "\\ ") + "-" + thouSep(vtube, "\\ ") + 
-                        "=\\underline{\\mathbf{" + thouSep(dp(Number(vcub) + Number(vtri) - Number(vtube), 1, 1), "\\ ") + 
+                        "=\\underline{\\mathbf{" + thouSep(dp(Number(vcub) + Number(vtri) - Number(vtube), 3, 1), "\\ ") + 
                         unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$";
             break;
         case 3:     //2cyl
@@ -158,10 +158,10 @@ function areavol() {
                 c = rndgen(2, 7, 1, 0.5, -1);//2 to 7 in 0.5's  sm cyl dia
                 d = rndgen(c + 3, 12, 1, 0.5, -1);//(c+3) to 12 in 0.5's lg cyl dia
             } while(a === b || a === d || b === c || b === d)
-            salgcyl = dp(2 * Math.PI * Math.pow((d / 2), 2) + Math.PI * d * a, 2, 2);
-            sasmcyl = dp(Math.PI * c * b, 2, 2);
-            vlgcyl = dp(Math.PI * Math.pow((d / 2), 2) * a, 2, 2);
-            vsmcyl = dp(Math.PI * Math.pow((c / 2), 2) * b, 2, 2);
+            salgcyl = dp(2 * Math.PI * Math.pow((d / 2), 2) + Math.PI * d * a, 3, 2);
+            sasmcyl = dp(Math.PI * c * b, 3, 2);
+            vlgcyl = dp(Math.PI * Math.pow((d / 2), 2) * a, 3, 2);
+            vsmcyl = dp(Math.PI * Math.pow((c / 2), 2) * b, 3, 2);
             var img = document.getElementById("2cyl");
             ctx.drawImage(img, 75, 25, 350, 200);
             ctx.textAlign = "center";
@@ -179,7 +179,7 @@ function areavol() {
             suma += "&=\\pi \\times" + c + "\\times" + b + "\\\\[5pt]";
             suma += "&=" + thouSep(sasmcyl, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ total&=" + thouSep(salgcyl, "\\ ") + "+" + sasmcyl + "=\\underline{\\mathbf{" + 
-                    thouSep(dp(Number(salgcyl) + Number(sasmcyl), 1, 1), "\\ ") + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]";
+                    thouSep(dp(Number(salgcyl) + Number(sasmcyl), 3, 1), "\\ ") + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]";
             suma += "V\\ of\\ large\\ cyclinder&=area\\ of\\ large\\ circle\\times length\\\\[5pt]";
             suma += "&=\\pi \\times" + (d / 2) + "^2\\times" + a + "\\\\[5pt]";
             suma += "&=" + thouSep(vlgcyl, "\\ ") + unitsmath + "^3\\\\[5pt]";
@@ -187,7 +187,7 @@ function areavol() {
             suma += "&=\\pi \\times" + (c / 2) + "^2\\times" + b + "\\\\[5pt]";
             suma += "&=" + thouSep(vsmcyl, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ total&=" + thouSep(vlgcyl, "\\ ") + "+" + thouSep(vsmcyl, "\\ ") + "=\\underline{\\mathbf{" + 
-                    thouSep(dp(Number(vlgcyl) + Number(vsmcyl), 1, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$";
+                    thouSep(dp(Number(vlgcyl) + Number(vsmcyl), 3, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$";
             break;
         case 4:     //tritube
             do {
@@ -197,11 +197,11 @@ function areavol() {
                 d = rndgen(2, b - 3, 0, 1, -1);   //2 to (b - 3) int
                 e = Math.floor(Math.sqrt(Math.pow(b / 2, 2) + Math.pow(c, 2)));   //pythag b/2 & c
             } while(a === b || a === c || b === c || a === e)
-            satri = dp(b * c + 2 * a * e + a * b, 2, 2);
-            satube = dp(Math.PI * d * a, 2, 2);
-            saend = dp(2 * Math.PI * Math.pow((d / 2), 2), 2, 2);
-            vtri = dp(0.5 * b * c * a, 2, 2);
-            vtube = dp(Math.PI * Math.pow((d / 2), 2) * a, 2, 2);
+            satri = dp(b * c + 2 * a * e + a * b, 3, 2);
+            satube = dp(Math.PI * d * a, 3, 2);
+            saend = dp(2 * Math.PI * Math.pow((d / 2), 2), 3, 2);
+            vtri = dp(0.5 * b * c * a, 3, 2);
+            vtube = dp(Math.PI * Math.pow((d / 2), 2) * a, 3, 2);
             var img = document.getElementById("tritube");
             ctx.drawImage(img, 75, 25, 350, 200);
             ctx.textAlign = "right";
@@ -227,7 +227,7 @@ function areavol() {
             suma += "&=2\\times \\pi \\times" + (d / 2) + "^2\\\\[5pt]";
             suma += "&=" + thouSep(saend, "\\ ") + unitsmath + "^2\\\\[5pt]";
             suma += "SA\\ total&=" + thouSep(satri, "\\ ") + "+" + thouSep(satube, "\\ ") + "-" + thouSep(saend, "\\ ") + "=\\underline{\\mathbf{" + 
-                        thouSep(dp(Number(satri) + Number(satube) - Number(saend), 1, 1), "\\ ") + unitsmath + "^2\\ (1\\ dp)}}\\\\[20pt]";
+                        thouSep(dp(Number(satri) + Number(satube) - Number(saend), 3, 1), "\\ ") + unitsmath + "^2\\ (1\\ dp)}}\\\\[20pt]";
             suma += "V\\ of\\ triangular\\ prism&=area\\ of\\ trangular\\ end\\times length\\\\[5pt]";
             suma += "&=\\frac{1}{2}\\times" + b + "\\times" + c + "\\times" + a + "\\\\[5pt]";
             suma += "&=" + thouSep(vtri, "\\ ") + unitsmath + "^3\\\\[5pt]";
@@ -235,7 +235,46 @@ function areavol() {
             suma += "&=\\pi \\times" + (d / 2) + "^2\\times" + a + "\\\\[5pt]";
             suma += "&=" + thouSep(vtube, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ total&=" + thouSep(vtri, "\\ ") + "-" + thouSep(vtube, "\\ ") + "=\\underline{\\mathbf{" + 
-                        thouSep(dp(Number(vtri) - Number(vtube), 1, 1), "\\ ") + unitsmath + "^3\\ (1\\ dp)}}\\end{aligned}$$";
+                        thouSep(dp(Number(vtri) - Number(vtube), 3, 1), "\\ ") + unitsmath + "^3\\ (1\\ dp)}}\\end{aligned}$$";
+            break;
+        case 5:     //rivet
+            sumq = "Find the surface area and volume of the object shown, rounding your answers to 1 decimal place. " + 
+                    "The head of the rivet is hemispherical. The drawing is not to scale";
+            units = " mm";      //only mm makes sense for rivet dimensions
+            unitsmath = "\\ mm";
+            a = rndgen(8, 15, 0, 1, -1);   //a int 8 to 15 head diameter
+            b = a / 2 + rndgen(-1, 1, 0, 1, -1);   //Shaft diameter = head diameter / 2 + rnd int -1 to 1
+            c = Math.ceil(a * 0.6 + rndgen(2, 6, 0, 1, -1));    //Shaft length = head diameter *  0.6 + rnd int 2 to 6
+            sahd = dp(3 * Math.PI * Math.pow(a / 2, 2), 3, 2);  //SA head
+            satube = dp(Math.PI * b * c, 3, 2);     //Shaft SA (- ends)
+            vhd = dp(2 / 3 * Math.PI * Math.pow(a / 2, 3), 3, 2);   //V head
+            vtube = dp(Math.PI * Math.pow(b / 2, 2) * c, 3, 2);     //V shaft
+            var img = document.getElementById("rivet");
+            ctx.drawImage(img, left, top, 350, 200);
+            ctx.textAlign = "center";
+            ctx.fillText(a + units, left + 170, top);
+            ctx.fillText(b + units, left + 170, bottom + 15);
+            ctx.textAlign = "left";
+            ctx.fillText(c + units, right - 80, bottom - 50);
+            suma += "$$\\begin{aligned}SA\\ of\\ rivet\\ head&=hemisphere\\ plus\\ circle\\\\[5pt]";
+            suma += "&=3\\pi r^2\\\\[5pt]";
+            suma += "&=3\\times \\pi \\times" + (a/2) + "^2 \\\\[5pt]";
+            suma += "&=" + thouSep(sahd, "\\ ") + unitsmath + "^2\\\\[5pt]";
+            suma += "SA\\ of\\ shaft&=tube\\ (area\\ of\\ 2\\ ends\\ hidden\\ in\\ joint) \\\\[5pt]";
+            suma += "&=\\pi Dl\\\\[5pt]";
+            suma += "&=\\pi \\times" + b + "\\times" + c + "\\\\[5pt]";
+            suma += "&=" + thouSep(satube, "\\ ") + unitsmath + "^2\\\\[5pt]";
+            suma += "SA\\ total&=" + thouSep(sahd, "\\ ") + "+" + thouSep(satube, "\\ ") + "=\\underline{\\mathbf{" + 
+                    thouSep(dp(Number(sahd) + Number(satube), 3, 1), "\\ ") + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
+            suma += "V\\ of\\ rivet\\ head&=\\frac{2}{3}\\pi r^3 \\\\[5pt]";
+            suma += "&=\\frac{2}{3}\\pi \\times" + (a/2) + "^3 \\\\[5pt]";
+            suma += "&=" + thouSep(vhd, "\\ ") + unitsmath + "^3\\\\[5pt]";
+            suma += "V\\ of\\ shaft&=area\\ of\\ circle\\times length\\\\[5pt]";
+            suma += "&=\\pi r^2 l \\\\[5pt]";
+            suma += "&=\\pi \\times" + (b/2) + "^2 \\times" + c + "\\\\[5pt]";
+            suma += "&=" + thouSep(vtube, "\\ ") + unitsmath + "^3\\\\[5pt]";
+            suma += "V\\ total&=" + thouSep(vhd, "\\ ") + "+" + thouSep(vtube, "\\ ") + "=\\underline{\\mathbf{" + 
+                    thouSep(dp(Number(vhd) +  Number(vtube), 3, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
             break;
     }
     suma += "";
