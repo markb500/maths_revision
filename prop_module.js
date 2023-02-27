@@ -25,7 +25,9 @@ function prop() {
             k = dp(y1 / Math.sqrt(x1), 3, 3);
             if(rndgen(1, 2, 0, 1, -1) === 1) {     //For y prop root x, find x given y
                 y2 = y1 + rndgen(3, 8, 0, 1, -1);
-                x2 = dp(Math.pow(y2 / k, 2), 2, 2);
+                do {
+                    x2 = dp(Math.pow(y2 / k, 2), 2, 2);
+                } while (x2 === x1);
                 sumq += "If y is proportional to &#8730x and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1 + ", find the ";
                 sumq += "constant of proportionality (to 3 decimal places) and use it to find the value of x ";
                 sumq += "(to 2 decimal places) when y&nbsp;=&nbsp;" + y2;
@@ -42,7 +44,9 @@ function prop() {
                 suma += "\\underline{\\mathbf{" + x2 + "}}&=x\\ (2\\ dp)\\end{aligned}$$";
             } else {                                //For y prop root x, find y given x
                 x2 = x1 + rndgen(3, 8, 0, 1, -1);
-                y2 = dp(k * Math.sqrt(x2), 2, 2);
+                do {
+                    y2 = dp(k * Math.sqrt(x2), 2, 2);
+                } while (y2 === y1);
                 sumq += "If y is proportional to &#8730x and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1 + ", find the ";
                 sumq += "constant of proportionality (to 3 decimal places) and use it to find the value of y ";
                 sumq += "(to 2 decimal places) when x&nbsp;=&nbsp;" + x2;
@@ -63,7 +67,9 @@ function prop() {
             k = dp(y1 * Math.sqrt(x1), 3, 3);
             if(rndgen(1, 2, 0, 1, -1) === 1) {  //For y inverse prop root x, find x given y
                 y2 = y1 + rndgen(3, 8, 0, 1, -1);
-                x2 = dp(Math.pow(k / y2, 2), 2, 2);
+                do {
+                    x2 = dp(Math.pow(k / y2, 2), 2, 2);
+                } while (x2 === x1);
                 sumq += "Given that y is inversely proportional to &#8730x and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1;
                 sumq += ", find the constant of proportionality (to 3 decimal places) and use it to find the ";
                 sumq += "value of x (to 2 decimal places) when y&nbsp;=&nbsp;" + y2;
@@ -81,7 +87,9 @@ function prop() {
                 suma += "&=\\underline{\\mathbf{" + x2 + "\\ (2\\ dp)}}\\end{aligned}$$";
             } else {                            //For y inverse prop root x, find y given x
                 x2 = x1 + rndgen(3, 8, 0, 1, -1);
-                y2 = dp(k / Math.sqrt(x2), 2, 2);
+                do {
+                    y2 = dp(k / Math.sqrt(x2), 2, 2);
+                } while (y2 === y1);
                 sumq += "Given that y is inversely proportional to &#8730x and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1;
                 sumq += ", find the constant of proportionality (to 3 decimal places) and use it to find the ";
                 sumq += "value of y (to 2 decimal places) when x&nbsp;=&nbsp;" + x2;
@@ -102,7 +110,9 @@ function prop() {
         k = dp(y1 / Math.pow(x1, 3), 3, 3);
         if(rndgen(1, 2, 0, 1, -1) === 1) {  //For y prop x^3, find x given y
             y2 = y1 + rndgen(3, 8, 0, 1, -1);
-            x2 = dp(Math.cbrt(y2 / k), 2, 2);
+                do {
+                    x2 = dp(Math.cbrt(y2 / k), 2, 2);
+                } while (x2 === x1);
             sumq += "Given that y is proportional to x<sup>3</sup> and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1;
             sumq += ", find the constant of proportionality (to 3 decimal places) and use it to find the ";
             sumq += "value of x (to 2 decimal places) when y&nbsp;=&nbsp;" + y2;
@@ -119,7 +129,9 @@ function prop() {
             suma += "\\underline{\\mathbf{" + x2 + "}}&=x\\ (2\\ dp)\\end{aligned}$$";
         } else {                            //For y prop x^3, find y given x
             x2 = x1 + rndgen(3, 8, 0, 1, -1);
-            y2 = dp(k * Math.pow(x2, 3), 2, 2);
+                do {
+                    y2 = dp(k * Math.pow(x2, 3), 2, 2);
+                } while (y2 === y1);
             sumq += "Given that y is proportional to x<sup>3</sup> and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1;
             sumq += ", find the constant of proportionality (to 3 decimal places) and use it to find the ";
             sumq += "value of y (to 2 decimal places) when x&nbsp;=&nbsp;" + x2;
@@ -140,7 +152,9 @@ function prop() {
             k = dp(y1 * Math.pow(x1, 3), 3, -1);
             if(rndgen(1, 2, 0, 1, -1) === 1) {  //For y inverse prop x^3, find x given y
                 y2 = rndgen(y1 + 8, 25, 0, 1, -1);
-                x2 = dp(Math.cbrt(k / y2), 2, 2);
+                do {
+                    x2 = dp(Math.cbrt(k / y2), 2, 2);
+                } while (x2 === x1);
                 sumq += "Given that y is inversely proportional to x<sup>3</sup> and y&nbsp;=&nbsp;" + y1;
                 sumq += " when x&nbsp;=&nbsp;" + x1 + ", find the constant of proportionality and use it to ";
                 sumq += "find the value of x (to 2 decimal places) when y&nbsp;=&nbsp;" + y2;
@@ -158,7 +172,9 @@ function prop() {
                 suma += "&=\\underline{\\mathbf{" + x2 + "\\ (2\\ dp)}}\\end{aligned}$$";
             } else {                        //For y inverse prop x^3, find y given x
                 x2 = rndgen(x1 + 2, 6, 0, 1, -1);
-                y2 = dp(k / Math.pow(x2, 3), 2, 2);
+                do {
+                    y2 = dp(k / Math.pow(x2, 3), 2, 2);
+                } while (y2 === y1);
                 sumq += "Given that y is inversely proportional to x<sup>3</sup> and y&nbsp;=&nbsp;" + y1;
                 sumq += " when x&nbsp;=&nbsp;" + x1 + ", find the constant of proportionality and use it to ";
                 sumq += "find the value of y (to 2 decimal places) when x&nbsp;=&nbsp;" + x2;
