@@ -256,7 +256,7 @@ function fracs() {
         anscx = true;
     } else if (ans1[0] < 0 && ans1[1] > 0) { //+ve numerator & -ve whole number
         anstot[0] = ans1[0] + 1;
-        anstot[1] = ans1[2] - ans1[1];
+        anstot[1] = ans1[1] - ans1[2];
         anstot[2] = ans1[2];
         anscx = true;
     } else if(ans1[1] === ans1[2]) {    //Frac = 1
