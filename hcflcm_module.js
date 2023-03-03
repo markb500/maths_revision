@@ -7,7 +7,12 @@ function hcflcm() {
     document.getElementById("myCanvas");
     myCanvas.height = "0.5";
     myCanvas.width = "0.5";
-    myCanvas.style = "border: none;";
+    myCanvas.style = "border: none;"; //1px solid #000000
+    document.getElementById("myCanvas2");
+    myCanvas2.height = 350;
+    myCanvas2.width = 500;
+    myCanvas2.style.visibility = "hidden";
+    ctx2 = myCanvas2.getContext('2d');
     sumq = "";
     suma = "";
     document.getElementById("a").innerHTML = "";
@@ -26,6 +31,17 @@ function hcflcm() {
             hcf[0] === term1[0] || hcf[0] === term2[0] || hcf[0] === term3[0] ||
             hcf[0] === 10)  //Ensures 3 different terms, none equal to hcf and hcf not 10 (far too easy)
     
+    var primeFacs1 = primeFactors(term1[0]);
+    var primeFacs2 = primeFactors(term2[0]);
+    var primeFacs3 = primeFactors(term3[0]);
+    var primesExp1 = primeExponents(primeFacs1);
+    var primesExp2 = primeExponents(primeFacs2);
+    var primesExp3 = primeExponents(primeFacs3);
+    
+    ctx2.fillText(primeTree(ctx2, term1, primeFacs1, primesExp1, 75, 50), x - 50, 330);
+    ctx2.fillText(primeTree(ctx2, term2, primeFacs2, primesExp2, 250, 50), x - 50, 330);
+    ctx2.fillText(primeTree(ctx2, term3, primeFacs3, primesExp3, 425, 50), x - 50, 330);
+
     for(var i = 2; i < 9; i += 2) { //Generates the powers for each variable in each term, 0 to 6
         term1[i] = rndgen(0, 6, 0, 1, -1);
         term2[i] = rndgen(0, 6, 0, 1, -1);
@@ -141,7 +157,8 @@ function hcflcm() {
                     chkpwr(term2[5], term2[6]) + f02 + chkpwr(term2[7], term2[8]) + f03 + sign2 + 
                     term3[0] + f01 + chkpwr(term3[1], term3[2]) + chkpwr(term3[3], term3[4]) + 
                     chkpwr(term3[5], term3[6]) + f02 + chkpwr(term3[7], term3[8]) + f03 + "$$<br />";
-
+    
+    suma += "<br>".repeat(11);
     suma += "$$\\begin{aligned}HCF&=" + hcf[0] + f01 + chkpwr(hcf[1], hcf[2]) + chkpwr(hcf[3], hcf[4]) + 
                 chkpwr(hcf[5], hcf[6]) + f02 + chkpwr(hcf[7], hcf[8]) + f03 + "\\\\" + "\\\\" +
 
@@ -158,8 +175,18 @@ function hcflcm() {
                 f22 + chkpwr(term2[7], term2[8] - hcf[8]) + f23 + sign2 + 
                 (term3[0] / hcf[0]) + f31 + chkpwr(term3[1], term3[2] - hcf[2]) + 
                 chkpwr(term3[3], term3[4] - hcf[4]) + chkpwr(term3[5], term3[6] - hcf[6]) + 
-                f32 + chkpwr(term3[7], term3[8] - hcf[8]) + f33 + "\\right) \\end{aligned}$$"
+                f32 + chkpwr(term3[7], term3[8] - hcf[8]) + f33 + "\\right)\\end{aligned}$$"
 
+    if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
+        if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
+            SolnWin.document.getElementById("myCanvas3");
+            SolnWin.myCanvas3.height = 350;
+            SolnWin.myCanvas3.width = 500;
+            var ctx3 = SolnWin.myCanvas3.getContext('2d');
+            ctx3.drawImage(myCanvas2, 0, 0);
+        }
+    }
+                    
     document.getElementById("q").innerHTML = sumq;
     document.getElementById("btnSoln").style.visibility="visible";
 }

@@ -47,8 +47,10 @@ function eqnformat(id) {
   if(id === "a") {      //soln btn clicked
     if(window.getComputedStyle(document.getElementById("a")).visibility === "visible") {
         document.getElementById("a").style.visibility="hidden";
+        document.getElementById("myCanvas2").style.visibility="hidden";
     } else {
         document.getElementById("a").style.visibility="visible";
+        document.getElementById("myCanvas2").style.visibility="visible";
         views += 1;
         document.getElementById("btnSoln").innerHTML = "<span class='font-weight-bold'>Show/Hide Solution</span><br />Views : " + views
     }
@@ -226,4 +228,77 @@ function pwrzero(num, pwr) {
   } else {
     return num + "\\times 10^{" + pwr + "}"
   }
+}
+
+function primeFactors(n) {
+//Finds prime factors for use in HCF/LCM
+  let arr = [];
+  let i = 2;
+  while(i <= n){
+      if(n % i == 0) {
+          n = n / i;
+          arr.push(i);
+      } else {
+          i++;
+      }
+  }
+  return arr;
+}
+
+function primeExponents(arr) {
+//Counts duplicates in primeFactors() array for use as exponents in HCF/LCM
+  var count = {};
+  arr.forEach(function(i) {count[i] = (count[i] || 0) + 1;});
+  return count;
+}
+
+function primeTree(ctx2, term, primefacs, primesexp, x, y) {
+//Draws the primes tree for hcf/lcm solution and lists primes with exponents beneath
+  var num = term[0];
+  ctx2.fillStyle = "red";
+  ctx2.strokeStyle = "red";
+  ctx2.textAlign = "left";
+  ctx2.font = "bold 22px STIX Two Math";
+  ctx2.fillText(term[0], x, y);
+  ctx2.font = "20px STIX Two Math";
+  for (var i = 0; i < primefacs.length - 1; i++) {
+      y += 50;
+      num /= primefacs[i];
+      ctx2.fillText(primefacs[i], x - 50, y);
+      ctx2.lineWidth = 2;
+      ctx2.beginPath();
+      ctx2.moveTo(x, y - 47);
+      ctx2.lineTo(x - 35, y - 10);
+      ctx2.stroke();
+      ctx2.beginPath();
+      ctx2.moveTo(x + 10, y - 47);
+      ctx2.lineTo(x + 10, y - 20);
+      ctx2.stroke();
+      ctx2.fillText(num, x, y);
+  }
+  var str = "";
+  for(var j in primesexp) {
+      if (primesexp[j] === 1) {
+          str += j + ", ";
+      } else if (primesexp[j] === 2) {
+          str += j + "\u00B2 " + ", ";
+      } else if (primesexp[j] === 3) {
+          str += j + "\u00B3 " + ", ";
+      } else if (primesexp[j] === 4) {
+          str += j + "\u2074" + ", ";
+      } else if (primesexp[j] === 5) {
+          str += j + "\u2075" + ", ";
+      } else if (primesexp[j] === 6) {
+          str += j + "\u2076" + ", ";
+      } else if (primesexp[j] === 7) {
+          str += j + "\u2077" + ", ";
+      } else if (primesexp[j] === 8) {
+          str += j + "\u2078" + ", ";
+      } else if (primesexp[j] === 9) {
+          str += j + "\u2079" + ", ";
+      }
+  }
+  var str = str.slice(0, str.length - 2);  //Remove final comma
+  ctx2.fillText(str, x - 50, 330);
+  return str;
 }

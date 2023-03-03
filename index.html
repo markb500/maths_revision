@@ -7,7 +7,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-TYB3CN9H15');
 </script>
 <title>Maths Revision App</title>
@@ -20,6 +19,7 @@
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML">
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link href='https://fonts.googleapis.com/css?family=STIX Two Math' rel='stylesheet'>
 </head>
 <body>
 <div class="py-3 jumbotron text-center" style="margin-bottom:0; background-image:url(images/typhoon_line.png); 
@@ -37,6 +37,7 @@
   //Opens new window when 'secret code' entered. Used for separate view of solutions.
   const pressed = [];
   const secretCode = 'chpz';
+  var SolnWin;
   window.addEventListener('keyup', (e) => {
     pressed.push(e.key);
     pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
@@ -47,7 +48,8 @@
 
   function solutionwin() {
     //Displays solution on 2nd window (SolnWin)
-    SolnWin.document.getElementById('a2').innerHTML = suma;
+    var suma2 = suma.replace("<br>".repeat(11), "");  //Removes leading spaces in 'hcf/lcm' solution
+    SolnWin.document.getElementById('a2').innerHTML = suma2;
     SolnWin.eqnformat('a2');
   }
 </script>
@@ -59,7 +61,7 @@
       <button
         id="noncalc" 
         class="btn btn-outline-primary btn-block" 
-        onclick="noncalc(); eqnformat('q'); solutionwin(); rounding()">Non-Calculator Maths
+        onclick="noncalc(); eqnformat('q'); solutionwin()">Non-Calculator Maths
       </button>
       <button
         id="solve1" 
@@ -166,8 +168,8 @@
         onclick="getElementById('a').innerHTML = suma; eqnformat('a')"><span class='font-weight-bold'>Show/Hide Solution</span><br />Views : 0
       </button>
       <div class="float-right">
-        <canvas id="myCanvas" width="0.5" height="0.5" style="border:none"> <!--border:1px solid #000000;-->
-        </canvas>
+        <canvas id="myCanvas" width="0.5" height="0.5" style="border:none"></canvas> <!--border:1px solid #000000;-->
+        <canvas id="myCanvas2" width="0.5" height="0.5" style="border:none"></canvas>
       </div>
       <h4 id="a", style="color:red; visibility:hidden"></h4>
       <img id="cubtri" style="visibility:hidden" width="400" height="250" src="images\cubtri.png" alt="cubtri">
