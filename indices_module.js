@@ -44,18 +44,18 @@ function indices() {
         r1 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
         do {
             n1 = rndgen(-9, 9, 0, 1, -1);   //int 9 to -9 not 0 or 1;
-        } while(n1 === 0 || Math.abs(n1) === 1)
-        d1 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
+            d1 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
+        } while(n1 === 0 || Math.abs(n1) === 1 || Math.abs(n1) === Math.abs(r1 * d1))
         r2 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
         do {
             n2 = rndgen(-9, 9, 0, 1, -1);   //int 9 to -9 not 0 or 1;
-        } while(n2 === 0 || Math.abs(n2) === 1)
-        d2 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
+            d2 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
+        } while(n2 === 0 || Math.abs(n2) === 1 || Math.abs(n2) === Math.abs(r2 * d2))
         r3 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
         do {
             n3 = rndgen(-9, 9, 0, 1, -1);   //int 9 to -9 not 0 or 1;
-        } while(n3 === 0 || Math.abs(n3) === 1)
-        d3 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
+            d3 = rndgen(1, 9, 0, 1, -1);   //int 1 to 9;
+        } while(n3 === 0 || Math.abs(n3) === 1 || Math.abs(n3) === Math.abs(r3 * d3))
         if (sumtype === 1) {
             nsoln = n1 * (d2 * r2 * d3 * r3) + n2 * (d1 * r1 * d3 * r3) - n3 * (d1 * r1 * d2 * r2);
             dsoln = d1 * r1 * d2 * r2 * d3 * r3;
