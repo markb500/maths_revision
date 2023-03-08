@@ -266,7 +266,7 @@ function areavol() {
             ctx.fillText(a + units, left + 170, top);
             ctx.fillText(b + units, left + 170, bottom + 15);
             ctx.textAlign = "left";
-            ctx.fillText(c + units, right - 80, bottom - 50);
+            ctx.fillText((c + a/2) + units, right - 80, bottom - 90);   //Full length of rivet
             suma += "$$\\begin{aligned}SA\\ of\\ rivet\\ head&=hemisphere\\ plus\\ circle\\\\[5pt]";
             suma += "&=3\\pi r^2\\\\[5pt]";
             suma += "&=3\\times \\pi \\times" + (a/2) + "^2 \\\\[5pt]";
