@@ -1,7 +1,6 @@
 var f1 = [], f2 = [], f3 = [], ans1 = [], ans2 = [], anstot = [], op1, op2;
 function fracs() {
-//Creates a sum with 3 mixed-number fractions, either '+ and/or - combination' or
-//'x and/or divide combination'. Deals with various solutions, including negatives.
+//Creates a sum with 3 mixed-number fractions, either '+ - with +, -, * or /' or '* / with * /'.
     var sign1, sign2, comdenom, gcd, tmp, sign1cx = false, sign2cx = false, anscx = false;
     var anstot = [];
     document.getElementById("myCanvas");
@@ -149,7 +148,7 @@ function fracs() {
                 suma += "$$\\begin{aligned}&=\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
                         "\\frac{" + f2[1] + "}{" + f2[2] + "}" + op2 + 
                         "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]"
-                if(sign1 === 4) {
+                if(sign1 === 4) {   //Change / to x and flip frac
                     tmp = f2[1];
                     f2[1] = f2[2];
                     f2[2] = tmp;
@@ -157,7 +156,7 @@ function fracs() {
                     op1 = "\\times";
                     sign1cx = true;
                 }
-                if(sign2 === 4) {
+                if(sign2 === 4) {   //Change / to x and flip frac
                     tmp = f3[1];
                     f3[1] = f3[2];
                     f3[2] = tmp;
@@ -245,13 +244,13 @@ function fracs() {
                             anscx = false;
                 }
             }
-        } else if (sign1 <3 && sign2 > 2) {     //Do mixed sum, + or - with * or /
+        } else if (sign1 <3 && sign2 > 2) {     //Do mixed sum, + - with * /
             f2[1] = f2[0] * f2[2] + f2[1];      //Turn fracs 2 & 3 into improper fracs for * or / sum
             f3[1] = f3[0] * f3[2] + f3[1];
             suma += "$$\\begin{aligned}&=" + f1[0] + "\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
                     "\\frac{" + f2[1] + "}{" + f2[2] + "}" + op2 + 
                     "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]"
-            if(sign2 === 4) {   //If div, flip frac and show new sum
+            if(sign2 === 4) {   //If div change sign, flip frac and show new sum
                 tmp = f3[1];
                 f3[1] = f3[2];
                 f3[2] = tmp;
@@ -263,7 +262,7 @@ function fracs() {
                 "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]"
             }
 
-            gcd = gcd2(f2[1], f2[2]);
+            gcd = gcd2(f2[1], f2[2]);   //Check all cancelling options
             while(gcd > 1) {
                 f2[1] = f2[1] / gcd;
                 f2[2] = f2[2] / gcd;
@@ -320,7 +319,7 @@ function fracs() {
             }
         }
     } while(Math.abs(ans1[0]) > 75 || Math.abs(ans1[1]) > 75 || Math.abs(ans1[2]) > 75 || (sign1 < 3 && sign2 > 2 && (comdenom === f1[2] || comdenom === ans2[2])))
-        //Keeps figures in solution manageable and, in mixed + with (* or /) sum, prevents common denominator being same as either denom in addition sum
+        //Keeps figures in solution manageable and, in mixed + - with * / sum, prevents common denominator being same as either denom in addition sum
     
     if(ans1[0] === 0) {
         suma += "&=\\frac{" + ans1[1] + "}{" + ans1[2] + "}\\\\[5pt]";
@@ -353,7 +352,7 @@ function fracs() {
         anstot[1] = 0;
         anstot[2] = 0;
         anscx = true;
-    } else if(ans1[2] === 1) {
+    } else if(ans1[2] === 1) {      //Denominator = 1
         anstot[0] = ans1[0] + ans1[1];
         anstot[1] = 0;
         anstot[2] = 0;
@@ -363,7 +362,7 @@ function fracs() {
         anstot[1] = ans1[1];
         anstot[2] = ans1[2];
     }
-    if (anstot[1] > anstot[2]) {
+    if (anstot[1] > anstot[2]) {    //Simplify improper frac
         anstot[0] += (anstot[1] - (anstot[1] % anstot[2])) / anstot[2];
         anstot[1] = anstot[1] % anstot[2];
         anscx = true;
