@@ -363,18 +363,18 @@ function fracs() {
         anstot[1] = ans1[1];
         anstot[2] = ans1[2];
     }
-    // if (anstot[1] > anstot[2]) {
-    //     anstot[0] += (anstot[1] - (anstot[1] % anstot[2])) / anstot[2];
-    //     anstot[1] = anstot[1] % anstot[2];
-    //     anscx = true;
-    // }
-    // gcd = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]))
-    // while(gcd > 1) {        //Check if frac cancels
-    //     anstot[1] = anstot[1] / gcd;
-    //     anstot[2] = anstot[2] / gcd;
-    //     gcd = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]));
-    //     anscx = true;
-    // }
+    if (anstot[1] > anstot[2]) {
+        anstot[0] += (anstot[1] - (anstot[1] % anstot[2])) / anstot[2];
+        anstot[1] = anstot[1] % anstot[2];
+        anscx = true;
+    }
+    gcd = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]))
+    while(gcd > 1) {        //Check if frac cancels
+        anstot[1] = anstot[1] / gcd;
+        anstot[2] = anstot[2] / gcd;
+        gcd = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]));
+        anscx = true;
+    }
 
     if(anscx) {     //If above section changed ans, show new
         if(anstot[0] === 0 && anstot[1] !== 0 && anstot[2] !== 0) {
