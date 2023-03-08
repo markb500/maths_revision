@@ -1,4 +1,4 @@
-var f1 = [], f2 = [], f3 = [], ans1 = [], anstot = [], op1, op2;
+var f1 = [], f2 = [], f3 = [], ans1 = [], ans2 = [], anstot = [], op1, op2;
 function fracs() {
 //Creates a sum with 3 mixed-number fractions, either '+ and/or - combination' or
 //'x and/or divide combination'. Deals with various solutions, including negatives.
@@ -28,8 +28,8 @@ function fracs() {
     }
 
     sign1 = rndgen(1, 4, 0, 1, -1);    //1 = +, 2 = -, 3 = *, 4 = /
-    if(sign1 < 3) {     //Both signs + or -
-        sign2 = rndgen(1, 2, 0, 1, -1);
+    if(sign1 < 3) {     //If sign1 + or -, sign2 can be any
+        sign2 = rndgen(1, 4, 0, 1, -1);
     } else {            //Both signs * or /
         sign2 = rndgen(3, 4, 0, 1, -1);
     }
@@ -65,12 +65,14 @@ function fracs() {
         sumq = "";
         suma = "";
         do {
-            if(sign1cx) {   //If signs changed as part of div sum, change 'em back
+            if(sign1cx) {   //If signs were changed as part of div sum, change 'em back
                 sign1 = 4;
+                op1 = "\\div";
                 sign1cx = false;
             }
             if(sign2cx) {
                 sign2 = 4;
+                op2 = "\\div";
                 sign2cx = false;
             }
             anscx = false;
@@ -106,28 +108,28 @@ function fracs() {
         f3[0] + "\\frac{" + f3[1] + "}{" + f3[2] + "}$$";
 
         comdenom = lcm([f1[2], f2[2], f3[2]]);    //For use in + & - calcs
-        if(sign1 === 1) {       //Do + & - calcs
-            if(sign2 === 1) {
-                ans1[0] = f1[0] + f2[0] + f3[0];
-                ans1[1] = (comdenom / f1[2] * f1[1]) + (comdenom / f2[2] * f2[1]) + (comdenom / f3[2] * f3[1]);
-                ans1[2] = comdenom;
-            } else if(sign2 === 2) {
-                ans1[0] = f1[0] + f2[0] - f3[0];
-                ans1[1] = (comdenom / f1[2] * f1[1]) + (comdenom / f2[2] * f2[1]) - (comdenom / f3[2] * f3[1]);
-                ans1[2] = comdenom;
+        if (sign1 < 3 && sign2 < 3) {       //Do + & - calcs
+            if(sign1 === 1) {
+                if(sign2 === 1) {
+                    ans1[0] = f1[0] + f2[0] + f3[0];
+                    ans1[1] = (comdenom / f1[2] * f1[1]) + (comdenom / f2[2] * f2[1]) + (comdenom / f3[2] * f3[1]);
+                    ans1[2] = comdenom;
+                } else if(sign2 === 2) {
+                    ans1[0] = f1[0] + f2[0] - f3[0];
+                    ans1[1] = (comdenom / f1[2] * f1[1]) + (comdenom / f2[2] * f2[1]) - (comdenom / f3[2] * f3[1]);
+                    ans1[2] = comdenom;
+                }
+            } else if(sign1 === 2) {
+                if(sign2 === 1) {
+                    ans1[0] = f1[0] - f2[0] + f3[0];
+                    ans1[1] = (comdenom / f1[2] * f1[1]) - (comdenom / f2[2] * f2[1]) + (comdenom / f3[2] * f3[1]);
+                    ans1[2] = comdenom;
+                } else if(sign2 === 2) {
+                    ans1[0] = f1[0] - f2[0] - f3[0];
+                    ans1[1] = (comdenom / f1[2] * f1[1]) - (comdenom / f2[2] * f2[1]) - (comdenom / f3[2] * f3[1]);
+                    ans1[2] = comdenom;
+                }
             }
-        } else if(sign1 === 2) {
-            if(sign2 === 1) {
-                ans1[0] = f1[0] - f2[0] + f3[0];
-                ans1[1] = (comdenom / f1[2] * f1[1]) - (comdenom / f2[2] * f2[1]) + (comdenom / f3[2] * f3[1]);
-                ans1[2] = comdenom;
-            } else if(sign2 === 2) {
-                ans1[0] = f1[0] - f2[0] - f3[0];
-                ans1[1] = (comdenom / f1[2] * f1[1]) - (comdenom / f2[2] * f2[1]) - (comdenom / f3[2] * f3[1]);
-                ans1[2] = comdenom;
-            }
-        }
-        if(sign1 < 3) {
             if(ans1[0] === 0) {
                 ans1[0] = "";
             }
@@ -139,42 +141,128 @@ function fracs() {
 
             suma += "&=" + ans1[0] + "\\frac{" + comdenom / f1[2] * f1[1] + op1 + 
                     comdenom / f2[2] * f2[1] + op2 + comdenom / f3[2] * f3[1] + "}{" + comdenom + "}\\\\[5pt]";
-        }
-
-        if(sign1 > 2) {     //Do * & / calcs
-            f1[1] = f1[0] * f1[2] + f1[1]
-            f2[1] = f2[0] * f2[2] + f2[1];
-            f3[1] = f3[0] * f3[2] + f3[1];
-            suma += "$$\\begin{aligned}&=\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
+        } else if (sign1 > 2 && sign2 > 2) {     //Do * & / calcs
+            if(sign1 > 2) {
+                f1[1] = f1[0] * f1[2] + f1[1]
+                f2[1] = f2[0] * f2[2] + f2[1];
+                f3[1] = f3[0] * f3[2] + f3[1];
+                suma += "$$\\begin{aligned}&=\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
+                        "\\frac{" + f2[1] + "}{" + f2[2] + "}" + op2 + 
+                        "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]"
+                if(sign1 === 4) {
+                    tmp = f2[1];
+                    f2[1] = f2[2];
+                    f2[2] = tmp;
+                    sign1 = 3;
+                    op1 = "\\times";
+                    sign1cx = true;
+                }
+                if(sign2 === 4) {
+                    tmp = f3[1];
+                    f3[1] = f3[2];
+                    f3[2] = tmp;
+                    sign2 = 3;
+                    op2 = "\\times";
+                    sign2cx = true;
+                }
+                if(sign1cx || sign2cx) {    //If a div sum, show with 'times' & flipped frac
+                    suma += "&=\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
                     "\\frac{" + f2[1] + "}{" + f2[2] + "}" + op2 + 
                     "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]"
-            if(sign1 === 4) {
-                tmp = f2[1];
-                f2[1] = f2[2];
-                f2[2] = tmp;
-                sign1 = 3;
-                sign1cx = true;
+                }
+
+                gcd = gcd2(f1[1], f1[2]);   //Check all cancelling options
+                while(gcd > 1) {
+                    f1[1] = f1[1] / gcd;
+                    f1[2] = f1[2] / gcd;
+                    gcd = gcd2(f1[1], f1[2]);
+                    anscx = true;
+                }
+                gcd = gcd2(f2[1], f2[2]);
+                while(gcd > 1) {
+                    f2[1] = f2[1] / gcd;
+                    f2[2] = f2[2] / gcd;
+                    gcd = gcd2(f2[1], f2[2]);
+                    anscx = true;
+                }
+                gcd = gcd2(f3[1], f3[2]);
+                while(gcd > 1) {
+                    f3[1] = f3[1] / gcd;
+                    f3[2] = f3[2] / gcd;
+                    gcd = gcd2(f3[1], f3[2]);
+                    anscx = true;
+                }
+                gcd = gcd2(f1[1], f2[2]);
+                while(gcd > 1) {
+                    f1[1] = f1[1] / gcd;
+                    f2[2] = f2[2] / gcd;
+                    gcd = gcd2(f1[1], f2[2]);
+                    anscx = true;
+                }
+                gcd = gcd2(f1[1], f3[2]);
+                while(gcd > 1) {
+                    f1[1] = f1[1] / gcd;
+                    f3[2] = f3[2] / gcd;
+                    gcd = gcd2(f1[1], f3[2]);
+                    anscx = true;
+                }
+                gcd = gcd2(f2[1], f3[2]);
+                while(gcd > 1) {
+                    f2[1] = f2[1] / gcd;
+                    f3[2] = f3[2] / gcd;
+                    gcd = gcd2(f2[1], f3[2]);
+                    anscx = true;
+                }
+                gcd = gcd2(f3[1], f1[2]);
+                while(gcd > 1) {
+                    f3[1] = f3[1] / gcd;
+                    f1[2] = f1[2] / gcd;
+                    gcd = gcd2(f3[1], f1[2]);
+                    anscx = true;
+                }
+                gcd = gcd2(f3[1], f2[2]);
+                while(gcd > 1) {
+                    f3[1] = f3[1] / gcd;
+                    f2[2] = f2[2] / gcd;
+                    gcd = gcd2(f3[1], f2[2]);
+                    anscx = true;
+                }
+                gcd = gcd2(f2[1], f1[2]);
+                while(gcd > 1) {
+                    f2[1] = f2[1] / gcd;
+                    f1[2] = f1[2] / gcd;
+                    gcd = gcd2(f2[1], f1[2]);
+                    anscx = true;
+                }
+                ans1[0] = 0;
+                ans1[1] = f1[1] * f2[1] * f3[1];
+                ans1[2] = f1[2] * f2[2] * f3[2];
+                
+                if(anscx) {     //For the rare 'no cancelling' case
+                    suma += "&=\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
+                            "\\frac{" + f2[1] + "}{" + f2[2] + "}" + op2 + 
+                            "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]";
+                            anscx = false;
+                }
             }
-            if(sign2 === 4) {
+        } else if (sign1 <3 && sign2 > 2) {     //Do mixed sum, + or - with * or /
+            f2[1] = f2[0] * f2[2] + f2[1];      //Turn fracs 2 & 3 into improper fracs for * or / sum
+            f3[1] = f3[0] * f3[2] + f3[1];
+            suma += "$$\\begin{aligned}&=" + f1[0] + "\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
+                    "\\frac{" + f2[1] + "}{" + f2[2] + "}" + op2 + 
+                    "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]"
+            if(sign2 === 4) {   //If div, flip frac and show new sum
                 tmp = f3[1];
                 f3[1] = f3[2];
                 f3[2] = tmp;
                 sign2 = 3;
+                op2 = "\\times";
                 sign2cx = true;
-            }
-            if(sign1cx || sign2cx) {    //If a div sum, show with 'times' & flipped frac
-                suma += "&=\\frac{" + f1[1] + "}{" + f1[2] + "}\\times" + 
-                "\\frac{" + f2[1] + "}{" + f2[2] + "}\\times" + 
+                suma += "&=" + f1[0] + "\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
+                "\\frac{" + f2[1] + "}{" + f2[2] + "}" + op2 + 
                 "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]"
             }
 
-            gcd = gcd2(f1[1], f1[2]);   //Check all cancelling options
-            while(gcd > 1) {
-                f1[1] = f1[1] / gcd;
-                f1[2] = f1[2] / gcd;
-                gcd = gcd2(f1[1], f1[2]);
-                anscx = true;
-            }
             gcd = gcd2(f2[1], f2[2]);
             while(gcd > 1) {
                 f2[1] = f2[1] / gcd;
@@ -189,32 +277,11 @@ function fracs() {
                 gcd = gcd2(f3[1], f3[2]);
                 anscx = true;
             }
-            gcd = gcd2(f1[1], f2[2]);
-            while(gcd > 1) {
-                f1[1] = f1[1] / gcd;
-                f2[2] = f2[2] / gcd;
-                gcd = gcd2(f1[1], f2[2]);
-                anscx = true;
-            }
-            gcd = gcd2(f1[1], f3[2]);
-            while(gcd > 1) {
-                f1[1] = f1[1] / gcd;
-                f3[2] = f3[2] / gcd;
-                gcd = gcd2(f1[1], f3[2]);
-                anscx = true;
-            }
             gcd = gcd2(f2[1], f3[2]);
             while(gcd > 1) {
                 f2[1] = f2[1] / gcd;
                 f3[2] = f3[2] / gcd;
                 gcd = gcd2(f2[1], f3[2]);
-                anscx = true;
-            }
-            gcd = gcd2(f3[1], f1[2]);
-            while(gcd > 1) {
-                f3[1] = f3[1] / gcd;
-                f1[2] = f1[2] / gcd;
-                gcd = gcd2(f3[1], f1[2]);
                 anscx = true;
             }
             gcd = gcd2(f3[1], f2[2]);
@@ -224,26 +291,37 @@ function fracs() {
                 gcd = gcd2(f3[1], f2[2]);
                 anscx = true;
             }
-            gcd = gcd2(f2[1], f1[2]);
-            while(gcd > 1) {
-                f2[1] = f2[1] / gcd;
-                f1[2] = f1[2] / gcd;
-                gcd = gcd2(f2[1], f1[2]);
-                anscx = true;
-            }
-            ans1[0] = 0;
-            ans1[1] = f1[1] * f2[1] * f3[1];
-            ans1[2] = f1[2] * f2[2] * f3[2];
-            
             if(anscx) {     //For the rare 'no cancelling' case
-                suma += "&=\\frac{" + f1[1] + "}{" + f1[2] + "}\\times" + 
-                        "\\frac{" + f2[1] + "}{" + f2[2] + "}\\times" + 
+                suma += "&=" + f1[0] + "\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
+                        "\\frac{" + f2[1] + "}{" + f2[2] + "}" + op2 + 
                         "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]";
                         anscx = false;
             }
-        }  
-    } while(ans1[0] > 75 || ans1[1] > 75 || ans1[2] > 75)
+            ans2[0] = 0;
+            ans2[1] = f2[1] * f3[1];
+            ans2[2] = f2[2] * f3[2];
+            
+            suma += "&=" + f1[0] + "\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
+                    "\\frac{" + ans2[1] + "}{" + ans2[2] + "}\\\\[5pt]";
 
+            comdenom = lcm2(f1[2], ans2[2]);    //Do + or - part of sum
+            suma += "&=" + f1[0] + "+\\frac{(\\frac{" + comdenom + "}{" + f1[2] + "}\\times" + f1[1] + ")" + op1 + 
+                    "(\\frac{" + comdenom + "}{" + ans2[2] + "}\\times" + ans2[1] + ")}{" + comdenom + "}\\\\[5pt]";
+
+            suma += "&=" + f1[0] + "\\frac{" + comdenom / f1[2] * f1[1] + op1 + comdenom / ans2[2] * ans2[1] + "}{" + comdenom + "}\\\\[5pt]";
+            if (sign1 === 1) {
+                ans1[0] = f1[0] + ans2[0];
+                ans1[1] = (comdenom / f1[2] * f1[1]) + (comdenom / ans2[2] * ans2[1]);
+                ans1[2] = comdenom;
+            } else if (sign1 === 2) {
+                ans1[0] = f1[0] - ans2[0];
+                ans1[1] = (comdenom / f1[2] * f1[1]) - (comdenom / ans2[2] * ans2[1]);
+                ans1[2] = comdenom;
+            }
+        }
+    } while(Math.abs(ans1[0]) > 75 || Math.abs(ans1[1]) > 75 || Math.abs(ans1[2]) > 75 || (sign1 < 3 && sign2 > 2 && (comdenom === f1[2] || comdenom === ans2[2])))
+        //Keeps figures in solution manageable and, in mixed + with (* or /) sum, prevents common denominator being same as either denom in addition sum
+    
     if(ans1[0] === 0) {
         suma += "&=\\frac{" + ans1[1] + "}{" + ans1[2] + "}\\\\[5pt]";
     } else {
@@ -285,13 +363,18 @@ function fracs() {
         anstot[1] = ans1[1];
         anstot[2] = ans1[2];
     }
-    gcd = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]))
-    while(gcd > 1) {        //Check if frac cancels
-        anstot[1] = anstot[1] / gcd;
-        anstot[2] = anstot[2] / gcd;
-        gcd = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]));
-        anscx = true;
-    }
+    // if (anstot[1] > anstot[2]) {
+    //     anstot[0] += (anstot[1] - (anstot[1] % anstot[2])) / anstot[2];
+    //     anstot[1] = anstot[1] % anstot[2];
+    //     anscx = true;
+    // }
+    // gcd = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]))
+    // while(gcd > 1) {        //Check if frac cancels
+    //     anstot[1] = anstot[1] / gcd;
+    //     anstot[2] = anstot[2] / gcd;
+    //     gcd = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]));
+    //     anscx = true;
+    // }
 
     if(anscx) {     //If above section changed ans, show new
         if(anstot[0] === 0 && anstot[1] !== 0 && anstot[2] !== 0) {
