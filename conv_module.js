@@ -21,9 +21,6 @@ function conv() {
     suma = "";
     document.getElementById("a").innerHTML = "";
     document.getElementById("noteslink").style.visibility="visible";
-    document.getElementById("noteslink").onclick = function() {
-        window.open("images/20200505-MathsBook8Proportionv1_3-APO.pdf#page=4", "_blank")
-    }
     do {
         sum = rndgen(1, 6, 0, 1, -1);
     } while(sum === prevsum || sum === prev2sum)
@@ -31,6 +28,9 @@ function conv() {
     prevsum = sum;
     switch(sum) {
         case 1:     //Absolute & relative error
+            document.getElementById("noteslink").onclick = function() {
+                window.open("images/20200504-MathsBook6ErrConvv1_3-APO.pdf#page=3", "_blank")
+            }
             m = rndgen(10, 30, 0, 1, -1);
             v = rndgen(2, 8, 0, 1, -1);
             merr = rndgen(2, 8, 0, 1, -1);
@@ -67,29 +67,32 @@ function conv() {
         case 5:
         case 6:
             qdata = [   //Units convert from, units convert to, min qty, max qty, conversion factor, rd role in calc
-                ["Gallons(UK)", "Pounds", 500, 1500, 10.02, "mult"],
-                ["Pounds", "Gallons(UK)", 4000, 12000, 0.0998, "divide"],
-                ["Gallons(UK)", "kg", 500, 1500, 4.545, "mult"],
-                ["kg", "Gallons(UK)", 1800, 5500, 0.22, "divide"],
-                ["Gallons(US)", "Pounds", 500, 1500, 8.345, "mult"],
-                ["Pounds", "Gallons(US)", 3300, 10000, 0.1198, "divide"],
-                ["Gallons(US)", "kg", 500, 1500, 3.785, "mult"],
-                ["kg", "Gallons(US)", 1500, 4500, 0.2642, "divide"],
-                ["Gallons(UK)", "Gallons(US)", 500, 1500, 1.2, "nil"],
-                ["Gallons(US)", "Gallons(UK)", 600, 1800, 0.833, "nil"],
-                ["Gallons(UK)", "Litres", 500, 1500, 4.545, "nil"],
-                ["Litres", "Gallons(UK)", 2200, 6800, 0.22, "nil"],
-                ["Gallons(US)", "Litres", 500, 1500, 3.785, "nil"],
-                ["Litres", "Gallons(US)", 1900, 5700, 0.2642, "nil"],
+                ["Gallons (UK)", "Pounds", 500, 1500, 10.02, "mult"],
+                ["Pounds", "Gallons (UK)", 4000, 12000, 0.0998, "divide"],
+                ["Gallons (UK)", "kg", 500, 1500, 4.545, "mult"],
+                ["kg", "Gallons (UK)", 1800, 5500, 0.22, "divide"],
+                ["Gallons (US)", "Pounds", 500, 1500, 8.345, "mult"],
+                ["Pounds", "Gallons (US)", 3300, 10000, 0.1198, "divide"],
+                ["Gallons (US)", "kg", 500, 1500, 3.785, "mult"],
+                ["kg", "Gallons (US)", 1500, 4500, 0.2642, "divide"],
+                ["Gallons (UK)", "Gallons (US)", 500, 1500, 1.2, "nil"],
+                ["Gallons (US)", "Gallons (UK)", 600, 1800, 0.833, "nil"],
+                ["Gallons (UK)", "Litres", 500, 1500, 4.545, "nil"],
+                ["Litres", "Gallons (UK)", 2200, 6800, 0.22, "nil"],
+                ["Gallons (US)", "Litres", 500, 1500, 3.785, "nil"],
+                ["Litres", "Gallons (US)", 1900, 5700, 0.2642, "nil"],
                 ["Pounds", "kg", 500, 1500, 0.4536, "nil"],
                 ["kg", "Pounds", 200, 700, 2.205, "nil"]
             ];
+            document.getElementById("noteslink").onclick = function() {
+                window.open("images/20200504-MathsBook6ErrConvv1_3-APO.pdf#page=9", "_blank")
+            }
             sel = rndgen(0, 15, 0, 1, -1);      //Selects row of qdata to use for question
             qty = rndgen(qdata[sel][2], qdata[sel][3], 0, 1, -1);
             rd = rndgen(0.78, 0.82, 2, 0.01, -1);
             sumq += "Convert " + thouSep(qty, " ") + " " + qdata[sel][0] + 
                     " of fuel with a specific gravity (relative density) of " + rd + " to " + qdata[sel][1] + 
-                    " given that the conversion factor is " + qdata[sel][4] + " Round your answer to 1 decimal places.";
+                    " given that the conversion factor is " + qdata[sel][4] + " Round your answer to 1 decimal place.";
 
             if(qdata[sel][5] === "mult") {      //qty to mass
                 suma += "$$\\begin{aligned}quantity\\times conversion\\ factor\\times relative\\ density&=\\\\[5pt]";
