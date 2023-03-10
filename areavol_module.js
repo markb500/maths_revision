@@ -1,5 +1,5 @@
 var prevsum = 0, prev2sum = 0, sumq, suma, a, b, c, d, e, f, g;
-var units, unitsmath, sacub, satri, satube, saend, salgcyl, sasmcyl, sahd, vcub, vtri, vtube, vlgcyl, vsmcyl, vhd;
+var units, unitsmath, sacub, satri, satube, saend, salgcyl, sasmcyl, sahd, sacone, vcub, vtri, vtube, vlgcyl, vsmcyl, vhd, vcone;
 function areavol() {
     //Uses 1 of 5 shapes with random dimensions added. Surface area & volume to be calculated.
     var sum, left = 75, top = 25, right = left + 350, bottom = top + 200;
@@ -46,7 +46,7 @@ function areavol() {
                 "rounding your answers to 1 decimal place. Drawing is not to scale. <br><br>";
     
     do {
-        sum = rndgen(1, 5, 0, 1, -1);
+        sum = rndgen(1, 6, 0, 1, -1);
     } while(sum === prevsum || sum === prev2sum)
     prev2sum = prevsum;
     prevsum = sum;
@@ -286,6 +286,44 @@ function areavol() {
             suma += "&=" + thouSep(vtube, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ total&=" + thouSep(vhd, "\\ ") + "+" + thouSep(vtube, "\\ ") + "=\\underline{\\mathbf{" + 
                     thouSep(dp(Number(vhd) +  Number(vtube), 3, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
+            break;
+        case 6:     //domecone
+            sumq = "Find the surface area and volume of the object shown, rounding your answers to 1 decimal place. " + 
+                    "The head of the dome is hemispherical. The drawing is not to scale";
+            units = " mm";      //only mm makes sense for dimensions
+            unitsmath = "\\ mm";
+            a = rndgen(8, 15, 0, 1, -1);   //a int 8 to 15 head diameter
+            b = Math.ceil(a * 0.6 + rndgen(2, 6, 0, 1, -1));    //Cone height = head diameter *  0.6 + rnd int 2 to 6
+            c = (Math.floor(Math.sqrt((Math.pow((a / 2), 2) + Math.pow(b, 2))) * 2) * 5) / 10;//slant height sqrt(radius^2 + cone height^2) in 0.5's
+            sahd = dp(2 * Math.PI * Math.pow(a / 2, 2), 3, 2);  //SA dome (without base)
+            sacone = dp(Math.PI * (a / 2) * c, 3, 2);     //SA cone (without base)
+            vhd = dp(2 / 3 * Math.PI * Math.pow(a / 2, 3), 3, 2);   //V dome
+            vcone = dp(1 / 3 * Math.PI * Math.pow(a / 2, 2) * b, 3, 2);     //V cone
+            var img = document.getElementById("domecone");
+            ctx.drawImage(img, left, top, 350, 200);
+            ctx.textAlign = "center";
+            ctx.fillText(a + units, left + 170, top);   //Diameter
+            ctx.fillText(c + units, left + 70, bottom - 35);    //Slant ht cone
+            ctx.textAlign = "left";
+            ctx.fillText((b + a / 2) + units, right - 70, bottom - 90);   //Full length of dome & cone
+            suma += "$$\\begin{aligned}SA\\ of\\ dome&=hemisphere\\ (without\\ base\\ hidden\\ in\\ joint)\\\\[5pt]";
+            suma += "&=2\\pi r^2\\\\[5pt]";
+            suma += "&=2\\times \\pi \\times" + (a/2) + "^2 \\\\[5pt]";
+            suma += "&=" + thouSep(sahd, "\\ ") + unitsmath + "^2\\\\[5pt]";
+            suma += "SA\\ of\\ cone&=cone\\ (without\\ base\\ hidden\\ in\\ joint) \\\\[5pt]";
+            suma += "&=\\pi rl\\\\[5pt]";
+            suma += "&=\\pi \\times" + (a / 2) + "\\times" + c + "\\\\[5pt]";
+            suma += "&=" + thouSep(sacone, "\\ ") + unitsmath + "^2\\\\[5pt]";
+            suma += "SA\\ total&=" + thouSep(sahd, "\\ ") + "+" + thouSep(sacone, "\\ ") + "=\\underline{\\mathbf{" + 
+                    thouSep(dp(Number(sahd) + Number(sacone), 3, 1), "\\ ") + unitsmath + "^2 \\ (1\\ dp)}}\\\\[20pt]"; 
+            suma += "V\\ of\\ dome&=\\frac{2}{3}\\pi r^3 \\\\[5pt]";
+            suma += "&=\\frac{2}{3}\\pi \\times" + (a / 2) + "^3 \\\\[5pt]";
+            suma += "&=" + thouSep(vhd, "\\ ") + unitsmath + "^3\\\\[5pt]";
+            suma += "V\\ of\\ cone&=\\frac{1}{3}\\pi r^2 h\\\\[5pt]";
+            suma += "&=\\frac{1}{3}\\pi \\times" + (a / 2) + "^2 \\times" + b + "\\\\[5pt]";
+            suma += "&=" + thouSep(vcone, "\\ ") + unitsmath + "^3\\\\[5pt]";
+            suma += "V\\ total&=" + thouSep(vhd, "\\ ") + "+" + thouSep(vcone, "\\ ") + "=\\underline{\\mathbf{" + 
+                    thouSep(dp(Number(vhd) +  Number(vcone), 3, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
             break;
     }
     suma += "";
