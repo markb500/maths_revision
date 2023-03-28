@@ -207,7 +207,7 @@ function areavol() {
                 c = rndgen(a - 2, 15, 0, 1, -1);   //(a - 2) to 15 int not = b
                 d = rndgen(2, b - 3, 0, 1, -1);   //2 to (b - 3) int
                 e = Math.floor(Math.sqrt(Math.pow(b / 2, 2) + Math.pow(c, 2)));   //pythag b/2 & c
-            } while(a === b || a === c || b === c || a === e)
+            } while(a === b || a === c || b === c || a === e || d > (b - 1) || d > (c - 1))
             satri = dp(b * c + 2 * a * e + a * b, 3, 2);
             satube = dp(Math.PI * d * a, 3, 2);
             saend = dp(2 * Math.PI * Math.pow((d / 2), 2), 3, 2);
