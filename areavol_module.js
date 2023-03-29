@@ -53,13 +53,13 @@ function areavol() {
     switch(sum) {
         case 1:     //cubtri
             do {
-                a = rndgen(8, 21, 0, 1, -1);   //a int 8 to 21
-                e = rndgen(4, a - 3, 2, 0.25, -1); //e 4 to (a - 3) in 0.25's
-                d = rndgen(5, 15, 0, 1, -1);   //d int 5 to 15
-                c = rndgen(3, d - 2, 2, 0.25, -1); //c 3 to (d - 2) in 0.25's
-                b = rndgen(4, 12, 0, 1, -1);   //b int 4 to 12
+                a = rndgen(8, 21, 0, 1, -1);   //a int 8 to 21                                              base long side
+                e = rndgen(4, a - 3, 2, 0.25, -1); //e 4 to (a - 3) in 0.25's                               base top length
+                d = rndgen(5, 15, 0, 1, -1);   //d int 5 to 15                                              base tri height
+                c = rndgen(3, d - 2, 2, 0.25, -1); //c 3 to (d - 2) in 0.25's                               base height
+                b = rndgen(4, 12, 0, 1, -1);   //b int 4 to 12                                              base width
                 f = (Math.floor(Math.sqrt((Math.pow((a - e), 2) + 
-                            Math.pow((d - c), 2))) * 2) * 5) / 10;//f sqrt((a - e)^2 + (d - c)^2) in 0.5's
+                            Math.pow((d - c), 2))) * 2) * 5) / 10;//f sqrt((a - e)^2 + (d - c)^2) in 0.5's  tri slope
             } while(a === b || a === d || b === d || e === d || f === d)
             sacub = dp(2 * a * c + 2 * b * c + a * b + e * b, 3, 2);
             satri = dp((a - e) * (d - c) + b * f + b * (d - c), 3, 2);
@@ -100,14 +100,14 @@ function areavol() {
             break;
         case 2:     //cubtritube
             do {
-                a = rndgen(8, 21, 0, 1, -1);   //a int 8 to 21
-                e = rndgen(4, a - 3, 2, 0.25, -1); //e 4 to (a - 3) in 0.25's
-                d = rndgen(5, 15, 0, 1, -1);   //d int 5 to 15
-                c = rndgen(3, d - 2, 2, 0.25, -1); //c 3 to (d - 2) in 0.25's
-                b = rndgen(4, 12, 0, 1, -1);   //b int 4 to 12
+                a = rndgen(8, 21, 0, 1, -1);   //a int 8 to 21                                              base long side
+                e = rndgen(4, a - 3, 2, 0.25, -1); //e 4 to (a - 3) in 0.25's                               base top length
+                d = rndgen(5, 15, 0, 1, -1);   //d int 5 to 15                                              base tri height
+                c = rndgen(3, d - 2, 2, 0.25, -1); //c 3 to (d - 2) in 0.25's                               base height
+                b = rndgen(4, 12, 0, 1, -1);   //b int 4 to 12                                              base width
                 f = (Math.floor(Math.sqrt((Math.pow((a - e), 2) + 
-                            Math.pow((d - c), 2))) * 2) * 5) / 10;//f sqrt((a - e)^2 + (d - c)^2) in 0.5's
-                g = rndgen(2, c - 1, 1, 0.5, -1);//g (2 to (c - 1) in 0.5's)
+                            Math.pow((d - c), 2))) * 2) * 5) / 10;//f sqrt((a - e)^2 + (d - c)^2) in 0.5's  tri slope
+                g = rndgen(2, c - 1, 1, 0.5, -1);//g (2 to (c - 1) in 0.5's)                                tube dia
             } while(a === b || a === d || b === d || e === d || f === d)
             sacub = dp(2 * a * c + 2 * b * c + a * b + e * b, 3, 2);
             satri = dp((a - e) * (d - c) + b * f + b * (d - c), 3, 2);
@@ -164,10 +164,10 @@ function areavol() {
             break;
         case 3:     //2cyl
             do {
-                a = rndgen(7, 25, 1, 0.5, -1);//7 to 25 in 0.5's  lg cyl length
-                b = rndgen(3, 15, 1, 0.5, -1);//3 to 15 in 0.5's  sm cyl length
-                c = rndgen(2, 7, 1, 0.5, -1);//2 to 7 in 0.5's  sm cyl dia
-                d = rndgen(c + 3, 12, 1, 0.5, -1);//(c+3) to 12 in 0.5's lg cyl dia
+                a = rndgen(7, 25, 1, 0.5, -1);//7 to 25 in 0.5's            lg cyl length
+                b = rndgen(3, 15, 1, 0.5, -1);//3 to 15 in 0.5's            sm cyl length
+                c = rndgen(2, 7, 1, 0.5, -1);//2 to 7 in 0.5's              sm cyl dia
+                d = rndgen(c + 3, 12, 1, 0.5, -1);//(c+3) to 12 in 0.5's    lg cyl dia
             } while(a === b || a === d || b === c || b === d)
             salgcyl = dp(2 * Math.PI * Math.pow((d / 2), 2) + Math.PI * d * a, 3, 2);
             sasmcyl = dp(Math.PI * c * b, 3, 2);
@@ -202,12 +202,12 @@ function areavol() {
             break;
         case 4:     //tritube
             do {
-                a = rndgen(8, 25, 0, 1, -1);   //8 to 25 int
-                b = rndgen(a - 2, 15, 0, 1, -1);   //(a - 2) to 15 int
-                c = rndgen(a - 2, 15, 0, 1, -1);   //(a - 2) to 15 int not = b
-                d = rndgen(2, b - 3, 0, 1, -1);   //2 to (b - 3) int
-                e = Math.floor(Math.sqrt(Math.pow(b / 2, 2) + Math.pow(c, 2)));   //pythag b/2 & c
-            } while(a === b || a === c || b === c || a === e || d > (b / 2) || d > (c / 2))
+                a = rndgen(8, 25, 0, 1, -1);   //8 to 25 int                                                length
+                b = rndgen(a - 2, 15, 0, 1, -1);   //(a - 2) to 15 int                                      width
+                c = rndgen(a - 2, 15, 0, 1, -1);   //(a - 2) to 15 int not = b                              height
+                d = rndgen(2, b - 3, 0, 1, -1);   //2 to (b - 3) int                                        tube dia
+                e = dp(Math.sqrt(Math.pow(b / 2, 2) + Math.pow(c, 2)), 1, 0);   //pythag b/2 & c (0 dp)     slope
+            } while(a === b || a === c || b === c || a === e || d > (b / 3) || d > (e / 3))
             satri = dp(b * c + 2 * a * e + a * b, 3, 2);
             satube = dp(Math.PI * d * a, 3, 2);
             saend = dp(2 * Math.PI * Math.pow((d / 2), 2), 3, 2);
