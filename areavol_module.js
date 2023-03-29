@@ -202,12 +202,12 @@ function areavol() {
             break;
         case 4:     //tritube
             do {
-                a = rndgen(8, 25, 0, 1, -1);   //8 to 25 int                                                length
-                b = rndgen(a - 2, 15, 0, 1, -1);   //(a - 2) to 15 int                                      width
-                c = rndgen(a - 2, 15, 0, 1, -1);   //(a - 2) to 15 int not = b                              height
+                a = rndgen(14, 30, 0, 1, -1);   //14 to 30 int                                              length
+                b = rndgen(9, 23, 0, 1, -1);   //13 to 23 int                                               width
+                c = rndgen(9, 23, 0, 1, -1);   //13 to 23 int not = b                                       height
                 d = rndgen(2, b - 3, 0, 1, -1);   //2 to (b - 3) int                                        tube dia
                 e = dp(Math.sqrt(Math.pow(b / 2, 2) + Math.pow(c, 2)), 1, 0);   //pythag b/2 & c (0 dp)     slope
-            } while(a === b || a === c || b === c || a === e || d > (b / 3) || d > (e / 3))
+            } while(a === b || a === c || b === c || a === e || b >= a || c >= a || e >= a || d > (b / 3) || d > (e / 3))
             satri = dp(b * c + 2 * a * e + a * b, 3, 2);
             satube = dp(Math.PI * d * a, 3, 2);
             saend = dp(2 * Math.PI * Math.pow((d / 2), 2), 3, 2);
