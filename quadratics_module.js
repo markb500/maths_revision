@@ -1,29 +1,9 @@
-var sumq = "", suma = "", a, b, c, x1, x2;
+var a, b, c, x1, x2;
 function quadratics() {
 //Produces quadratic expression of form x^2 + bx + c = 0 to be solved by factorisation.
 //x^2 always has coefficient of 1 and solutions are always integers.
-  document.getElementById("myCanvas");
-  myCanvas.height = "0.5";
-  myCanvas.width = "0.5";
-  myCanvas.style = "border: none;"; 
-  document.getElementById("myCanvas2");
-  myCanvas2.height = "0.5";
-  myCanvas2.width = "0.5";
-  myCanvas2.style.visibility = "hidden";
-  if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
-      if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
-          SolnWin.document.getElementById("myCanvas3");
-          SolnWin.myCanvas3.height = "0.5";
-          SolnWin.myCanvas3.width = "0.5";
-      }
-  }
   sumq = "";
   suma = "";
-  document.getElementById("a").innerHTML = "";
-  document.getElementById("noteslink").style.visibility="visible";
-  document.getElementById("noteslink").onclick = function() {
-      window.open("images/20200504-MathsBook5AlgebraicOpsv1_3-APO.pdf#page=15", "_blank")
-  }
   do {
     a = 1;
     b = rndgen(-30, 30, 0, 1, -1);  //int -30 to 30
@@ -55,6 +35,8 @@ function quadratics() {
   } else {
     suma += "\\end{aligned}$$";
   }
-  document.getElementById("q").innerHTML = sumq;
-  document.getElementById("btnSoln").style.visibility="visible";
+ 
+  var notesLink = "images/20200504-MathsBook5AlgebraicOpsv1_3-APO.pdf#page=15"
+  var sumArray = [sumq, suma, notesLink];
+  return sumArray;
 }

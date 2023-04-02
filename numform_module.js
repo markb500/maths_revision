@@ -2,28 +2,8 @@ function numform() {
     //Generates 2 numbers with x10 exponents. These must either be multiplied or divided
     //and then given in both sci and eng notation form. No calculator.
     //Uses sciengnot & pwrzero functions in utils_maths_module
-    document.getElementById("myCanvas");
-    myCanvas.height = "0.5";
-    myCanvas.width = "0.5";
-    myCanvas.style = "border: none;";
-    document.getElementById("myCanvas2");
-    myCanvas2.height = "0.5";
-    myCanvas2.width = "0.5";
-    myCanvas2.style.visibility = "hidden";
-    if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
-        if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
-            SolnWin.document.getElementById("myCanvas3");
-            SolnWin.myCanvas3.height = "0.5";
-            SolnWin.myCanvas3.width = "0.5";
-        }
-    }
     sumq = "";
     suma = "";
-    document.getElementById("a").innerHTML = "";
-    document.getElementById("noteslink").style.visibility="visible";
-    document.getElementById("noteslink").onclick = function() {
-        window.open("images/20200504-MathsBook3Indicesv1_3-APO.pdf#page=10", "_blank")
-    }
     var tmp = rndgen(1, 2, 0, 1, -1);
     switch(tmp) {
         case 1: //multiply the numbers
@@ -67,6 +47,7 @@ function numform() {
             suma += "\\end{aligned}$$";
             break;
     }
-    document.getElementById("q").innerHTML = sumq;
-    document.getElementById("btnSoln").style.visibility="visible";
+    var notesLink = "images/20200504-MathsBook3Indicesv1_3-APO.pdf#page=10";
+    var sumArray = [sumq, suma, notesLink];
+    return sumArray;
 }

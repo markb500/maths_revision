@@ -3,28 +3,8 @@ function indices() {
 //Creates expression with 3 terms, 2 on top over the 3rd underneath. Each term can have radical
 //from 1 (no radical) up to 9, index numerator from -9 to 9 (not 0 or 1) and index denominator from 1 to 9.
 //Expression simplifies to ltr with index. Index may be frac, which will be in simplest form.
-    document.getElementById("myCanvas");
-    myCanvas.height = "0.5";
-    myCanvas.width = "0.5";
-    myCanvas.style = "border: none;";
-    document.getElementById("myCanvas2");
-    myCanvas2.height = "0.5";
-    myCanvas2.width = "0.5";
-    myCanvas2.style.visibility = "hidden";
-    if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
-        if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
-            SolnWin.document.getElementById("myCanvas3");
-            SolnWin.myCanvas3.height = "0.5";
-            SolnWin.myCanvas3.width = "0.5";
-        }
-    }
     sumq = "";
     suma = "";
-    document.getElementById("a").innerHTML = "";
-    document.getElementById("noteslink").style.visibility="visible";
-    document.getElementById("noteslink").onclick = function() {
-        window.open("images/20200504-MathsBook3Indicesv1_3-APO.pdf#page=4", "_blank")
-    }
     switch(rndgen(1, 4, 0, 1, -1)) {
         case 1:
             ltr = "x";
@@ -102,6 +82,7 @@ function indices() {
     } else {
         suma += "&=" + ltr + "^{\\frac{" + nsoln + "}{" + dsoln + "}}\\end{aligned}$$";
     }
-    document.getElementById("q").innerHTML = sumq;
-    document.getElementById("btnSoln").style.visibility="visible";
+    var notesLink = "images/20200504-MathsBook3Indicesv1_3-APO.pdf#page=4";
+    var sumArray = [sumq, suma, notesLink];
+    return sumArray;
 }

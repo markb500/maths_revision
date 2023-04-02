@@ -1,31 +1,11 @@
-var prevsum = 0;
 function transposeII() {
     var sum;
-    document.getElementById("myCanvas");
-    myCanvas.height = "0.5";
-    myCanvas.width = "0.5";
-    myCanvas.style = "border: none;";
-    document.getElementById("myCanvas2");
-    myCanvas2.height = "0.5";
-    myCanvas2.width = "0.5";
-    myCanvas2.style.visibility = "hidden";
-    if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
-        if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
-            SolnWin.document.getElementById("myCanvas3");
-            SolnWin.myCanvas3.height = "0.5";
-            SolnWin.myCanvas3.width = "0.5";
-        }
-    }
     sumq = "";
     suma = "";
-    document.getElementById("a").innerHTML = "";
-    document.getElementById("noteslink").style.visibility="visible";
-    document.getElementById("noteslink").onclick = function() {
-        window.open("images/20200505-MathsBook9TranspFormv1_5-APO.pdf#page=7", "_blank")
-    }
     do {
         sum = rndgen(1, 20, 0, 1, -1);
-    } while(sum === prevsum)
+    } while(sum === prevsum || sum === prev2sum)
+    prev2sum = prevsum;
     prevsum = sum;
     switch(sum) {
         case 1:
@@ -213,6 +193,7 @@ function transposeII() {
             break;
     }
     
-    document.getElementById("q").innerHTML = sumq;
-    document.getElementById("btnSoln").style.visibility="visible";    
+    var notesLink = "images/20200504-MathsBook5AlgebraicOpsv1_3-APO.pdf#page=29"
+    var sumArray = [sumq, suma, notesLink];
+    return sumArray;
 }

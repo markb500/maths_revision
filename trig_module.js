@@ -3,28 +3,8 @@ function trig() {
     //Draws a right angled triangle in approx correct scale for randomly generated dimensions (3 sides & angles).
     //2 dimensions randomly selected to be calculated. Dimensions randomly changed too.
     var left, right, top, bottom;
-    document.getElementById("myCanvas");
-    myCanvas.height = "0.5";
-    myCanvas.width = "0.5";
-    myCanvas.style = "border: none;"; //1px solid #000000
-    document.getElementById("myCanvas2");
-    myCanvas2.height = "0.5";
-    myCanvas2.width = "0.5";
-    myCanvas2.style.visibility = "hidden";
-    if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
-        if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
-            SolnWin.document.getElementById("myCanvas3");
-            SolnWin.myCanvas3.height = "0.5";
-            SolnWin.myCanvas3.width = "0.5";
-        }
-    }
     sumq = "";
     suma = "";
-    document.getElementById("a").innerHTML = "";
-    document.getElementById("noteslink").style.visibility="visible";
-    document.getElementById("noteslink").onclick = function() {
-        window.open("images/20200504-MathsBook7Pythagv1_3-APO.pdf#page=5", "_blank")
-    }
     switch(rndgen(1, 3, 0, 1, -1)) {      //1=m 2=cm 3=mm
         case 1:
             units = " m";
@@ -56,9 +36,9 @@ function trig() {
         right = adj * 300 / opp + left;
     }
 
-    document.getElementById("myCanvas");
-    myCanvas.height = 375;
-    myCanvas.width = right + 125;
+    // document.getElementById("myCanvas");
+    // myCanvas.height = 375;
+    // myCanvas.width = right + 125;
     var ctx = myCanvas.getContext('2d');
 
             //Draw triangle
@@ -230,6 +210,7 @@ function trig() {
                         unitsmath + "\\ (2\\ dp)}}&=Opp\\end{aligned}$$";
             break;
     }
-    document.getElementById("q").innerHTML = sumq;
-    document.getElementById("btnSoln").style.visibility="visible";
+    var notesLink = "images/20200504-MathsBook7Pythagv1_3-APO.pdf#page=5";
+    var sumArray = [sumq, suma, notesLink];
+    return sumArray;
 }

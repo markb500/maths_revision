@@ -37,7 +37,7 @@ function eqnformat(id) {
   //Re-runs mathjax rendering on text with given id. Used in all sum functions.
   //Also toggles visibility of the 'a' element each time soln btn clicked, increments the views
   //count each time 'a' is made visible and re-sets views to zero each time a question button is clicked.
-  MathJax.Hub.Queue(["Typeset",MathJax.Hub, id]);
+  MathJax.Hub.Queue(["Typeset" ,MathJax.Hub, id]);
   if(id === "q") {
     //Initialisation for new Q; reset number of views in soln btn and ensure 'a' element is hidden.
     views = 0;

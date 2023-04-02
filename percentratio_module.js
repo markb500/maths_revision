@@ -1,30 +1,10 @@
 var prevsum = 0, prev2sum = 0, sumq, suma, num1, num2, pct, rat1, rat2, rat3;
-var ratunits = [" m", " N", " kg", "£", "\\ m", "\\ N", "\\ kg", "£"], iratunit;
+var ratunits = ["&nbsp;m", "&nbsp;N", "&nbsp;kg", "£", "\\ m", "\\ N", "\\ kg", "£"], iratunit;
 function percentratio() {
     //Randomly selects from 6 questions (5 percent & 1 ratio). Units randomly changed in ration question.
     var sum, comdenom;
-    document.getElementById("myCanvas");
-    myCanvas.height = "0.5";
-    myCanvas.width = "0.5";
-    myCanvas.style = "border: none;";
-    document.getElementById("myCanvas2");
-    myCanvas2.height = "0.5";
-    myCanvas2.width = "0.5";
-    myCanvas2.style.visibility = "hidden";
-    if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
-        if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
-            SolnWin.document.getElementById("myCanvas3");
-            SolnWin.myCanvas3.height = "0.5";
-            SolnWin.myCanvas3.width = "0.5";
-        }
-    }
     sumq = "";
     suma = "";
-    document.getElementById("a").innerHTML = "";
-    document.getElementById("noteslink").style.visibility="visible";
-    document.getElementById("noteslink").onclick = function() {
-        window.open("images/20200504-MathsBook4HCFLCMFactv1_5-APO.pdf#page=3", "_blank")
-    }
     do {
         sum = rndgen(1, 6, 0, 1, -1);
     } while(sum === prevsum || sum === prev2sum)
@@ -32,9 +12,7 @@ function percentratio() {
     prevsum = sum;
     switch(sum) {
         case 1://Without using a calculator, express num1 as a percentage of num2 to 1 dp.
-            document.getElementById("noteslink").onclick = function() {
-                window.open("images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50", "_blank")
-            }
+            var notesLink = "images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50";
             num1 =  rndgen(1, 5, 1, 0.1, -1);  //1.1 to 5.1 1dp
             num2 =  rndgen(num1 + 0.4, 8, 1, 0.1, -1);  //(num1 + 0.4) to 8 1dp
             sumq += "Without using a calculator, express " + num1 + " as a percentage of " + num2 + 
@@ -42,44 +20,36 @@ function percentratio() {
             suma += "$$\\frac{" + num1 + "}{" + num2 + "}\\times 100=" + 
                         dp((num1 / num2) * 100, 1, 1) + "\\ \\%\\ (1\\ dp)$$";
             break;
-        case 2://Calculate, without using a calculator, p % of num1, to 1 dp."""
-            document.getElementById("noteslink").onclick = function() {
-                window.open("images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50", "_blank")
-            }
+        case 2://Calculate, without using a calculator, p % of num1, to 1 dp.
+            var notesLink = "images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50";
             do {
                 pct = rndgen(3, 99, 0, 1, -1);
             } while(pct === 10 || pct === 25 || pct === 50 || pct === 75)
             num1 = rndgen(16, 51, 0, 1, -1);
-            sumq += "Calculate, without using a calculator, " + pct + " % of " + num1 + 
+            sumq += "Calculate, without using a calculator, " + pct + "&nbsp;% of " + num1 + 
                         ", rounding your answer to 1 decimal place.";
             suma += "$$\\frac{" + pct + "}{100}\\times" + num1 + "=" + 
                         dp((pct / 100) * num1, 1, 1) + "\\ (1\\ dp)$$";
             break;
-        case 3://Without using a calculator, express p % as a proper fraction in its simplest form."""
-            document.getElementById("noteslink").onclick = function() {
-                window.open("images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50", "_blank")
-            }
+        case 3://Without using a calculator, express p % as a proper fraction in its simplest form.
+            var notesLink = "images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50";
             pct = rndgen(3, 99, 0, 1, -1);
             comdenom = gcd2(pct, 100);
-            sumq += "Without using a calculator, express " + pct + " % as a proper fraction in its simplest form.";
+            sumq += "Without using a calculator, express " + pct + "&nbsp;% as a proper fraction in its simplest form.";
             if(comdenom !== 1) {
                 suma += "$$\\frac{" + pct + "}{100}=\\frac{" + (pct / comdenom) + "}{" + (100 / comdenom) + "}$$";
             } else {
                 suma += "$$\\frac{" + pct + "}{100}$$";
             }
             break;
-        case 4://Without using a calculator, convert p % to a decimal."""
-            document.getElementById("noteslink").onclick = function() {
-                window.open("images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50", "_blank")
-            }
+        case 4://Without using a calculator, convert p % to a decimal.
+            var notesLink = "images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50";
             pct = rndgen(3, 99, 1, 0.1, -1);
-            sumq += "Without using a calculator, convert " + pct + " % to a decimal.";
+            sumq += "Without using a calculator, convert " + pct + "&nbsp;% to a decimal.";
             suma += "$$\\frac{" + pct + "}{100}=" + dp(pct / 100, 3, -1) + "$$"; 
             break;
-        case 5://Without using a calculator, convert Round(p / 100, 4) to a percentage."""
-            document.getElementById("noteslink").onclick = function() {
-                window.open("images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50", "_blank")
-            }
+        case 5://Without using a calculator, convert Round(p / 100, 4) to a percentage.
+            var notesLink = "images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50";
             pct = rndgen(0.5, 99, 2, 0.01, -1);
             sumq += "Without using a calculator, convert " + 
                         dp(pct / 100, 4, -1) + " to a percentage.";
@@ -87,9 +57,7 @@ function percentratio() {
                         "\\times 100=" + pct + "\\ \\%$$";   
             break;
         case 6://Without using a calculator, divide num1 unit(iratunit) in the ratio rat1:rat2:rat3.
-        document.getElementById("noteslink").onclick = function() {
-            window.open("images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=52", "_blank")
-        }
+        var notesLink = "images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=52";
             do {
                 num1 = rndgen(48, 91, 0, 1, -1);
                 rat1 = rndgen(1, 10, 0, 1, -1);
@@ -121,6 +89,6 @@ function percentratio() {
             }
             break;
     }
-    document.getElementById("q").innerHTML = sumq;
-    document.getElementById("btnSoln").style.visibility="visible";
+    var sumArray = [sumq, suma, notesLink];
+    return sumArray;
 }

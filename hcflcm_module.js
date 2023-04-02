@@ -1,25 +1,12 @@
 var term1 = [], term2 = [], term3 = [], hcf = [], lcm = [];
 function hcflcm() {
 //Creates an expression with 3 terms, each with up to 4 variables. Each variable has an index from 1 to 6
-//Solution requires HCF (GCD) and LCM to be found without use of a calculator,
+//Solution requires HCF (GCD) and LCM to be found without use of a calculator (primes tree shown in soln),
 //followed by factorisation of the expression.
     var ltrsel, sign1, sign2, f01, f02, f03, f11, f12, f13, f21, f22, f23, f31, f32, f33;
-    document.getElementById("myCanvas");
-    myCanvas.height = "0.5";
-    myCanvas.width = "0.5";
-    myCanvas.style = "border: none;"; //1px solid #000000
-    document.getElementById("myCanvas2");
-    myCanvas2.height = 350;
-    myCanvas2.width = 500;
-    myCanvas2.style.visibility = "hidden";
     ctx2 = myCanvas2.getContext('2d');
     sumq = "";
     suma = "";
-    document.getElementById("a").innerHTML = "";
-    document.getElementById("noteslink").style.visibility="visible";
-    document.getElementById("noteslink").onclick = function() {
-        window.open("images/20200504-MathsBook4HCFLCMFactv1_5-APO.pdf#page=3", "_blank")
-    }
     do {    //Generates hcf, creates 3 random multiples of hcf and then gets lcm of those 3 terms
         hcf[0] = rndgen(2, 11, 0, 1, -1);  //int 2 to 11
         term1[0] = hcf[0] * rndgen(1, 8, 0, 1, -1);
@@ -177,16 +164,7 @@ function hcflcm() {
                 chkpwr(term3[3], term3[4] - hcf[4]) + chkpwr(term3[5], term3[6] - hcf[6]) + 
                 f32 + chkpwr(term3[7], term3[8] - hcf[8]) + f33 + "\\right)\\end{aligned}$$"
 
-    if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
-        if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
-            SolnWin.document.getElementById("myCanvas3");
-            SolnWin.myCanvas3.height = 350;
-            SolnWin.myCanvas3.width = 500;
-            var ctx3 = SolnWin.myCanvas3.getContext('2d');
-            ctx3.drawImage(myCanvas2, 0, 0);
-        }
-    }
-                    
-    document.getElementById("q").innerHTML = sumq;
-    document.getElementById("btnSoln").style.visibility="visible";
+  var notesLink = "images/20200504-MathsBook4HCFLCMFactv1_5-APO.pdf#page=3"
+  var sumArray = [sumq, suma, notesLink];
+  return sumArray;
 }

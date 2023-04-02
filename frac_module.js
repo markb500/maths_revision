@@ -1,31 +1,9 @@
 var f1 = [], f2 = [], f3 = [], ans1 = [], ans2 = [], anstot = [], op1, op2;
 function fracs() {
 //Creates a sum with 3 mixed-number fractions, either '+ - with +, -, * or /' or '* / with * /'.
-    var sign1, sign2, comdenom, gcd, tmp, sign1cx = false, sign2cx = false, anscx = false;
-    var anstot = [];
-    document.getElementById("myCanvas");
-    myCanvas.height = "0.5";
-    myCanvas.width = "0.5";
-    myCanvas.style = "border: none;";
-    document.getElementById("myCanvas2");
-    myCanvas2.height = "0.5";
-    myCanvas2.width = "0.5";
-    myCanvas2.style.visibility = "hidden";
-    if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
-        if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
-            SolnWin.document.getElementById("myCanvas3");
-            SolnWin.myCanvas3.height = "0.5";
-            SolnWin.myCanvas3.width = "0.5";
-        }
-    }
+    var sign1, sign2, comdenom, gcd, tmp, sign1cx = false, sign2cx = false, anscx = false, anstot = [];
     sumq = "";
     suma = "";
-    document.getElementById("a").innerHTML = "";
-    document.getElementById("noteslink").style.visibility="visible";
-    document.getElementById("noteslink").onclick = function() {
-        window.open("images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=22", "_blank")
-    }
-
     sign1 = rndgen(1, 4, 0, 1, -1);    //1 = +, 2 = -, 3 = *, 4 = /
     if(sign1 < 3) {     //If sign1 + or -, sign2 can be any
         sign2 = rndgen(1, 4, 0, 1, -1);
@@ -386,7 +364,7 @@ function fracs() {
     } else {
         suma += "\\end{aligned}$$";
     }
-
-    document.getElementById("q").innerHTML = sumq;
-    document.getElementById("btnSoln").style.visibility="visible";    
+    var notesLink = "images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=22";
+    var sumArray = [sumq, suma, notesLink];
+    return sumArray;
 }

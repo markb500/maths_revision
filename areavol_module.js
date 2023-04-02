@@ -1,4 +1,4 @@
-var prevsum = 0, prev2sum = 0, sumq, suma, a, b, c, d, e, f, g;
+var prevsum = 0, prev2sum = 0, a, b, c, d, e, f, g;
 var units, unitsmath, sacub, satri, satube, saend, salgcyl, sasmcyl, sahd, sacone, vcub, vtri, vtube, vlgcyl, vsmcyl, vhd, vcone;
 function areavol() {
     //Uses 1 of 5 shapes with random dimensions added. Surface area & volume to be calculated.
@@ -19,26 +19,6 @@ function areavol() {
             units = " mm";
             unitsmath = "\\ mm";
             break;
-    }
-    document.getElementById("myCanvas");
-    myCanvas.width = "500";
-    myCanvas.height = "300";
-    myCanvas.style = "border: none;"; //1px solid #000000 
-    document.getElementById("myCanvas2");
-    myCanvas2.height = "0.5";
-    myCanvas2.width = "0.5";
-    myCanvas2.style.visibility = "hidden";
-    if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
-        if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
-            SolnWin.document.getElementById("myCanvas3");
-            SolnWin.myCanvas3.height = "0.5";
-            SolnWin.myCanvas3.width = "0.5";
-        }
-    }
-    document.getElementById("a").innerHTML = "";
-    document.getElementById("noteslink").style.visibility="visible";
-    document.getElementById("noteslink").onclick = function() {
-        window.open("images/20200505-MathsBook12AreaVolv1_3-APO.pdf#page=3", "_blank")
     }
     var ctx = myCanvas.getContext("2d");
     ctx.font = "20px Comic Sans MS";
@@ -202,9 +182,9 @@ function areavol() {
             break;
         case 4:     //tritube
             do {
-                a = rndgen(14, 30, 0, 1, -1);   //14 to 30 int                                              length
-                b = rndgen(9, 23, 0, 1, -1);   //13 to 23 int                                               width
-                c = rndgen(9, 23, 0, 1, -1);   //13 to 23 int not = b                                       height
+                a = rndgen(14, 30, 0, 1, -1);   //14 to 30 int                                                length
+                b = rndgen(9, 23, 0, 1, -1);   //13 to 23 int                                              width
+                c = rndgen(9, 23, 0, 1, -1);   //13 to 23 int not = b                                      height
                 d = rndgen(2, b - 3, 0, 1, -1);   //2 to (b - 3) int                                        tube dia
                 e = dp(Math.sqrt(Math.pow(b / 2, 2) + Math.pow(c, 2)), 1, 0);   //pythag b/2 & c (0 dp)     slope
             } while(a === b || a === c || b === c || a === e || b >= a || c >= a || e >= a || d > (b / 3) || d > (e / 3))
@@ -326,8 +306,7 @@ function areavol() {
                     thouSep(dp(Number(vhd) +  Number(vcone), 3, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
             break;
     }
-    suma += "";
-    
-    document.getElementById("q").innerHTML = sumq;
-    document.getElementById("btnSoln").style.visibility="visible";
+    var notesLink = "images/20200505-MathsBook12AreaVolv1_3-APO.pdf#page=3";
+    var sumArray = [sumq, suma, notesLink];
+    return sumArray;
 }

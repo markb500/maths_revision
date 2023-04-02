@@ -2,25 +2,8 @@ var prevsum = 0, prev2sum = 0, sumq, suma, m, v, merr, mmax, vmax, verr, ke, kee
 function conv() {
     //Produces randomly selected problems in either error calculation or conversion
     var sum;
-    document.getElementById("myCanvas");
-    myCanvas.height = "0.5";
-    myCanvas.width = "0.5";
-    myCanvas.style = "border: none;";
-    document.getElementById("myCanvas2");
-    myCanvas2.height = "0.5";
-    myCanvas2.width = "0.5";
-    myCanvas2.style.visibility = "hidden";
-    if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
-        if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
-            SolnWin.document.getElementById("myCanvas3");
-            SolnWin.myCanvas3.height = "0.5";
-            SolnWin.myCanvas3.width = "0.5";
-        }
-    }
     sumq = "";
     suma = "";
-    document.getElementById("a").innerHTML = "";
-    document.getElementById("noteslink").style.visibility="visible";
     do {
         sum = rndgen(1, 6, 0, 1, -1);
     } while(sum === prevsum || sum === prev2sum)
@@ -28,9 +11,7 @@ function conv() {
     prevsum = sum;
     switch(sum) {
         case 1:     //Absolute & relative error
-            document.getElementById("noteslink").onclick = function() {
-                window.open("images/20200504-MathsBook6ErrConvv1_3-APO.pdf#page=3", "_blank")
-            }
+            var notesLink = "images/20200504-MathsBook6ErrConvv1_3-APO.pdf#page=3";
             m = rndgen(10, 30, 0, 1, -1);
             v = rndgen(2, 8, 0, 1, -1);
             merr = rndgen(2, 8, 0, 1, -1);
@@ -84,9 +65,7 @@ function conv() {
                 ["Pounds", "kg", 500, 1500, 0.4536, "nil"],
                 ["kg", "Pounds", 200, 700, 2.205, "nil"]
             ];
-            document.getElementById("noteslink").onclick = function() {
-                window.open("images/20200504-MathsBook6ErrConvv1_3-APO.pdf#page=9", "_blank")
-            }
+            var notesLink = "images/20200504-MathsBook6ErrConvv1_3-APO.pdf#page=9";
             sel = rndgen(0, 15, 0, 1, -1);      //Selects row of qdata to use for question
             qty = rndgen(qdata[sel][2], qdata[sel][3], 0, 1, -1);
             rd = rndgen(0.78, 0.82, 2, 0.01, -1);
@@ -112,6 +91,6 @@ function conv() {
             }
             break;
     }
-    document.getElementById("q").innerHTML = sumq;
-    document.getElementById("btnSoln").style.visibility="visible";
+    var sumArray = [sumq, suma, notesLink];
+    return sumArray;
 }
