@@ -87,9 +87,39 @@
         onclick="sumshow('noncalc', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Non-Calculator Maths
       </button>
       <button
+        id="fracs" 
+        class="btn btn-outline-primary btn-block" 
+        onclick="sumshow('fracs', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Fractions
+      </button>
+      <button
+        id="percentratio" 
+        class="btn btn-outline-primary btn-block" 
+        onclick="sumshow('percentratio', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Percentages & Ratios
+      </button>
+      <button
+        id="indices" 
+        class="btn btn-outline-primary btn-block" 
+        onclick="sumshow('indices', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Indices
+      </button>
+      <button
+        id="numform" 
+        class="btn btn-outline-primary btn-block" 
+        onclick="sumshow('numform', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Number Form
+      </button>
+      <button
+        id="hcflcm" 
+        class="btn btn-outline-primary btn-block" 
+        onclick="sumshow('hcflcm', '0.5', '0.5', '350', '500', '350', '500'); eqnformat('q'); solutionwin()">HCF/LCM
+      </button>
+      <button
         id="solve1" 
         class="btn btn-outline-primary btn-block" 
         onclick="sumshow('solve1', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Algebra: Solve Equation
+      </button>
+      <button
+        id="quadratics" 
+        class="btn btn-outline-primary btn-block" 
+        onclick="sumshow('quadratics', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Quadratics
       </button>
       <div class="container" style="margin-top:10px"></div>
       <div class="row g-0">  <!--Puts 2 buttons side-by-side-->
@@ -112,29 +142,9 @@
       </div>
       <div class="container" style="margin-top:10px"></div>
       <button
-        id="quadratics" 
+        id="conv" 
         class="btn btn-outline-primary btn-block" 
-        onclick="sumshow('quadratics', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Quadratics
-      </button>
-      <button
-        id="hcflcm" 
-        class="btn btn-outline-primary btn-block" 
-        onclick="sumshow('hcflcm', '0.5', '0.5', '350', '500', '350', '500'); eqnformat('q'); solutionwin()">HCF/LCM
-      </button>
-      <button
-        id="fracs" 
-        class="btn btn-outline-primary btn-block" 
-        onclick="sumshow('fracs', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Fractions
-      </button>
-      <button
-        id="simultaneous" 
-        class="btn btn-outline-primary btn-block" 
-        onclick="sumshow('simultaneous', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Simultaneous Equations
-      </button>
-      <button
-        id="indices" 
-        class="btn btn-outline-primary btn-block" 
-        onclick="sumshow('indices', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Indices
+        onclick="sumshow('conv', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Errors & Conversions
       </button>
       <button
         id="trig" 
@@ -142,29 +152,19 @@
         onclick="sumshow('trig', '375', '450', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">RA Triangle Trigonometry
       </button>
       <button
-        id="areavol" 
-        class="btn btn-outline-primary btn-block" 
-        onclick="sumshow('areavol', '300', '500', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Surface Area & Volume
-      </button>
-      <button
-        id="percentratio" 
-        class="btn btn-outline-primary btn-block" 
-        onclick="sumshow('percentratio', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Percentages & Ratios
-      </button>
-      <button
         id="prop" 
         class="btn btn-outline-primary btn-block" 
         onclick="sumshow('prop', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Proportionality
       </button>
       <button
-        id="numform" 
+        id="simultaneous" 
         class="btn btn-outline-primary btn-block" 
-        onclick="sumshow('numform', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Number Form
+        onclick="sumshow('simultaneous', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Simultaneous Equations
       </button>
       <button
-        id="conv" 
+        id="areavol" 
         class="btn btn-outline-primary btn-block" 
-        onclick="sumshow('conv', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Errors & Conversions
+        onclick="sumshow('areavol', '300', '500', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Surface Area & Volume
       </button>
       <button
         id="testdesign" 
