@@ -1,10 +1,9 @@
 var term1 = [], term2 = [], term3 = [], hcf = [], lcm = [];
-function hcflcm() {
+function hcflcm(ctx2) {
 //Creates an expression with 3 terms, each with up to 4 variables. Each variable has an index from 1 to 6
 //Solution requires HCF (GCD) and LCM to be found without use of a calculator (primes tree shown in soln),
 //followed by factorisation of the expression.
     var ltrsel, sign1, sign2, f01, f02, f03, f11, f12, f13, f21, f22, f23, f31, f32, f33;
-    ctx2 = myCanvas2.getContext('2d');
     sumq = "";
     suma = "";
     do {    //Generates hcf, creates 3 random multiples of hcf and then gets lcm of those 3 terms
@@ -145,7 +144,7 @@ function hcflcm() {
                     term3[0] + f01 + chkpwr(term3[1], term3[2]) + chkpwr(term3[3], term3[4]) + 
                     chkpwr(term3[5], term3[6]) + f02 + chkpwr(term3[7], term3[8]) + f03 + "$$<br />";
     
-    suma += "<br>".repeat(11);
+    suma += "<br>".repeat(12);
     suma += "$$\\begin{aligned}HCF&=" + hcf[0] + f01 + chkpwr(hcf[1], hcf[2]) + chkpwr(hcf[3], hcf[4]) + 
                 chkpwr(hcf[5], hcf[6]) + f02 + chkpwr(hcf[7], hcf[8]) + f03 + "\\\\" + "\\\\" +
 

@@ -1,5 +1,5 @@
 var ang, adj, opp, hyp, units, unitsmath;
-function trig() {
+function trig(ctx) {
     //Draws a right angled triangle in approx correct scale for randomly generated dimensions (3 sides & angles).
     //2 dimensions randomly selected to be calculated. Dimensions randomly changed too.
     var left, right, top, bottom;
@@ -35,11 +35,6 @@ function trig() {
         bottom = top + 300;
         right = adj * 300 / opp + left;
     }
-
-    // document.getElementById("myCanvas");
-    // myCanvas.height = 375;
-    // myCanvas.width = right + 125;
-    var ctx = myCanvas.getContext('2d');
 
             //Draw triangle
     ctx.lineWidth = 3;

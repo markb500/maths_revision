@@ -1,6 +1,6 @@
 //Various functions used in sum functions, as described in each below.
 
-var views = 0;  //Used to count solution views
+var sumData = [], sumq = "", suma = "", testQsheet, views = 0;
 
 function op(sign) {
 //Used in solve1 to convert random number (0 or 1) to sign string.
@@ -301,4 +301,304 @@ function primeTree(ctx2, term, primefacs, primesexp, x, y) {
   var str = str.slice(0, str.length - 2);  //Remove final comma
   ctx2.fillText(str, x - 50, 330);
   return str;
+}
+
+function sumshow(sumType, h1, w1, h2, w2, h3, w3) {
+  //Called by btn click in Index. Gets required sum data and sets up canvas if required.
+  document.getElementById("myCanvas");
+  myCanvas.height = h1;
+  myCanvas.width = w1;
+  myCanvas.style = "border: none;";
+  document.getElementById("myCanvas2");
+  myCanvas2.height = h2;
+  myCanvas2.width = w2;
+  myCanvas2.style.visibility = "hidden";
+  document.getElementById("a").innerHTML = "";
+  switch (sumType) {
+      case "noncalc":
+          sumData = noncalc();
+          break;
+      case "solve1":
+          sumData = solve1();
+          break;
+      case "transposeI":
+          sumData = transposeI();
+          break;
+      case "transposeII":
+          sumData = transposeII();
+          break;
+      case "quadratics":
+          sumData = quadratics();
+          break;
+      case "hcflcm":
+          ctx2 = myCanvas2.getContext('2d');
+          sumData = hcflcm(ctx2);
+          break;
+      case "indices":
+          sumData = indices();
+          break;
+      case "numform":
+          sumData = numform();
+          break;
+      case "percentratio":
+          sumData = percentratio();
+          break;
+      case "prop":
+          sumData = prop();
+          break;
+      case "simultaneous":
+          sumData = simultaneous();
+          break;
+      case "conv":
+          sumData = conv();
+          break;
+      case "areavol":
+          ctx = myCanvas.getContext('2d');
+          sumData = areavol(ctx);
+          break;
+      case "fracs":
+          sumData = fracs();
+          break;
+      case "trig":
+          ctx = myCanvas.getContext('2d');
+          sumData = trig(ctx);
+          break;
+  }
+  if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
+      if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
+          SolnWin.document.getElementById("myCanvas3");
+          SolnWin.myCanvas3.height = h3;
+          SolnWin.myCanvas3.width = w3;
+          if (h3 > 0.5) { //Otherwise, assume no solution image so myCanvas2 not defined
+              var ctx3 = SolnWin.myCanvas3.getContext('2d');
+              ctx3.drawImage(myCanvas2, 0, 0);
+          }
+          var suma2 = sumData[1].replace("<br>".repeat(12), "");  //Removes leading spaces in 'hcf/lcm' solution
+          SolnWin.document.getElementById('a2').innerHTML = suma2;
+          SolnWin.eqnformat('a2');
+      }
+  }
+  document.getElementById("noteslink").style.visibility="visible";
+  document.getElementById("noteslink").onclick = function() {window.open(sumData[2], "_blank")}
+  document.getElementById("q").innerHTML = sumData[0];
+  document.getElementById("a").innerHTML = sumData[1];
+  document.getElementById("btnSoln").style.visibility="visible";
+}
+
+function testsumshow(sumType, qnum) {
+  //Called by sumAuth, used in test creation. Gets required sum and sets up canvas if required.
+  switch (sumType) {
+      case "noncalc":
+          sumData = noncalc();
+          break;
+      case "solve1":
+          sumData = solve1();
+          break;
+      case "transposeI":
+          sumData = transposeI();
+          break;
+      case "transposeII":
+          sumData = transposeII();
+          break;
+      case "quadratics":
+          sumData = quadratics();
+          break;
+      case "hcflcm":
+          document.getElementById('myCanvasa' + qnum).height="350";
+          document.getElementById('myCanvasa' + qnum).width="500";
+          document.getElementById('myCanvasa' + qnum).style.visibility = 'visible';
+          ctx2 = document.getElementById('myCanvasa' + qnum).getContext('2d');
+          sumData = hcflcm(ctx2);
+          sumData[1] = sumData[1].replace("<br>".repeat(12), "");     //Removes lead in <br>'s from solution
+          break;
+      case "indices":
+          sumData = indices();
+          break;
+      case "numform":
+          sumData = numform();
+          break;
+      case "percentratio":
+          sumData = percentratio();
+          break;
+      case "prop":
+          sumData = prop();
+          break;
+      case "simultaneous":
+          sumData = simultaneous();
+          break;
+      case "conv":
+          sumData = conv();
+          break;
+      case "areavol":
+          document.getElementById('myCanvasq' + qnum).style.visibility = 'visible';
+          document.getElementById('myCanvasq' + qnum).height = '300';
+          document.getElementById('myCanvasq' + qnum).width = '500';
+          ctx = document.getElementById('myCanvasq' + qnum).getContext('2d');
+          document.getElementById('myCanvasqa' + qnum).style.visibility = 'visible';
+          document.getElementById('myCanvasqa' + qnum).height = '300';
+          document.getElementById('myCanvasqa' + qnum).width = '500';
+          ctx2 = document.getElementById('myCanvasqa' + qnum).getContext('2d');
+          sumData = areavol(ctx);
+          sumData[0] = sumData[0] + '<br>'.repeat(6);    //Makes space for canvas between this and next q, in pre-print view
+          sumData[1] = sumData[1].replace("<br>".repeat(13), "");     //Removes lead in <br>'s from solution
+          ctx2.drawImage(document.getElementById('myCanvasq' + qnum), 0, 0);
+          break;
+      case "fracs":
+          sumData = fracs();
+          break;
+      case "trig":
+          document.getElementById('myCanvasq' + qnum).style.visibility = 'visible';
+          document.getElementById('myCanvasq' + qnum).height = '375';
+          document.getElementById('myCanvasq' + qnum).width = '450';
+          ctx = document.getElementById('myCanvasq' + qnum).getContext('2d');
+          document.getElementById('myCanvasqa' + qnum).style.visibility = 'visible';
+          document.getElementById('myCanvasqa' + qnum).height = '375';
+          document.getElementById('myCanvasqa' + qnum).width = '450';
+          ctx2 = document.getElementById('myCanvasqa' + qnum).getContext('2d');
+          sumData = trig(ctx);
+          sumData[0] = sumData[0] + '<br>'.repeat(10);    //Makes space for canvas between this and next q, in pre-print view
+          ctx2.drawImage(document.getElementById('myCanvasq' + qnum), 0, 0);
+          break;
+  }
+}
+
+function sumAuth(sumtype, qnum, totalq) {
+  //Called by testshow. Creates elements for test layout and inserts q's, a's and diags
+  var qdiv = document.createElement('div');
+  qdiv.id = 'qdiv' + qnum;
+  qdiv.classList.add('pagebreak');
+  document.getElementById('q').appendChild(qdiv);
+  var canvasq = document.createElement("canvas");
+  canvasq.id = 'myCanvasq' + qnum;
+  canvasq.height = '0.5';
+  canvasq.width = '0.5';
+  canvasq.style.float = 'right';
+  canvasq.style.visibility = 'hidden';
+  document.getElementById('qdiv' + qnum).appendChild(canvasq);
+  var qele = document.createElement('h3');
+  qele.id = 'q' + qnum;
+  document.getElementById('qdiv' + qnum).appendChild(qele);
+  var button = document.createElement('button');
+  button.id = 'btn' + qnum;
+  button.classList.add("pagebreak");
+  button.innerText = 'Modify This Sum';
+  button.addEventListener('click', (event) => {
+    var whichQ = parseInt(event.target.id.replace('btn', ''));  //Gets the question number
+    testsumshow(sumtype, whichQ);
+    document.getElementById('q' + whichQ).innerHTML = whichQ + '.  ' + sumData[0];
+    document.getElementById('ai' + (whichQ + totalq)).innerHTML = whichQ + '.  ' + sumData[0] + "<br>";
+    document.getElementById('aii' + (whichQ + totalq)).innerHTML = sumData[1];
+    eqnformat();
+  })
+  document.getElementById("q").appendChild(button);
+  var adiv = document.createElement('div');
+  adiv.id = 'adiv' + qnum;
+  adiv.classList.add('pagebreak');
+  document.getElementById('a').appendChild(adiv);
+  var canvasqa = document.createElement("canvas");
+  canvasqa.id = 'myCanvasqa' + qnum;
+  canvasqa.height = '0.5';
+  canvasqa.width = '0.5';
+  canvasqa.style.visibility = 'hidden';
+  canvasqa.style.float = 'right';
+  document.getElementById('adiv' + qnum).appendChild(canvasqa);
+  var aele1 = document.createElement("h3");
+  aele1.id = 'ai' + (qnum + totalq);
+  document.getElementById('adiv' + qnum).appendChild(aele1);  //For answer section, question written in black
+  var canvasa = document.createElement("canvas");
+  canvasa.id = 'myCanvasa' + qnum;
+  canvasa.height = '0.5';
+  canvasa.width = '0.5';
+  canvasa.style.padding = 0;
+  canvasa.style.margin = 'auto';        //)
+  canvasa.style.display = 'block';      //) Centre the canvas.
+  canvasa.style.visibility = 'hidden';  //)
+  document.getElementById('adiv' + qnum).appendChild(canvasa);
+  var aele2 = document.createElement("h3");
+  aele2.id = 'aii' + (qnum + totalq);
+  aele2.style = "color:red";
+  document.getElementById('adiv' + qnum).appendChild(aele2);  //For answer section, solution written in red
+  testsumshow(sumtype, qnum);
+  document.getElementById('q' + qnum).innerHTML = qnum + ".  " + sumData[0];
+  document.getElementById('ai' + (qnum + totalq)).innerHTML = qnum + ".  " + sumData[0] + '<br>';
+  document.getElementById('aii' + (qnum + totalq)).innerHTML = sumData[1];
+}
+
+function testshow() {
+  //Called on page load. Gets test design from testCreate and cycles through list
+  let data = sessionStorage.getItem("testArr"); //Passed from testCreate as json string
+  const testOrder = JSON.parse(data);
+  totalq = testOrder.length;
+  var qnum = 1;
+  var qdiv = document.createElement("div");
+  qdiv.id = 'q';
+  document.body.appendChild(qdiv);
+  var adiv = document.createElement("div");
+  adiv.id = 'a';
+  document.body.appendChild(adiv);
+  for (var i = 0; i < testOrder.length; i++) {
+    switch (testOrder[i]) {
+      case "Non-Calculator Maths":
+        sumAuth('noncalc', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Algebra: Solve Equation":
+        sumAuth('solve1', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Fractions":
+        sumAuth('fracs', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "HCF/LCM":
+        sumAuth('hcflcm', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Proportionality":
+        sumAuth('prop', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Transposition I":
+        sumAuth('transposeI', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Transposition II":
+        sumAuth('transposeII', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Quadratics":
+        sumAuth('quadratics', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Simultaneous Equations":
+        sumAuth('simultaneous', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Indices":
+        sumAuth('indices', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "RA Triangle Trigonometry":
+        sumAuth('trig', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Surface Area &amp; Volume":
+        sumAuth('areavol', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Percentages &amp; Ratios":
+        sumAuth('percentratio', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Number Form":
+        sumAuth('numform', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+      case "Errors &amp; Conversions":
+        sumAuth('conv', qnum, totalq);
+        qnum = qnum + 1;
+        break;
+    }
+  }
+  eqnformat('t'); //Ensures MathJax has formatted all sums in test
 }

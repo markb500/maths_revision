@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Maths Test Creator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" id="MathJax-script" async
+          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML"></script>
+  <style>
+    ul{
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      margin-bottom: 10px;
+      float: left;
+      cursor: move;
+    }
+    li{
+      width: 200px;
+      border-style: solid;
+      border-width: 2px;
+      border-radius: 8px;
+      border-color: #000000;
+      margin: 5px;
+      padding: 5px;
+      text-align: center;
+    }
+  </style>
+  <script>
+    $(function(){
+      $("#sortable").sortable({
+        revert: true,
+        tolerance: "touch"
+      });
+      $(".doner").draggable({
+        connectToSortable: "#sortable",
+        helper: "clone",
+        revert: "invalid"
+      });
+      $("ul, li").disableSelection();
+    });
+  </script>
+</head>
+<body>
+  <div class="py-3 jumbotron text-center" style="margin-bottom:0; background-image:url(images/typhoon_line.png); 
+                  background-size:50%; background-repeat:no-repeat; background-position:right center">
+    <img id="cosbadge" width="98" height="135" class="float-left" src="images\Cosbadge.png" alt="cosbadge">
+    <h1><br>Maths Revision Questions<br><br></h1>
+  </div>
+  <script src="utils_maths_module.js"></script>
+  <script src="noncalc_module.js"></script>
+  <script src="testshow_module.js"></script>
+  <div class="row" style="margin:10px">
+    <div class="col-md-3">
+      <p> <br> </p>
+      <p>The right hand column shows the subject of each question, in the order they will appear in the test.</p>
+      <p>To add further questions, drag them from the left hand column.</p>
+      <p>To delete a question, double click it.</p>
+      <p>To change the order, drag a question up or down the right hand column.</p>
+      <p>Once you're ready, click the "Create Test" button.</p>
+      <button
+        id="testcreate" 
+        class="btn btn-outline-primary btn-block" 
+        onclick="testSheetOpen()"><b>Create Test</b>
+      </button>
+    </div>
+    <div class="col-md-9">
+      <h3><u>Maths Test Creator</u></h3>
+      <ul>
+        <li class="doner">Non-Calculator Maths</li>
+        <li class="doner">Algebra: Solve Equation</li>
+        <li class="doner">Fractions</li>
+        <li class="doner">HCF/LCM</li>
+        <li class="doner">Proportionality</li>
+        <li class="doner">Transposition I</li>
+        <li class="doner">Transposition II</li>
+        <li class="doner">Quadratics</li>
+        <li class="doner">Simultaneous Equations</li>
+        <li class="doner">Indices</li>
+        <li class="doner">RA Triangle Trigonometry</li>
+        <li class="doner">Surface Area & Volume</li>
+        <li class="doner">Percentages & Ratios</li>
+        <li class="doner">Number Form</li>
+        <li class="doner">Errors & Conversions</li>
+      </ul>
+    
+      <ul id="sortable" ondblclick="eleRemove(event)">
+        <li>Non-Calculator Maths</li>
+        <li>Algebra: Solve Equation</li>
+        <li>Fractions</li>
+        <li>HCF/LCM</li>
+        <li>Proportionality</li>
+        <li>Transposition I</li>
+        <li>Transposition II</li>
+        <li>Quadratics</li>
+        <li>Simultaneous Equations</li>
+        <li>Indices</li>
+        <li>RA Triangle Trigonometry</li>
+        <li>Surface Area & Volume</li>
+        <li>Percentages & Ratios</li>
+        <li>Number Form</li>
+        <li>Errors & Conversions</li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    function eleRemove(event) {
+      event.target.remove();
+    }
+    function testSheetOpen() {
+      let items = document.getElementById('sortable').getElementsByTagName('li');
+      var myArr = [];
+      for (var i = 0; i < items.length; i++) {
+        myArr.push(items[i].innerHTML);
+      }
+      const jsonArr = JSON.stringify(myArr);
+      sessionStorage.setItem("testArr", jsonArr);
+      var testQsheet = window.open('testQsheet.html','testQsheet');
+    }
+  </script>
+</body>
+</html>

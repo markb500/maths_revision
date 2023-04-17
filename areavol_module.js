@@ -1,10 +1,10 @@
 var prevsum = 0, prev2sum = 0, a, b, c, d, e, f, g;
 var units, unitsmath, sacub, satri, satube, saend, salgcyl, sasmcyl, sahd, sacone, vcub, vtri, vtube, vlgcyl, vsmcyl, vhd, vcone;
-function areavol() {
+function areavol(ctx) {
     //Uses 1 of 5 shapes with random dimensions added. Surface area & volume to be calculated.
     var sum, left = 75, top = 25, right = left + 350, bottom = top + 200;
-    sumq = "";
-    suma = "";
+    var sumq = "";
+    var suma = "";
     suma+= "<br>".repeat(13);
     switch(rndgen(1, 3, 0, 1, -1)) {      //1=m 2=cm 3=mm
         case 1:
@@ -20,7 +20,6 @@ function areavol() {
             unitsmath = "\\ mm";
             break;
     }
-    var ctx = myCanvas.getContext("2d");
     ctx.font = "20px Comic Sans MS";
     sumq += "Find the surface area and volume of the object shown, " + 
                 "rounding your answers to 1 decimal place. Drawing is not to scale. <br><br>";
@@ -31,7 +30,7 @@ function areavol() {
     prev2sum = prevsum;
     prevsum = sum;
     switch(sum) {
-        case 1:     //cubtri
+        case 1:     //cubtri 
             do {
                 a = rndgen(8, 21, 0, 1, -1);   //a int 8 to 21                                              base long side
                 e = rndgen(4, a - 3, 2, 0.25, -1); //e 4 to (a - 3) in 0.25's                               base top length
@@ -45,8 +44,7 @@ function areavol() {
             satri = dp((a - e) * (d - c) + b * f + b * (d - c), 3, 2);
             vcub = dp(a * b * c, 3, 2);
             vtri = dp(0.5 * (a - e) * (d - c) * b, 3, 2);
-            var img = document.getElementById("cubtri");
-            ctx.drawImage(img, left, top, 350, 200);
+            ctx.drawImage(cubtri, left, top, 350, 200);
             ctx.textAlign = "center";
             ctx.fillText(a + units, left + 145, bottom + 15);   //a
             ctx.textAlign = "right";
@@ -76,7 +74,7 @@ function areavol() {
             suma += "&=\\frac{1}{2}\\times" + (a - e) + "\\times" + (d - c) + "\\times" + b + "\\\\[5pt]";
             suma += "&=" + thouSep(vtri, "\\ ") + unitsmath + "^3\\\\[5pt]";
             suma += "V\\ total&=" + thouSep(vcub, "\\ ") + "+" + thouSep(vtri, "\\ ") + "=\\underline{\\mathbf{" + 
-                    thouSep(dp(Number(vcub) +  Number(vtri), 3, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$"; 
+                    thouSep(dp(Number(vcub) +  Number(vtri), 3, 1), "\\ ") + unitsmath + "^3 \\ (1\\ dp)}}\\end{aligned}$$";
             break;
         case 2:     //cubtritube
             do {
@@ -96,8 +94,7 @@ function areavol() {
             vcub = dp(a * b * c, 3, 2);
             vtri = dp(0.5 * (a - e) * (d - c) * b, 3, 2);
             vtube = dp(Math.PI * Math.pow((g / 2), 2) * a, 3, 2);
-            var img = document.getElementById("cubtritube");
-            ctx.drawImage(img, left, top, 350, 200);
+            ctx.drawImage(cubtritube, left, top, 350, 200);
             ctx.textAlign = "center";
             ctx.fillText(a + units, left + 145, bottom + 15);   //a
             ctx.textAlign = "right";
@@ -153,8 +150,7 @@ function areavol() {
             sasmcyl = dp(Math.PI * c * b, 3, 2);
             vlgcyl = dp(Math.PI * Math.pow((d / 2), 2) * a, 3, 2);
             vsmcyl = dp(Math.PI * Math.pow((c / 2), 2) * b, 3, 2);
-            var img = document.getElementById("2cyl");
-            ctx.drawImage(img, 75, 25, 350, 200);
+            ctx.drawImage(twocyl, 75, 25, 350, 200);
             ctx.textAlign = "center";
             ctx.fillText(a + units, left + 120, bottom + 15);   //a
             ctx.fillText(b + units, left + 260, bottom + 15);   //b
@@ -193,8 +189,7 @@ function areavol() {
             saend = dp(2 * Math.PI * Math.pow((d / 2), 2), 3, 2);
             vtri = dp(0.5 * b * c * a, 3, 2);
             vtube = dp(Math.PI * Math.pow((d / 2), 2) * a, 3, 2);
-            var img = document.getElementById("tritube");
-            ctx.drawImage(img, 75, 25, 350, 200);
+            ctx.drawImage(tritube, 75, 25, 350, 200);
             ctx.textAlign = "right";
             ctx.fillText(a + units, left + 60, bottom - 30);  //a
             ctx.textAlign = "center";
@@ -240,8 +235,7 @@ function areavol() {
             satube = dp(Math.PI * b * c, 3, 2);     //Shaft SA (- ends)
             vhd = dp(2 / 3 * Math.PI * Math.pow(a / 2, 3), 3, 2);   //V head
             vtube = dp(Math.PI * Math.pow(b / 2, 2) * c, 3, 2);     //V shaft
-            var img = document.getElementById("rivet");
-            ctx.drawImage(img, left, top, 350, 200);
+            ctx.drawImage(rivet, left, top, 350, 200);
             ctx.textAlign = "center";
             ctx.fillText(a + units, left + 170, top);
             ctx.fillText(b + units, left + 170, bottom + 15);
@@ -279,8 +273,7 @@ function areavol() {
             sacone = dp(Math.PI * (a / 2) * c, 3, 2);     //SA cone (without base)
             vhd = dp(2 / 3 * Math.PI * Math.pow(a / 2, 3), 3, 2);   //V dome
             vcone = dp(1 / 3 * Math.PI * Math.pow(a / 2, 2) * b, 3, 2);     //V cone
-            var img = document.getElementById("domecone");
-            ctx.drawImage(img, left, top, 350, 200);
+            ctx.drawImage(domecone, left, top, 350, 200);
             ctx.textAlign = "center";
             ctx.fillText(a + units, left + 170, top);   //Diameter
             ctx.fillText(c + units, left + 70, bottom - 35);    //Slant ht cone

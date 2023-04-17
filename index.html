@@ -20,6 +20,36 @@
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link href='https://fonts.googleapis.com/css?family=STIX Two Math' rel='stylesheet'>
+<script>
+  var cubtri = new Image();
+  cubtri.src = "images/cubtri.png";
+  var cubtritube = new Image();
+  cubtritube.src = "images/cubtritube.png";
+  var twocyl = new Image();
+  twocyl.src = "images/2cyl.png";
+  var tritube = new Image();
+  tritube.src = "images/tritube.png";
+  var rivet = new Image();
+  rivet.src = "images/rivet.png";
+  var domecone = new Image();
+  domecone.src = "images/domecone.png";
+</script>
+<script src="noncalc_module.js"></script>
+<script src="quadratics_module.js"></script>
+<script src="solve1_module.js"></script>
+<script src="transposeI_module.js"></script>
+<script src="transposeII_module.js"></script>
+<script src="hcflcm_module.js"></script>
+<script src="frac_module.js"></script>
+<script src="simultaneous_module.js"></script>
+<script src="indices_module.js"></script>
+<script src="trig_module.js"></script>
+<script src="areavol_module.js"></script>
+<script src="percentratio_module.js"></script>
+<script src="prop_module.js"></script>
+<script src="numform_module.js"></script>
+<script src="conv_module.js"></script>
+<script src="utils_maths_module.js"></script>
 </head>
 <body>
 <div class="py-3 jumbotron text-center" style="margin-bottom:0; background-image:url(images/typhoon_line.png); 
@@ -136,6 +166,11 @@
         class="btn btn-outline-primary btn-block" 
         onclick="sumshow('conv', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Errors & Conversions
       </button>
+      <button
+        id="testdesign" 
+        class="btn btn-outline-primary btn-block" 
+        onclick="window.open('testCreate.html','testCreate');">Test Designer
+      </button>
       <a href="MathsHelp/userhelp.html">
         <button
           id="userhelp" 
@@ -161,16 +196,10 @@
         onclick="getElementById('a').innerHTML = sumData[1]; eqnformat('a')"><span class='font-weight-bold'>Show/Hide Solution</span><br />Views : 0
       </button>
       <div class="float-right">
-        <canvas id="myCanvas" width="0.5" height="0.5" style="border:none"></canvas> <!--border:1px solid #000000;-->
+        <canvas id="myCanvas" width="0.5" height="0.5" style="border:none"></canvas>
         <canvas id="myCanvas2" width="0.5" height="0.5" style="border:none"></canvas>
       </div>
       <h4 id="a", style="color:red; visibility:hidden"></h4>
-      <img id="cubtri" style="visibility:hidden" width="400" height="250" src="images\cubtri.png" alt="cubtri">
-      <img id="cubtritube" style="visibility:hidden" width="400" height="250" src="images\cubtritube.png" alt="cubtritube">
-      <img id="2cyl" style="visibility:hidden" width="400" height="250" src="images\2cyl.png" alt="2cyl">
-      <img id="tritube" style="visibility:hidden" width="400" height="250" src="images\tritube.png" alt="tritube">
-      <img id="rivet" style="visibility:hidden" width="400" height="250" src="images\rivet.png" alt="rivet">
-      <img id="domecone" style="visibility:hidden" width="400" height="250" src="images\domecone.png" alt="domecone">
     </div>
   </div>
   <footer class="container-fluid text-center">
@@ -178,22 +207,5 @@
     <p>Designed by Mark Butler, APO, RAF Cosford</p>
   </footer>
 </div>
-<script src="sumshow_module.js"></script>
-<script src="noncalc_module.js"></script>
-<script src="quadratics_module.js"></script>
-<script src="solve1_module.js"></script>
-<script src="transposeI_module.js"></script>
-<script src="transposeII_module.js"></script>
-<script src="hcflcm_module.js"></script>
-<script src="frac_module.js"></script>
-<script src="simultaneous_module.js"></script>
-<script src="indices_module.js"></script>
-<script src="trig_module.js"></script>
-<script src="areavol_module.js"></script>
-<script src="percentratio_module.js"></script>
-<script src="prop_module.js"></script>
-<script src="numform_module.js"></script>
-<script src="conv_module.js"></script>
-<script src="utils_maths_module.js"></script>
 </body>
 </html>
