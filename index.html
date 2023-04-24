@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript" id="MathJax-script" async
+<script id="MathJax-script" async
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML">
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -54,7 +54,7 @@
 <body>
 <div class="py-3 jumbotron text-center" style="margin-bottom:0; background-image:url(images/typhoon_line.png); 
                 background-size:50%; background-repeat:no-repeat; background-position:right center">
-  <img id="cosbadge" width="98" height="135" class="float-left" src="images\Cosbadge.png" alt="cosbadge">
+  <img id="cosbadge" width="98" height="135" class="float-left" src="images/Cosbadge.png" alt="cosbadge">
   <h1><br>Maths Revision Questions<br><br></h1>
 </div>
 <script type="text/x-mathjax-config">
@@ -171,12 +171,12 @@
         class="btn btn-outline-primary btn-block" 
         onclick="window.open('testCreate.html','testCreate');">Test Designer
       </button>
-      <a href="MathsHelp/userhelp.html">
+      <div href="MathsHelp/userhelp.html">
         <button
           id="userhelp" 
           class="btn btn-outline-primary mt-2">User Help
         </button>
-      </a>
+      </div>
     </div>
     <div class="col-md-9">
       <h3 id="q"></h3>
@@ -193,13 +193,13 @@
         tabIndex="0" 
         class="btn btn-outline-primary m-3" 
         style="visibility:hidden" 
-        onclick="getElementById('a').innerHTML = sumData[1]; eqnformat('a')"><span class='font-weight-bold'>Show/Hide Solution</span><br />Views : 0
+        onclick="getElementById('a').innerHTML = sumData[1]; eqnformat('a')"><span class='font-weight-bold'>Show/Hide Solution</span><br>Views : 0
       </button>
       <div class="float-right">
         <canvas id="myCanvas" width="0.5" height="0.5" style="border:none"></canvas>
         <canvas id="myCanvas2" width="0.5" height="0.5" style="border:none"></canvas>
       </div>
-      <h4 id="a", style="color:red; visibility:hidden"></h4>
+      <h4 id="a",style="color:red; visibility:hidden"></h4>
     </div>
   </div>
   <footer class="container-fluid text-center">
