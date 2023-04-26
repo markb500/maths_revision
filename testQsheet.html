@@ -42,10 +42,14 @@
   <script src="utils_maths_module.js"></script>
   <style>
     @media print {
-    .pagebreak {page-break-after: always;}
-    button.pagebreak {display: none;}
-    p.pagebreak {display: none;}
-  }
+      .pagebreak {
+        page-break-after: always;
+      }
+      button.pagebreak {display: none;}
+      p.pagebreak {display: none;}
+    }
+    .wrapper {overflow: hidden;}
+    .qbtn {float: left;}  /*these 2 put the question text, 'modify' btn and canvas in the same row*/
   </style>
 </head>
 <body onload="testshow()">
