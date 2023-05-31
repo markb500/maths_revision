@@ -357,7 +357,8 @@ function sumshow(sumType, h1, w1, h2, w2, h3, w3) {
       sumData = prop();
       break;
     case "simultaneous":
-      sumData = simultaneous();
+      ctx2 = myCanvas2.getContext('2d');
+      sumData = simultaneous(ctx2);
       break;
     case "areavol":
       ctx = myCanvas.getContext('2d');
@@ -443,7 +444,12 @@ function testsumshow(sumType, qnum) {
       sumData = prop();
       break;
     case "simultaneous":
-      sumData = simultaneous();
+      document.getElementById('myCanvasa' + qnum).style.visibility = 'visible';
+      document.getElementById('myCanvasa' + qnum).height = '400';
+      document.getElementById('myCanvasa' + qnum).width = '400';
+      ctx2 = document.getElementById('myCanvasa' + qnum).getContext('2d');
+      sumData = simultaneous(ctx2);
+      sumData[1] = sumData[1].replace("<br>".repeat(14), "");     //Removes lead in <br>'s from solution
       break;
     case "areavol":
       document.getElementById('myCanvasq' + qnum).style.visibility = 'visible';
@@ -628,4 +634,194 @@ function testshow() {
     }
   }
   eqnformat('t'); //Ensures MathJax has formatted all sums in test
+}
+
+function scaleDraw(ctx2, xpositive, ypositive, xscale, yscale) {
+  //Use in Simultaneous Module to draw the graph axis
+    var xfigs, yfigs, xposn, yposn, xoffset, yoffset, xtxtalign, ytxtalign, xscaleposn, yscaleposn;
+
+    ctx2.font = "15px Comic Sans MS";
+    ctx2.lineWidth = 3;
+    ctx2.beginPath();
+    if (xpositive && ypositive) {
+        xposn = 350;
+        yposn = 50;
+        xoffset = 10;
+        yoffset = -10;
+        xtxtalign = 'top';
+        ytxtalign = 'right';
+        xscaleposn = [100, 150, 200, 250, 300, 350];
+        yscaleposn = [300, 250, 200, 150, 100, 50];
+        xfigs = [1 * xscale, 2 * xscale, 3 * xscale, 4 * xscale, 5 * xscale];
+        yfigs = [1 * yscale, 2 * yscale, 3 * yscale, 4 * yscale, 5 * yscale];
+        ctx2.moveTo(40, xposn);
+        ctx2.lineTo(350, xposn);    //x axis
+        ctx2.moveTo(yposn, 360);
+        ctx2.lineTo(yposn, 50);     //y axis
+    } else if (!xpositive && ypositive) {
+        xposn = 350;
+        yposn = 350;
+        xoffset = 10;
+        yoffset = 10;
+        xtxtalign = 'top';
+        ytxtalign = 'left';
+        xscaleposn = [300, 250, 200, 150, 100, 50];
+        yscaleposn = [300, 250, 200, 150, 100, 50];
+        xfigs = [1 * -xscale, 2 * -xscale, 3 * -xscale, 4 * -xscale, 5 * -xscale];
+        yfigs = [1 * yscale, 2 * yscale, 3 * yscale, 4 * yscale, 5 * yscale];
+        ctx2.moveTo(50, xposn);
+        ctx2.lineTo(360, xposn);    //x axis
+        ctx2.moveTo(yposn, 360);
+        ctx2.lineTo(yposn, 50);     //y axis
+    } else if (xpositive && !ypositive) {
+        xposn = 50;
+        yposn = 50;
+        xoffset = -10;
+        yoffset = -10;
+        xtxtalign = 'bottom';
+        ytxtalign = 'right';
+        xscaleposn = [100, 150, 200, 250, 300, 350];
+        yscaleposn = [100, 150, 200, 250, 300, 350];
+        xfigs = [1 * xscale, 2 * xscale, 3 * xscale, 4 * xscale, 5 * xscale];
+        yfigs = [1 * -yscale, 2 * -yscale, 3 * -yscale, 4 * -yscale, 5 * -yscale];
+        ctx2.moveTo(40, xposn);
+        ctx2.lineTo(350, xposn);    //x axis
+        ctx2.moveTo(yposn, 350);
+        ctx2.lineTo(yposn, 40);     //y axis
+    } else {
+        xposn = 50;
+        yposn = 350;
+        xoffset = -10;
+        yoffset = 10;
+        xtxtalign = 'bottom';
+        ytxtalign = 'left';
+        xscaleposn = [300, 250, 200, 150, 100, 50];
+        yscaleposn = [100, 150, 200, 250, 300, 350];
+        xfigs = [1 * -xscale, 2 * -xscale, 3 * -xscale, 4 * -xscale, 5 * -xscale];
+        yfigs = [1 * -yscale, 2 * -yscale, 3 * -yscale, 4 * -yscale, 5 * -yscale];
+        ctx2.moveTo(50, xposn);
+        ctx2.lineTo(360, xposn);    //x axis
+        ctx2.moveTo(yposn, 350);
+        ctx2.lineTo(yposn, 40);     //y axis
+    }
+
+    for (let i = 0; i < 5; i++) {
+        ctx2.moveTo(xscaleposn[i], xposn);
+        ctx2.lineTo(xscaleposn[i], xposn + xoffset);   //x scale marks
+        ctx2.textAlign = "center";
+        ctx2.textAlign = xtxtalign;
+        ctx2.fillText(xfigs[i], xscaleposn[i], xposn + 3 * xoffset);   //x scale digits
+        ctx2.moveTo(yposn, yscaleposn[i]);
+        ctx2.lineTo(yposn + yoffset, yscaleposn[i]);   //y scale marks
+        ctx2.textAlign = ytxtalign;
+        ctx2.fillText(yfigs[i], yposn + 1.5 * yoffset, yscaleposn[i] + 5);     //y scale digits
+    }
+    ctx2.fillText('0', yposn + 1.5 * yoffset, xposn + 3 * xoffset);     //origin digit
+    ctx2.font = "30px Comic Sans MS";
+    ctx2.fillText(ltr1txt, xscaleposn[5], xposn + 3 * xoffset);    //x scale label
+    ctx2.fillText(ltr2txt, yposn + 1.5 * yoffset, yscaleposn[5]);  //y scale label
+    ctx2.font = "20px Comic Sans MS";
+    ctx2.fillText('Solution: (' + x + ', ' + y + ')', xscaleposn[3], yscaleposn[5]);  //Show solution on graph
+    ctx2.stroke();
+    for (let i = 0; i < 5; i++) {
+        ctx2.lineWidth = 0.4;
+        ctx2.moveTo(xscaleposn[i], xposn);
+        ctx2.lineTo(xscaleposn[i], yscaleposn[5]);
+        ctx2.moveTo(yposn, yscaleposn[i]);
+        ctx2.lineTo(xscaleposn[5], yscaleposn[i]);
+    }
+    ctx2.stroke();
+    for (let i = 0; i < 5; i++) {
+        ctx2.lineWidth = 0.1;
+        if (xpositive) {
+            ctx2.moveTo(xscaleposn[i] - 40, xposn);
+            ctx2.lineTo(xscaleposn[i] - 40, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 30, xposn);
+            ctx2.lineTo(xscaleposn[i] - 30, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 20, xposn);
+            ctx2.lineTo(xscaleposn[i] - 20, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 10, xposn);
+            ctx2.lineTo(xscaleposn[i] - 10, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 10, xposn);
+            ctx2.lineTo(xscaleposn[i] + 10, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 20, xposn);
+            ctx2.lineTo(xscaleposn[i] + 20, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 30, xposn);
+            ctx2.lineTo(xscaleposn[i] + 30, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 40, xposn);
+            ctx2.lineTo(xscaleposn[i] + 40, yscaleposn[5]);
+        } else {
+            ctx2.moveTo(xscaleposn[i] + 40, xposn);
+            ctx2.lineTo(xscaleposn[i] + 40, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 30, xposn);
+            ctx2.lineTo(xscaleposn[i] + 30, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 20, xposn);
+            ctx2.lineTo(xscaleposn[i] + 20, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 10, xposn);
+            ctx2.lineTo(xscaleposn[i] + 10, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 10, xposn);
+            ctx2.lineTo(xscaleposn[i] - 10, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 20, xposn);
+            ctx2.lineTo(xscaleposn[i] - 20, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 30, xposn);
+            ctx2.lineTo(xscaleposn[i] - 30, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 40, xposn);
+            ctx2.lineTo(xscaleposn[i] - 40, yscaleposn[5]);
+        }
+        if (ypositive) {
+            ctx2.moveTo(yposn, yscaleposn[i] - 10);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 10);
+            ctx2.moveTo(yposn, yscaleposn[i] - 20);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 20);
+            ctx2.moveTo(yposn, yscaleposn[i] - 30);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 30);
+            ctx2.moveTo(yposn, yscaleposn[i] - 40);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 40);
+            ctx2.moveTo(yposn, yscaleposn[i] + 10);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 10);
+            ctx2.moveTo(yposn, yscaleposn[i] + 20);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 20);
+            ctx2.moveTo(yposn, yscaleposn[i] + 30);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 30);
+            ctx2.moveTo(yposn, yscaleposn[i] + 40);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 40);
+        } else {
+            ctx2.moveTo(yposn, yscaleposn[i] + 10);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 10);
+            ctx2.moveTo(yposn, yscaleposn[i] + 20);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 20);
+            ctx2.moveTo(yposn, yscaleposn[i] + 30);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 30);
+            ctx2.moveTo(yposn, yscaleposn[i] + 40);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 40);
+            ctx2.moveTo(yposn, yscaleposn[i] - 10);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 10);
+            ctx2.moveTo(yposn, yscaleposn[i] - 20);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 20);
+            ctx2.moveTo(yposn, yscaleposn[i] - 30);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 30);
+            ctx2.moveTo(yposn, yscaleposn[i] - 40);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 40);
+        }
+    }
+    ctx2.stroke();
+}
+
+function coordCalc(x, y, xscale, yscale, xpositive, ypositive) {
+  //Used in Simultaneous Module to calc coords for graphical solution
+    var xcoord, ycoord;
+    if (xpositive && ypositive) {           //x +ve y +ve
+        xcoord = 50 * ((x / xscale) + 1);
+        ycoord = 400 - 50 * ((y / yscale) + 1);
+    } else if (xpositive && !ypositive) {    //x +ve y -ve
+        xcoord = 50 * ((x / xscale) + 1);
+        ycoord = 50 * ((y / -yscale) + 1);
+    } else if (!xpositive && ypositive) {    //x -ve y +ve
+        xcoord = 400 - 50 * ((x / -xscale) + 1);
+        ycoord = 400 - 50 * ((y / yscale) + 1);
+    } else {                        //x -ve y -ve
+        xcoord = 400 - 50 * ((x / -xscale) + 1);
+        ycoord = 50 * ((y / -yscale) + 1);
+    }
+    return {x: xcoord, y: ycoord};
 }

@@ -20,6 +20,21 @@
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link href='https://fonts.googleapis.com/css?family=STIX Two Math' rel='stylesheet'>
+<style>
+  table {   /*For coords table in Simultaneous Eqns module*/
+    margin-left: 75px;
+    margin-right: 75px;
+    margin-bottom: 30px;
+  }
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    width: 60px;
+    padding: 8px;
+  }
+</style>
+</head>
+</head>
 <script>
   var cubtri = new Image();
   cubtri.src = "images/cubtri.png";
@@ -159,7 +174,7 @@
       <button
         id="simultaneous" 
         class="btn btn-outline-primary btn-block" 
-        onclick="sumshow('simultaneous', '0.5', '0.5', '0.5', '0.5', '0.5', '0.5'); eqnformat('q'); solutionwin()">Simultaneous Equations
+        onclick="sumshow('simultaneous', '0.5', '0.5', '400', '400', '400', '400'); eqnformat('q'); solutionwin()">Simultaneous Equations
       </button>
       <button
         id="areavol" 
@@ -171,12 +186,12 @@
         class="btn btn-outline-primary btn-block" 
         onclick="window.open('testCreate.html','testCreate');">Test Designer
       </button>
-      <a href="MathsHelp/userhelp.html">
+      <div href="MathsHelp/userhelp.html">
         <button
           id="userhelp" 
           class="btn btn-outline-primary mt-2">User Help
         </button>
-      </a>
+      </div>
     </div>
     <div class="col-md-9">
       <h3 id="q"></h3>
@@ -199,7 +214,7 @@
         <canvas id="myCanvas" width="0.5" height="0.5" style="border:none"></canvas>
         <canvas id="myCanvas2" width="0.5" height="0.5" style="border:none"></canvas>
       </div>
-      <h4 id="a", style="color:red; visibility:hidden"></h4>
+      <h4 id="a" style="color:red; visibility:hidden"></h4>
     </div>
   </div>
   <footer class="container-fluid text-center">
