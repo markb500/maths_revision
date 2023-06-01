@@ -825,3 +825,93 @@ function coordCalc(x, y, xscale, yscale, xpositive, ypositive) {
     }
     return {x: xcoord, y: ycoord};
 }
+
+function scaleSet(x, y) {
+  var xpositive, ypositive, xscale, yscale;
+  if (x > 0) {
+      xpositive = true;
+  } else {
+      xpositive = false;
+  }
+  if (y > 0) {
+      ypositive = true;
+  } else {
+      ypositive = false;
+  }
+  if (Math.abs(x) < 4) {
+      xscale = 1;
+  } else if (Math.abs(x) < 9) {
+      xscale = 2;
+  } else if (Math.abs(x) < 21) {
+      xscale = 5;
+  } else if (Math.abs(x) < 41) {
+      xscale = 10;
+  } else {
+      xscale = 20;
+  }
+  if (Math.abs(y) < 4) {
+      yscale = 1;
+  } else if (Math.abs(y) < 9) {
+      yscale = 2;
+  } else if (Math.abs(y) < 21) {
+      yscale = 5;
+  } else if (Math.abs(y) < 41) {
+      yscale = 10;
+  } else {
+      yscale = 20;
+  }
+  return {xptve: xpositive, yptve: ypositive, x: xscale, y: yscale};
+}
+
+function coordTab(x, y, xcf1, ycf1, c1, xcf2, ycf2, c2, xscale, xpositive, sum) {
+  //Used in Simultaneous Module. Creates the coordinates for the coord tables
+  if (xpositive) {
+    xtab11 = x - xscale;
+    xtab21 = x - xscale;
+    if (sum === 1) {
+      ytab11 = dp((c1 - xcf1 * xtab11) / ycf1, 1, -1);
+      ytab21 = dp((c2 - xcf2 * xtab21) / ycf2, 1, -1);
+    } else {
+      ytab11 = dp(xcf1 * xtab11 + c1, 1, -1);
+      ytab21 = dp(xcf2 * xtab21 + c2, 1, -1);
+    }
+    xtab12 = x;
+    xtab22 = x;
+    ytab12 = y;
+    ytab22 = y;
+    xtab13 = x + xscale;
+    xtab23 = x + xscale;
+    if (sum === 1) {
+      ytab13 = dp((c1 - xcf1 * xtab13) / ycf1, 1, -1);
+      ytab23 = dp((c2 - xcf2 * xtab23) / ycf2, 1, -1);
+    } else {
+      ytab13 = dp(xcf1 * xtab13 + c1, 1, -1);
+      ytab23 = dp(xcf2 * xtab23 + c2, 1, -1);
+    }
+  } else {
+    xtab11 = x + xscale;
+    xtab21 = x + xscale;
+    if (sum === 1) {
+      ytab11 = dp((c1 - xcf1 * xtab11) / ycf1, 1, -1);
+      ytab21 = dp((c2 - xcf2 * xtab21) / ycf2, 1, -1);
+    } else {
+      ytab11 = dp(xcf1 * xtab11 + c1, 1, -1);
+      ytab21 = dp(xcf2 * xtab21 + c2, 1, -1);
+    }
+    xtab12 = x;
+    xtab22 = x;
+    ytab12 = y;
+    ytab22 = y;
+    xtab13 = x - xscale;
+    xtab23 = x - xscale;
+    if (sum === 1) {
+      ytab13 = dp((c1 - xcf1 * xtab13) / ycf1, 1, -1);
+      ytab23 = dp((c2 - xcf2 * xtab23) / ycf2, 1, -1);
+    } else {
+      ytab13 = dp(xcf1 * xtab13 + c1, 1, -1);
+      ytab23 = dp(xcf2 * xtab23 + c2, 1, -1);
+    }
+  }
+  return {x11: xtab11, x12: xtab12, x13: xtab13, y11: ytab11, y12: ytab12, y13: ytab13, 
+          x21: xtab21, x22: xtab22, x23: xtab23, y21: ytab21, y22: ytab22, y23: ytab23};
+}
