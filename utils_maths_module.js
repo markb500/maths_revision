@@ -915,3 +915,8 @@ function coordTab(x, y, xcf1, ycf1, c1, xcf2, ycf2, c2, xscale, xpositive, sum) 
   return {x11: xtab11, x12: xtab12, x13: xtab13, y11: ytab11, y12: ytab12, y13: ytab13, 
           x21: xtab21, x22: xtab22, x23: xtab23, y21: ytab21, y22: ytab22, y23: ytab23};
 }
+
+function bgSelect() {
+  //Changes background colour inn response to selection on dropdown list
+  document.querySelector(':root').style.setProperty('--bgcolour', document.getElementById("colourSelect").value);
+}
