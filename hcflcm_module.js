@@ -48,7 +48,7 @@ function hcflcm(ctx2) {
         //Choose group of symbols for use as variables
     do {
         ltrsel = rndgen(1, 3, 0, 1, -1);
-    } while (prevnum = ltrsel)
+    } while (prevnum === ltrsel)
     prevnum = ltrsel;
 
     switch (ltrsel) {
