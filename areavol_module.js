@@ -1,10 +1,10 @@
-var prevsum = 0, prev2sum = 0, a, b, c, d, e, f, g;
+var sumarr = [], sumq, suma, a, b, c, d, e, f, g;
 var units, unitsmath, sacub, satri, satube, saend, salgcyl, sasmcyl, sahd, sacone, vcub, vtri, vtube, vlgcyl, vsmcyl, vhd, vcone;
 function areavol(ctx) {
     //Uses 1 of 5 shapes with random dimensions added. Surface area & volume to be calculated.
     var sum, left = 75, top = 25, right = left + 350, bottom = top + 200;
-    var sumq = "";
-    var suma = "";
+    sumq = "";
+    suma = "";
     suma+= "<br>".repeat(13);
     switch(rndgen(1, 3, 0, 1, -1)) {      //1=m 2=cm 3=mm
         case 1:
@@ -24,11 +24,8 @@ function areavol(ctx) {
     sumq += "Find the surface area and volume of the object shown, " + 
                 "rounding your answers to 1 decimal place. Drawing is not to scale. <br><br>";
     
-    do {
-        sum = rndgen(1, 6, 0, 1, -1);
-    } while(sum === prevsum || sum === prev2sum)
-    prev2sum = prevsum;
-    prevsum = sum;
+    sumarr = QLimitRepeats(sumarr, 6);   //Ensures no repeat question until at least 50% of questions shown
+    sum = sumarr[sumarr.length - 1];
     switch(sum) {
         case 1:     //cubtri 
             do {

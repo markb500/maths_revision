@@ -1,12 +1,10 @@
+var sumarr = [], sumq, suma;
 function transposeII() {
     var sum;
     sumq = "";
     suma = "";
-    do {
-        sum = rndgen(1, 20, 0, 1, -1);
-    } while(sum === prevsum || sum === prev2sum)
-    prev2sum = prevsum;
-    prevsum = sum;
+    sumarr = QLimitRepeats(sumarr, 20);   //Ensures no repeat question until at least 50% of questions shown
+    sum = sumarr[sumarr.length - 1];
     switch(sum) {
         case 1:
             sumq += "Transpose the following to make b the subject.";

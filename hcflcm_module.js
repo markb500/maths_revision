@@ -1,4 +1,4 @@
-var term1 = [], term2 = [], term3 = [], hcf = [], lcm = [];
+var prevnum = 0, term1 = [], term2 = [], term3 = [], hcf = [], lcm = [];
 function hcflcm(ctx2) {
 //Creates an expression with 3 terms, each with up to 4 variables. Each variable has an index from 1 to 6
 //Solution requires HCF (GCD) and LCM to be found without use of a calculator (primes tree shown in soln),
@@ -46,7 +46,10 @@ function hcflcm(ctx2) {
         sign2 = "-";
     }
         //Choose group of symbols for use as variables
-    ltrsel = rndgen(1, 3, 0, 1, -1);
+    do {
+        ltrsel = rndgen(1, 3, 0, 1, -1);
+    } while (prevnum = ltrsel)
+    prevnum = ltrsel;
 
     switch (ltrsel) {
         case 1:

@@ -1,14 +1,11 @@
-var prevsum = 0, prev2sum = 0, sumq, suma, m, v, merr, mmax, vmax, verr, ke, keerr, qdata, sel, qty, rd;
+var sumarr = [], sumq, suma, m, v, merr, mmax, vmax, verr, ke, keerr, qdata, sel, qty, rd;
 function conv() {
     //Produces randomly selected problems in either error calculation or conversion
     var sum;
     sumq = "";
     suma = "";
-    do {
-        sum = rndgen(1, 6, 0, 1, -1);
-    } while(sum === prevsum || sum === prev2sum)
-    prev2sum = prevsum;
-    prevsum = sum;
+    sumarr = QLimitRepeats(sumarr, 6);   //Ensures no repeat question until at least 50% of questions shown
+    sum = sumarr[sumarr.length - 1];
     switch(sum) {
         case 1:     //Absolute & relative error
             var notesLink = "images/20200504-MathsBook6ErrConvv1_3-APO.pdf#page=3";

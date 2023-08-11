@@ -303,6 +303,300 @@ function primeTree(ctx2, term, primefacs, primesexp, x, y) {
   return str;
 }
 
+function scaleDraw(ctx2, xpositive, ypositive, xscale, yscale) {
+  //Use in Simultaneous Module to draw the graph axis
+    var xfigs, yfigs, xposn, yposn, xoffset, yoffset, xtxtalign, ytxtalign, xscaleposn, yscaleposn;
+
+    ctx2.font = "15px Comic Sans MS";
+    ctx2.lineWidth = 3;
+    ctx2.beginPath();
+    if (xpositive && ypositive) {
+        xposn = 350;
+        yposn = 50;
+        xoffset = 10;
+        yoffset = -10;
+        xtxtalign = 'top';
+        ytxtalign = 'right';
+        xscaleposn = [100, 150, 200, 250, 300, 350];
+        yscaleposn = [300, 250, 200, 150, 100, 50];
+        xfigs = [1 * xscale, 2 * xscale, 3 * xscale, 4 * xscale, 5 * xscale];
+        yfigs = [1 * yscale, 2 * yscale, 3 * yscale, 4 * yscale, 5 * yscale];
+        ctx2.moveTo(40, xposn);
+        ctx2.lineTo(350, xposn);    //x axis
+        ctx2.moveTo(yposn, 360);
+        ctx2.lineTo(yposn, 50);     //y axis
+    } else if (!xpositive && ypositive) {
+        xposn = 350;
+        yposn = 350;
+        xoffset = 10;
+        yoffset = 10;
+        xtxtalign = 'top';
+        ytxtalign = 'left';
+        xscaleposn = [300, 250, 200, 150, 100, 50];
+        yscaleposn = [300, 250, 200, 150, 100, 50];
+        xfigs = [1 * -xscale, 2 * -xscale, 3 * -xscale, 4 * -xscale, 5 * -xscale];
+        yfigs = [1 * yscale, 2 * yscale, 3 * yscale, 4 * yscale, 5 * yscale];
+        ctx2.moveTo(50, xposn);
+        ctx2.lineTo(360, xposn);    //x axis
+        ctx2.moveTo(yposn, 360);
+        ctx2.lineTo(yposn, 50);     //y axis
+    } else if (xpositive && !ypositive) {
+        xposn = 50;
+        yposn = 50;
+        xoffset = -10;
+        yoffset = -10;
+        xtxtalign = 'bottom';
+        ytxtalign = 'right';
+        xscaleposn = [100, 150, 200, 250, 300, 350];
+        yscaleposn = [100, 150, 200, 250, 300, 350];
+        xfigs = [1 * xscale, 2 * xscale, 3 * xscale, 4 * xscale, 5 * xscale];
+        yfigs = [1 * -yscale, 2 * -yscale, 3 * -yscale, 4 * -yscale, 5 * -yscale];
+        ctx2.moveTo(40, xposn);
+        ctx2.lineTo(350, xposn);    //x axis
+        ctx2.moveTo(yposn, 350);
+        ctx2.lineTo(yposn, 40);     //y axis
+    } else {
+        xposn = 50;
+        yposn = 350;
+        xoffset = -10;
+        yoffset = 10;
+        xtxtalign = 'bottom';
+        ytxtalign = 'left';
+        xscaleposn = [300, 250, 200, 150, 100, 50];
+        yscaleposn = [100, 150, 200, 250, 300, 350];
+        xfigs = [1 * -xscale, 2 * -xscale, 3 * -xscale, 4 * -xscale, 5 * -xscale];
+        yfigs = [1 * -yscale, 2 * -yscale, 3 * -yscale, 4 * -yscale, 5 * -yscale];
+        ctx2.moveTo(50, xposn);
+        ctx2.lineTo(360, xposn);    //x axis
+        ctx2.moveTo(yposn, 350);
+        ctx2.lineTo(yposn, 40);     //y axis
+    }
+
+    for (let i = 0; i < 5; i++) {
+        ctx2.moveTo(xscaleposn[i], xposn);
+        ctx2.lineTo(xscaleposn[i], xposn + xoffset);   //x scale marks
+        ctx2.textAlign = "center";
+        ctx2.textAlign = xtxtalign;
+        ctx2.fillText(xfigs[i], xscaleposn[i], xposn + 3 * xoffset);   //x scale digits
+        ctx2.moveTo(yposn, yscaleposn[i]);
+        ctx2.lineTo(yposn + yoffset, yscaleposn[i]);   //y scale marks
+        ctx2.textAlign = ytxtalign;
+        ctx2.fillText(yfigs[i], yposn + 1.5 * yoffset, yscaleposn[i] + 5);     //y scale digits
+    }
+    ctx2.fillText('0', yposn + 1.5 * yoffset, xposn + 3 * xoffset);     //origin digit
+    ctx2.font = "30px Comic Sans MS";
+    ctx2.fillText(ltr1txt, xscaleposn[5], xposn + 3 * xoffset);    //x scale label
+    ctx2.fillText(ltr2txt, yposn + 1.5 * yoffset, yscaleposn[5]);  //y scale label
+    ctx2.font = "20px Comic Sans MS";
+    ctx2.fillText('Solution: (' + x + ', ' + y + ')', xscaleposn[3], yscaleposn[5]);  //Show solution on graph
+    ctx2.stroke();
+    for (let i = 0; i < 5; i++) {
+        ctx2.lineWidth = 0.4;
+        ctx2.moveTo(xscaleposn[i], xposn);
+        ctx2.lineTo(xscaleposn[i], yscaleposn[5]);
+        ctx2.moveTo(yposn, yscaleposn[i]);
+        ctx2.lineTo(xscaleposn[5], yscaleposn[i]);
+    }
+    ctx2.stroke();
+    for (let i = 0; i < 5; i++) {
+        ctx2.lineWidth = 0.1;
+        if (xpositive) {
+            ctx2.moveTo(xscaleposn[i] - 40, xposn);
+            ctx2.lineTo(xscaleposn[i] - 40, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 30, xposn);
+            ctx2.lineTo(xscaleposn[i] - 30, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 20, xposn);
+            ctx2.lineTo(xscaleposn[i] - 20, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 10, xposn);
+            ctx2.lineTo(xscaleposn[i] - 10, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 10, xposn);
+            ctx2.lineTo(xscaleposn[i] + 10, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 20, xposn);
+            ctx2.lineTo(xscaleposn[i] + 20, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 30, xposn);
+            ctx2.lineTo(xscaleposn[i] + 30, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 40, xposn);
+            ctx2.lineTo(xscaleposn[i] + 40, yscaleposn[5]);
+        } else {
+            ctx2.moveTo(xscaleposn[i] + 40, xposn);
+            ctx2.lineTo(xscaleposn[i] + 40, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 30, xposn);
+            ctx2.lineTo(xscaleposn[i] + 30, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 20, xposn);
+            ctx2.lineTo(xscaleposn[i] + 20, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] + 10, xposn);
+            ctx2.lineTo(xscaleposn[i] + 10, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 10, xposn);
+            ctx2.lineTo(xscaleposn[i] - 10, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 20, xposn);
+            ctx2.lineTo(xscaleposn[i] - 20, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 30, xposn);
+            ctx2.lineTo(xscaleposn[i] - 30, yscaleposn[5]);
+            ctx2.moveTo(xscaleposn[i] - 40, xposn);
+            ctx2.lineTo(xscaleposn[i] - 40, yscaleposn[5]);
+        }
+        if (ypositive) {
+            ctx2.moveTo(yposn, yscaleposn[i] - 10);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 10);
+            ctx2.moveTo(yposn, yscaleposn[i] - 20);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 20);
+            ctx2.moveTo(yposn, yscaleposn[i] - 30);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 30);
+            ctx2.moveTo(yposn, yscaleposn[i] - 40);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 40);
+            ctx2.moveTo(yposn, yscaleposn[i] + 10);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 10);
+            ctx2.moveTo(yposn, yscaleposn[i] + 20);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 20);
+            ctx2.moveTo(yposn, yscaleposn[i] + 30);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 30);
+            ctx2.moveTo(yposn, yscaleposn[i] + 40);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 40);
+        } else {
+            ctx2.moveTo(yposn, yscaleposn[i] + 10);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 10);
+            ctx2.moveTo(yposn, yscaleposn[i] + 20);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 20);
+            ctx2.moveTo(yposn, yscaleposn[i] + 30);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 30);
+            ctx2.moveTo(yposn, yscaleposn[i] + 40);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 40);
+            ctx2.moveTo(yposn, yscaleposn[i] - 10);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 10);
+            ctx2.moveTo(yposn, yscaleposn[i] - 20);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 20);
+            ctx2.moveTo(yposn, yscaleposn[i] - 30);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 30);
+            ctx2.moveTo(yposn, yscaleposn[i] - 40);
+            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 40);
+        }
+    }
+    ctx2.stroke();
+}
+
+function coordCalc(x, y, xscale, yscale, xpositive, ypositive) {
+  //Used in Simultaneous Module to calc coords for graphical solution
+    var xcoord, ycoord;
+    if (xpositive && ypositive) {           //x +ve y +ve
+        xcoord = 50 * ((x / xscale) + 1);
+        ycoord = 400 - 50 * ((y / yscale) + 1);
+    } else if (xpositive && !ypositive) {    //x +ve y -ve
+        xcoord = 50 * ((x / xscale) + 1);
+        ycoord = 50 * ((y / -yscale) + 1);
+    } else if (!xpositive && ypositive) {    //x -ve y +ve
+        xcoord = 400 - 50 * ((x / -xscale) + 1);
+        ycoord = 400 - 50 * ((y / yscale) + 1);
+    } else {                        //x -ve y -ve
+        xcoord = 400 - 50 * ((x / -xscale) + 1);
+        ycoord = 50 * ((y / -yscale) + 1);
+    }
+    return {x: xcoord, y: ycoord};
+}
+
+function scaleSet(x, y) {
+  var xpositive, ypositive, xscale, yscale;
+  if (x > 0) {
+      xpositive = true;
+  } else {
+      xpositive = false;
+  }
+  if (y > 0) {
+      ypositive = true;
+  } else {
+      ypositive = false;
+  }
+  if (Math.abs(x) < 4) {
+      xscale = 1;
+  } else if (Math.abs(x) < 9) {
+      xscale = 2;
+  } else if (Math.abs(x) < 21) {
+      xscale = 5;
+  } else if (Math.abs(x) < 41) {
+      xscale = 10;
+  } else {
+      xscale = 20;
+  }
+  if (Math.abs(y) < 4) {
+      yscale = 1;
+  } else if (Math.abs(y) < 9) {
+      yscale = 2;
+  } else if (Math.abs(y) < 21) {
+      yscale = 5;
+  } else if (Math.abs(y) < 41) {
+      yscale = 10;
+  } else {
+      yscale = 20;
+  }
+  return {xptve: xpositive, yptve: ypositive, x: xscale, y: yscale};
+}
+
+function coordTab(x, y, xcf1, ycf1, c1, xcf2, ycf2, c2, xscale, xpositive, sum) {
+  //Used in Simultaneous Module. Creates the coordinates for the coord tables
+  if (xpositive) {
+    xtab11 = x - xscale;
+    xtab21 = x - xscale;
+    if (sum === 1) {
+      ytab11 = dp((c1 - xcf1 * xtab11) / ycf1, 1, -1);
+      ytab21 = dp((c2 - xcf2 * xtab21) / ycf2, 1, -1);
+    } else {
+      ytab11 = dp(xcf1 * xtab11 + c1, 1, -1);
+      ytab21 = dp(xcf2 * xtab21 + c2, 1, -1);
+    }
+    xtab12 = x;
+    xtab22 = x;
+    ytab12 = y;
+    ytab22 = y;
+    xtab13 = x + xscale;
+    xtab23 = x + xscale;
+    if (sum === 1) {
+      ytab13 = dp((c1 - xcf1 * xtab13) / ycf1, 1, -1);
+      ytab23 = dp((c2 - xcf2 * xtab23) / ycf2, 1, -1);
+    } else {
+      ytab13 = dp(xcf1 * xtab13 + c1, 1, -1);
+      ytab23 = dp(xcf2 * xtab23 + c2, 1, -1);
+    }
+  } else {
+    xtab11 = x + xscale;
+    xtab21 = x + xscale;
+    if (sum === 1) {
+      ytab11 = dp((c1 - xcf1 * xtab11) / ycf1, 1, -1);
+      ytab21 = dp((c2 - xcf2 * xtab21) / ycf2, 1, -1);
+    } else {
+      ytab11 = dp(xcf1 * xtab11 + c1, 1, -1);
+      ytab21 = dp(xcf2 * xtab21 + c2, 1, -1);
+    }
+    xtab12 = x;
+    xtab22 = x;
+    ytab12 = y;
+    ytab22 = y;
+    xtab13 = x - xscale;
+    xtab23 = x - xscale;
+    if (sum === 1) {
+      ytab13 = dp((c1 - xcf1 * xtab13) / ycf1, 1, -1);
+      ytab23 = dp((c2 - xcf2 * xtab23) / ycf2, 1, -1);
+    } else {
+      ytab13 = dp(xcf1 * xtab13 + c1, 1, -1);
+      ytab23 = dp(xcf2 * xtab23 + c2, 1, -1);
+    }
+  }
+  return {x11: xtab11, x12: xtab12, x13: xtab13, y11: ytab11, y12: ytab12, y13: ytab13, 
+          x21: xtab21, x22: xtab22, x23: xtab23, y21: ytab21, y22: ytab22, y23: ytab23};
+}
+
+function QLimitRepeats(arr, x) {
+  //Ensures no repeat question until at least 50% of questions in calling module have been shown.
+  //'arr' stores previous questions for calling module. 'x' is the number of questions in the calling module.
+  var sum;
+  do {
+    sum = rndgen(1, x, 0, 1, -1);
+  } while (arr.includes(sum))
+  arr.push(sum);
+  if (arr.length > Math.ceil(x/2)) {
+    arr.shift();
+  }
+  return arr;
+}
+
 function sumshow(sumType, h1, w1, h2, w2, h3, w3) {
   //Called by btn click in Index. Gets required sum data and sets up canvas if required.
   document.getElementById("myCanvas");
@@ -634,286 +928,6 @@ function testshow() {
     }
   }
   eqnformat('t'); //Ensures MathJax has formatted all sums in test
-}
-
-function scaleDraw(ctx2, xpositive, ypositive, xscale, yscale) {
-  //Use in Simultaneous Module to draw the graph axis
-    var xfigs, yfigs, xposn, yposn, xoffset, yoffset, xtxtalign, ytxtalign, xscaleposn, yscaleposn;
-
-    ctx2.font = "15px Comic Sans MS";
-    ctx2.lineWidth = 3;
-    ctx2.beginPath();
-    if (xpositive && ypositive) {
-        xposn = 350;
-        yposn = 50;
-        xoffset = 10;
-        yoffset = -10;
-        xtxtalign = 'top';
-        ytxtalign = 'right';
-        xscaleposn = [100, 150, 200, 250, 300, 350];
-        yscaleposn = [300, 250, 200, 150, 100, 50];
-        xfigs = [1 * xscale, 2 * xscale, 3 * xscale, 4 * xscale, 5 * xscale];
-        yfigs = [1 * yscale, 2 * yscale, 3 * yscale, 4 * yscale, 5 * yscale];
-        ctx2.moveTo(40, xposn);
-        ctx2.lineTo(350, xposn);    //x axis
-        ctx2.moveTo(yposn, 360);
-        ctx2.lineTo(yposn, 50);     //y axis
-    } else if (!xpositive && ypositive) {
-        xposn = 350;
-        yposn = 350;
-        xoffset = 10;
-        yoffset = 10;
-        xtxtalign = 'top';
-        ytxtalign = 'left';
-        xscaleposn = [300, 250, 200, 150, 100, 50];
-        yscaleposn = [300, 250, 200, 150, 100, 50];
-        xfigs = [1 * -xscale, 2 * -xscale, 3 * -xscale, 4 * -xscale, 5 * -xscale];
-        yfigs = [1 * yscale, 2 * yscale, 3 * yscale, 4 * yscale, 5 * yscale];
-        ctx2.moveTo(50, xposn);
-        ctx2.lineTo(360, xposn);    //x axis
-        ctx2.moveTo(yposn, 360);
-        ctx2.lineTo(yposn, 50);     //y axis
-    } else if (xpositive && !ypositive) {
-        xposn = 50;
-        yposn = 50;
-        xoffset = -10;
-        yoffset = -10;
-        xtxtalign = 'bottom';
-        ytxtalign = 'right';
-        xscaleposn = [100, 150, 200, 250, 300, 350];
-        yscaleposn = [100, 150, 200, 250, 300, 350];
-        xfigs = [1 * xscale, 2 * xscale, 3 * xscale, 4 * xscale, 5 * xscale];
-        yfigs = [1 * -yscale, 2 * -yscale, 3 * -yscale, 4 * -yscale, 5 * -yscale];
-        ctx2.moveTo(40, xposn);
-        ctx2.lineTo(350, xposn);    //x axis
-        ctx2.moveTo(yposn, 350);
-        ctx2.lineTo(yposn, 40);     //y axis
-    } else {
-        xposn = 50;
-        yposn = 350;
-        xoffset = -10;
-        yoffset = 10;
-        xtxtalign = 'bottom';
-        ytxtalign = 'left';
-        xscaleposn = [300, 250, 200, 150, 100, 50];
-        yscaleposn = [100, 150, 200, 250, 300, 350];
-        xfigs = [1 * -xscale, 2 * -xscale, 3 * -xscale, 4 * -xscale, 5 * -xscale];
-        yfigs = [1 * -yscale, 2 * -yscale, 3 * -yscale, 4 * -yscale, 5 * -yscale];
-        ctx2.moveTo(50, xposn);
-        ctx2.lineTo(360, xposn);    //x axis
-        ctx2.moveTo(yposn, 350);
-        ctx2.lineTo(yposn, 40);     //y axis
-    }
-
-    for (let i = 0; i < 5; i++) {
-        ctx2.moveTo(xscaleposn[i], xposn);
-        ctx2.lineTo(xscaleposn[i], xposn + xoffset);   //x scale marks
-        ctx2.textAlign = "center";
-        ctx2.textAlign = xtxtalign;
-        ctx2.fillText(xfigs[i], xscaleposn[i], xposn + 3 * xoffset);   //x scale digits
-        ctx2.moveTo(yposn, yscaleposn[i]);
-        ctx2.lineTo(yposn + yoffset, yscaleposn[i]);   //y scale marks
-        ctx2.textAlign = ytxtalign;
-        ctx2.fillText(yfigs[i], yposn + 1.5 * yoffset, yscaleposn[i] + 5);     //y scale digits
-    }
-    ctx2.fillText('0', yposn + 1.5 * yoffset, xposn + 3 * xoffset);     //origin digit
-    ctx2.font = "30px Comic Sans MS";
-    ctx2.fillText(ltr1txt, xscaleposn[5], xposn + 3 * xoffset);    //x scale label
-    ctx2.fillText(ltr2txt, yposn + 1.5 * yoffset, yscaleposn[5]);  //y scale label
-    ctx2.font = "20px Comic Sans MS";
-    ctx2.fillText('Solution: (' + x + ', ' + y + ')', xscaleposn[3], yscaleposn[5]);  //Show solution on graph
-    ctx2.stroke();
-    for (let i = 0; i < 5; i++) {
-        ctx2.lineWidth = 0.4;
-        ctx2.moveTo(xscaleposn[i], xposn);
-        ctx2.lineTo(xscaleposn[i], yscaleposn[5]);
-        ctx2.moveTo(yposn, yscaleposn[i]);
-        ctx2.lineTo(xscaleposn[5], yscaleposn[i]);
-    }
-    ctx2.stroke();
-    for (let i = 0; i < 5; i++) {
-        ctx2.lineWidth = 0.1;
-        if (xpositive) {
-            ctx2.moveTo(xscaleposn[i] - 40, xposn);
-            ctx2.lineTo(xscaleposn[i] - 40, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] - 30, xposn);
-            ctx2.lineTo(xscaleposn[i] - 30, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] - 20, xposn);
-            ctx2.lineTo(xscaleposn[i] - 20, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] - 10, xposn);
-            ctx2.lineTo(xscaleposn[i] - 10, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] + 10, xposn);
-            ctx2.lineTo(xscaleposn[i] + 10, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] + 20, xposn);
-            ctx2.lineTo(xscaleposn[i] + 20, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] + 30, xposn);
-            ctx2.lineTo(xscaleposn[i] + 30, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] + 40, xposn);
-            ctx2.lineTo(xscaleposn[i] + 40, yscaleposn[5]);
-        } else {
-            ctx2.moveTo(xscaleposn[i] + 40, xposn);
-            ctx2.lineTo(xscaleposn[i] + 40, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] + 30, xposn);
-            ctx2.lineTo(xscaleposn[i] + 30, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] + 20, xposn);
-            ctx2.lineTo(xscaleposn[i] + 20, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] + 10, xposn);
-            ctx2.lineTo(xscaleposn[i] + 10, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] - 10, xposn);
-            ctx2.lineTo(xscaleposn[i] - 10, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] - 20, xposn);
-            ctx2.lineTo(xscaleposn[i] - 20, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] - 30, xposn);
-            ctx2.lineTo(xscaleposn[i] - 30, yscaleposn[5]);
-            ctx2.moveTo(xscaleposn[i] - 40, xposn);
-            ctx2.lineTo(xscaleposn[i] - 40, yscaleposn[5]);
-        }
-        if (ypositive) {
-            ctx2.moveTo(yposn, yscaleposn[i] - 10);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 10);
-            ctx2.moveTo(yposn, yscaleposn[i] - 20);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 20);
-            ctx2.moveTo(yposn, yscaleposn[i] - 30);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 30);
-            ctx2.moveTo(yposn, yscaleposn[i] - 40);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 40);
-            ctx2.moveTo(yposn, yscaleposn[i] + 10);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 10);
-            ctx2.moveTo(yposn, yscaleposn[i] + 20);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 20);
-            ctx2.moveTo(yposn, yscaleposn[i] + 30);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 30);
-            ctx2.moveTo(yposn, yscaleposn[i] + 40);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 40);
-        } else {
-            ctx2.moveTo(yposn, yscaleposn[i] + 10);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 10);
-            ctx2.moveTo(yposn, yscaleposn[i] + 20);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 20);
-            ctx2.moveTo(yposn, yscaleposn[i] + 30);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 30);
-            ctx2.moveTo(yposn, yscaleposn[i] + 40);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] + 40);
-            ctx2.moveTo(yposn, yscaleposn[i] - 10);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 10);
-            ctx2.moveTo(yposn, yscaleposn[i] - 20);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 20);
-            ctx2.moveTo(yposn, yscaleposn[i] - 30);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 30);
-            ctx2.moveTo(yposn, yscaleposn[i] - 40);
-            ctx2.lineTo(xscaleposn[5], yscaleposn[i] - 40);
-        }
-    }
-    ctx2.stroke();
-}
-
-function coordCalc(x, y, xscale, yscale, xpositive, ypositive) {
-  //Used in Simultaneous Module to calc coords for graphical solution
-    var xcoord, ycoord;
-    if (xpositive && ypositive) {           //x +ve y +ve
-        xcoord = 50 * ((x / xscale) + 1);
-        ycoord = 400 - 50 * ((y / yscale) + 1);
-    } else if (xpositive && !ypositive) {    //x +ve y -ve
-        xcoord = 50 * ((x / xscale) + 1);
-        ycoord = 50 * ((y / -yscale) + 1);
-    } else if (!xpositive && ypositive) {    //x -ve y +ve
-        xcoord = 400 - 50 * ((x / -xscale) + 1);
-        ycoord = 400 - 50 * ((y / yscale) + 1);
-    } else {                        //x -ve y -ve
-        xcoord = 400 - 50 * ((x / -xscale) + 1);
-        ycoord = 50 * ((y / -yscale) + 1);
-    }
-    return {x: xcoord, y: ycoord};
-}
-
-function scaleSet(x, y) {
-  var xpositive, ypositive, xscale, yscale;
-  if (x > 0) {
-      xpositive = true;
-  } else {
-      xpositive = false;
-  }
-  if (y > 0) {
-      ypositive = true;
-  } else {
-      ypositive = false;
-  }
-  if (Math.abs(x) < 4) {
-      xscale = 1;
-  } else if (Math.abs(x) < 9) {
-      xscale = 2;
-  } else if (Math.abs(x) < 21) {
-      xscale = 5;
-  } else if (Math.abs(x) < 41) {
-      xscale = 10;
-  } else {
-      xscale = 20;
-  }
-  if (Math.abs(y) < 4) {
-      yscale = 1;
-  } else if (Math.abs(y) < 9) {
-      yscale = 2;
-  } else if (Math.abs(y) < 21) {
-      yscale = 5;
-  } else if (Math.abs(y) < 41) {
-      yscale = 10;
-  } else {
-      yscale = 20;
-  }
-  return {xptve: xpositive, yptve: ypositive, x: xscale, y: yscale};
-}
-
-function coordTab(x, y, xcf1, ycf1, c1, xcf2, ycf2, c2, xscale, xpositive, sum) {
-  //Used in Simultaneous Module. Creates the coordinates for the coord tables
-  if (xpositive) {
-    xtab11 = x - xscale;
-    xtab21 = x - xscale;
-    if (sum === 1) {
-      ytab11 = dp((c1 - xcf1 * xtab11) / ycf1, 1, -1);
-      ytab21 = dp((c2 - xcf2 * xtab21) / ycf2, 1, -1);
-    } else {
-      ytab11 = dp(xcf1 * xtab11 + c1, 1, -1);
-      ytab21 = dp(xcf2 * xtab21 + c2, 1, -1);
-    }
-    xtab12 = x;
-    xtab22 = x;
-    ytab12 = y;
-    ytab22 = y;
-    xtab13 = x + xscale;
-    xtab23 = x + xscale;
-    if (sum === 1) {
-      ytab13 = dp((c1 - xcf1 * xtab13) / ycf1, 1, -1);
-      ytab23 = dp((c2 - xcf2 * xtab23) / ycf2, 1, -1);
-    } else {
-      ytab13 = dp(xcf1 * xtab13 + c1, 1, -1);
-      ytab23 = dp(xcf2 * xtab23 + c2, 1, -1);
-    }
-  } else {
-    xtab11 = x + xscale;
-    xtab21 = x + xscale;
-    if (sum === 1) {
-      ytab11 = dp((c1 - xcf1 * xtab11) / ycf1, 1, -1);
-      ytab21 = dp((c2 - xcf2 * xtab21) / ycf2, 1, -1);
-    } else {
-      ytab11 = dp(xcf1 * xtab11 + c1, 1, -1);
-      ytab21 = dp(xcf2 * xtab21 + c2, 1, -1);
-    }
-    xtab12 = x;
-    xtab22 = x;
-    ytab12 = y;
-    ytab22 = y;
-    xtab13 = x - xscale;
-    xtab23 = x - xscale;
-    if (sum === 1) {
-      ytab13 = dp((c1 - xcf1 * xtab13) / ycf1, 1, -1);
-      ytab23 = dp((c2 - xcf2 * xtab23) / ycf2, 1, -1);
-    } else {
-      ytab13 = dp(xcf1 * xtab13 + c1, 1, -1);
-      ytab23 = dp(xcf2 * xtab23 + c2, 1, -1);
-    }
-  }
-  return {x11: xtab11, x12: xtab12, x13: xtab13, y11: ytab11, y12: ytab12, y13: ytab13, 
-          x21: xtab21, x22: xtab22, x23: xtab23, y21: ytab21, y22: ytab22, y23: ytab23};
 }
 
 function bgSelect() {

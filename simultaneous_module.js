@@ -1,7 +1,7 @@
 var x, y, xcf1, xcf2, ycf1, ycf2, c1, c2, ltr1, ltr2, xcross1, xcross2, ycross1, ycross2, xouter1, xouter2, youter1, youter2;
 var xcross1status, xcross2status, ycross1status, ycross2status, xouter1status, xouter2status, youter1status, youter2status;
 function simultaneous(ctx2) {
-    var scale, tab, xtab11, ytab11, xtab12, ytab12, xtab13, ytab13, xtab21, ytab21, xtab22, ytab22, xtab23, ytab23;
+    var scale, tab;
     sumq = "";
     suma = "<br><br><br><br><br><br><br><br><br><br><br><br><br><br>";  //So starts below canvas
     switch(rndgen(1, 4, 0, 1, -1)) {

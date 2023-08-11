@@ -1,4 +1,4 @@
-var prevsum = 0, prev2sum = 0, a, b, c, d;
+var sumarr = [], a, b, c, d;
 
 function noncalc() {
 //Creates questions in 1 of 4 randomly chosen forms to be solved without use of calculator.
@@ -9,12 +9,9 @@ function noncalc() {
 //type5 - a / b + c(d + e)
     sumq = "";
     suma = "";
-    do {
-        var sumChoice = rndgen(1, 5, 0, 1, -1);
-    } while(sumChoice === prevsum || sumChoice === prev2sum)
-    prev2sum = prevsum;
-    prevsum = sumChoice;
-    switch (sumChoice) {
+    sumarr = QLimitRepeats(sumarr, 5);   //Ensures no repeat question until at least 50% of questions shown
+    sum = sumarr[sumarr.length - 1];
+    switch (sum) {
         case 1:
             //a x b + c / d
             do {
