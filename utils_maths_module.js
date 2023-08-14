@@ -597,7 +597,7 @@ function QLimitRepeats(arr, x) {
   return arr;
 }
 
-function sumshow(sumType, h1, w1, h2, w2, h3, w3) {
+function sumshow(sumType, h1, w1, h2, w2) {
   //Called by btn click in Index. Gets required sum data and sets up canvas if required.
   document.getElementById("myCanvas");
   myCanvas.height = h1;
@@ -662,9 +662,9 @@ function sumshow(sumType, h1, w1, h2, w2, h3, w3) {
   if (SolnWin) {      //Prior to 1st open of SolnWin, the .closed test is null
     if (!SolnWin.closed) {  //Once SolnWin has been opened, SolnWin is true whether open or closed so need this extra test
       SolnWin.document.getElementById("myCanvas3");
-      SolnWin.myCanvas3.height = h3;
-      SolnWin.myCanvas3.width = w3;
-      if (h3 > 0.5) { //Otherwise, assume no solution image so myCanvas2 not defined
+      SolnWin.myCanvas3.height = h2;
+      SolnWin.myCanvas3.width = w2;
+      if (h2 > 0.5) { //Otherwise, assume no solution image so myCanvas2 not defined
         var ctx3 = SolnWin.myCanvas3.getContext('2d');
         ctx3.drawImage(myCanvas2, 0, 0);
       }
