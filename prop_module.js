@@ -16,11 +16,6 @@ function prop() {
                 do {
                     x2 = dp(Math.pow(y2 / k, 2), 2, 2);
                 } while (x2 === x1);
-                // if (y1 / Math.sqrt(x1) - dp(y1 / Math.sqrt(x1), 0, -1) === 0) {
-                //     sumq += " and use it to find the value of x ";
-                // } else {
-                //     sumq += " (to 3 decimal places) and use it to find the value of x ";
-                // }
                 sumq += "If y is proportional to &#8730x and y&nbsp;=&nbsp;" + y1 + " when x&nbsp;=&nbsp;" + x1 + ", find the ";
                 sumq += "constant of proportionality";
                 if (y1 / Math.sqrt(x1) - dp(y1 / Math.sqrt(x1), 0, -1) === 0) {
