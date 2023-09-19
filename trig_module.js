@@ -52,11 +52,7 @@ function trig(ctx) {
     ctx.arc(left, bottom, 40, 0, -(Math.PI/180) * ang, true);
                                     //arc(x, y, radius, startAngle, endAngle, counterclockwise)
     ctx.stroke();
-    //Solution doesn't wrap around canvas due to alignment of '=' so this forces solution
-    //below canvas when window too narrow.
-    // if(window.innerWidth < 995) {
-        suma += "<br>".repeat(16);
-    // }
+    suma += "<br>".repeat(16);
     switch(rndgen(1, 6, 0, 1, -1)) {      //Select which 2 params to show on tri
         case 1:     //1-adj opp
             ctx.font = "20px Comic Sans MS";
