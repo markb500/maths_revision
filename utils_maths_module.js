@@ -789,7 +789,7 @@ function sumAuth(sumtype, qnum) {
   button.id = 'btn' + qnum;
   button.classList.add("pagebreak");  //css in testQsheet used to hide button in print version
   button.classList.add("qbtn");       //css testQsheet used to put Q text, 'modify' btn and canvas in a row
-  button.innerText = 'Modify This Sum';
+  button.innerText = 'Modify This Question';
   button.addEventListener('click', (event) => {
     var whichQ = parseInt(event.target.id.replace('btn', ''));  //Gets the question number for use in element id
     testsumshow(sumtype, whichQ);
