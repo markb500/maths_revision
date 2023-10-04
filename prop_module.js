@@ -264,7 +264,7 @@ function prop() {
             } while (k - dp(k, 0, -1) !== 0 || k === 1)  //Ensures k has no decimal places and isn't 1
             sumq += "The intensity (I) of an aircraft landing light is inversely proportional to the square of the distance (d) from the light.<br>";
             sumq += "a. Calculate the constant of proportionality if the intensity is " + intensity + "&nbsp;candela (cd) at a distance of " + distance + "&nbsp;m.<br>";
-            sumq += "b. Use the constant of proportionality calculated above to find distance at which the intensity is " + (intensity + intensityadj) + 
+            sumq += "b. Use the constant of proportionality calculated above to find the distance at which the intensity is " + (intensity + intensityadj) + 
                         "&nbsp;cd, rounding your answer to 2 decimal places.";
             suma += "$$\\begin{aligned}a.\\ \\ I&\\propto \\frac{1}{d}\\\\[5pt]";
             suma += "I&=\\frac{k}{d}\\\\[5pt]";
