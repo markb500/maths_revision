@@ -302,7 +302,7 @@ function prop() {
             suma += "\\end{aligned}$$";
             break;
     }
-    var notesLink = "images/20200505-MathsBook8Proportionv1_3-APO.pdf#page=4";
+    var notesLink = "images/20230706-MathsBook08Proportionv1_6-APO.pdf#page=4";
     var sumArray = [sumq, suma, notesLink];
     return sumArray;
 }
