@@ -650,6 +650,10 @@ function sumshow(sumType, h1, w1, h2, w2) {
     case "prop":
       sumData = prop();
       break;
+    case "sincosgraph":
+      ctx2 = myCanvas2.getContext('2d');
+      sumData = sincosgraph(ctx2);
+      break;
     case "simultaneous":
       ctx2 = myCanvas2.getContext('2d');
       sumData = simultaneous(ctx2);
@@ -732,10 +736,17 @@ function testsumshow(sumType, qnum) {
       ctx2 = document.getElementById('myCanvasqa' + qnum).getContext('2d');
       sumData = trig(ctx);
       sumData[0] = sumData[0] + '<br>'.repeat(10);    //Makes space for canvas between this and next q, in pre-print view
-      ctx2.drawImage(document.getElementById('myCanvasq' + qnum), 0, 0);
+      ctx2.drawImage(document.getElementById('myCanvasq' + qnum), 0, 0);  //Shows q image in solution
       break;
     case "prop":
       sumData = prop();
+      break;
+    case "sincosgraph":
+      document.getElementById('myCanvasa' + qnum).height="600";
+      document.getElementById('myCanvasa' + qnum).width="600";
+      document.getElementById('myCanvasa' + qnum).style.visibility = 'visible';
+      ctx2 = document.getElementById('myCanvasa' + qnum).getContext('2d');
+      sumData = sincosgraph(ctx2);
       break;
     case "simultaneous":
       document.getElementById('myCanvasa' + qnum).style.visibility = 'visible';
@@ -757,7 +768,7 @@ function testsumshow(sumType, qnum) {
       sumData = areavol(ctx);
       sumData[0] = sumData[0] + '<br>'.repeat(6);    //Makes space for canvas between this and next q, in pre-print view
       sumData[1] = sumData[1].replace("<br>".repeat(13), "");     //Removes lead in <br>'s from solution
-      ctx2.drawImage(document.getElementById('myCanvasq' + qnum), 0, 0);
+      ctx2.drawImage(document.getElementById('myCanvasq' + qnum), 0, 0);  //Shows q image in solution
       break;
   }
 }
@@ -915,6 +926,10 @@ function testshow() {
         break;
       case "Proportionality":
         sumAuth('prop', qnum);
+        qnum = qnum + 1;
+        break;
+      case "Sin/Cos Graphs":
+        sumAuth('sincosgraph', qnum);
         qnum = qnum + 1;
         break;
       case "Simultaneous Equations":

@@ -1,12 +1,12 @@
-var sumarr = [], sumq, suma, num1, num2, pct, rat1, rat2, rat3;
+var sumarrpercent = [], sumq, suma, num1, num2, pct, rat1, rat2, rat3;
 var ratunits = ["&nbsp;m", "&nbsp;N", "&nbsp;kg", "£", "\\ m", "\\ N", "\\ kg", "£"], iratunit;
 function percentratio() {
     //Randomly selects from 6 questions (5 percent & 1 ratio). Units randomly changed in ration question.
     var sum, comdenom;
     sumq = "";
     suma = "";
-    sumarr = QLimitRepeats(sumarr, 6);   //Ensures no repeat question until at least 50% of questions shown
-    sum = sumarr[sumarr.length - 1];
+    sumarrpercent = QLimitRepeats(sumarrpercent, 6);   //Ensures no repeat question until at least 50% of questions shown
+    sum = sumarrpercent[sumarrpercent.length - 1];
     switch(sum) {
         case 1://Without using a calculator, express num1 as a percentage of num2 to 1 dp.
             var notesLink = "images/20200427-MathsBook1BasicNumv1_3-APO.pdf#page=50";

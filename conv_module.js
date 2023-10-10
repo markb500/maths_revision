@@ -1,11 +1,11 @@
-var sumarr = [], sumq, suma, m, v, merr, mmax, vmax, verr, ke, keerr, qdata, sel, qty, rd;
+var sumarrconv = [], sumq, suma, m, v, merr, mmax, vmax, verr, ke, keerr, qdata, sel, qty, rd;
 function conv() {
     //Produces randomly selected problems in either error calculation or conversion
     var sum;
     sumq = "";
     suma = "";
-    sumarr = QLimitRepeats(sumarr, 6);   //Ensures no repeat question until at least 50% of questions shown
-    sum = sumarr[sumarr.length - 1];
+    sumarrconv = QLimitRepeats(sumarrconv, 6);   //Ensures no repeat question until at least 50% of questions shown
+    sum = sumarrconv[sumarrconv.length - 1];
     switch(sum) {
         case 1:     //Absolute & relative error
             var notesLink = "images/20200504-MathsBook6ErrConvv1_3-APO.pdf#page=3";

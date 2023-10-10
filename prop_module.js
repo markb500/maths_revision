@@ -1,12 +1,12 @@
-var sumarr = [], sumq, suma;
+var sumarrprop = [], sumq, suma;
 function prop() {
     //Produces randomly selected problems in proportionality
     var sum, k, engspeed, propspeed, engspeedadj, propspeedadj, drag, dragadj, velocity, veladj, friction, frictionadj, weight, weightadj;
     var volume, pressure, volumeadj, pressureadj, current, resistance, currentadj, resistanceadj, intensity, distance, intensityadj, distanceadj;
     sumq = "";
     suma = "";
-    sumarr = QLimitRepeats(sumarr, 12);   //Ensures no repeat question until at least 50% of questions shown
-    sum = sumarr[sumarr.length - 1];
+    sumarrprop = QLimitRepeats(sumarrprop, 12);   //Ensures no repeat question until at least 50% of questions shown
+    sum = sumarrprop[sumarrprop.length - 1];
     switch(sum) {
         case 1:
             do {
