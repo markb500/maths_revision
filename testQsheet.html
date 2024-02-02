@@ -108,10 +108,18 @@
   <style>
     @media print {
       .pagebreak {
+        position: relative;
+        height: 99vh;
+        width: 100vw;
+        /* border: 1px solid; */
         page-break-after: always;
       }
-      button.pagebreak {display: none;}
-      p.pagebreak {display: none;}
+      .midpage {
+        position: absolute;
+        top: 50%;
+      }
+      button.noshow {display: none;}
+      p.noshow {display: none;}
     }
     .wrapper {overflow: hidden;}
     .qbtn {float: left;}  /*these 2 put the question text, 'modify' btn and canvas in the same row*/
@@ -130,14 +138,14 @@
   </style>
 </head>
 <body onload="testshow()">
-  <div class="py-3 jumbotron text-left" style="margin-bottom:0; background-image:url(images/typhoon_line.png); 
+  <div class="py-3 jumbotron text-left" style="page-break-after: always; margin-bottom:0; background-image:url(images/typhoon_line.png); 
                   background-size:50%; background-repeat:no-repeat; background-position:right center">
     <img id="cosbadge" width="98" height="135" class="float-left" src="images\Cosbadge.png" alt="cosbadge">
     <h1>&nbsp;&nbsp;&nbsp;Student Name _______________<br>
       &nbsp;&nbsp;&nbsp;Course&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _______________<br>
       &nbsp;&nbsp;&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _______________</h1>
   </div>
-  <p class="pagebreak">Each question has a <q>Modify This Sum</q> button which allows you to select a sum of the required difficulty or format.<br>
+  <p class="noshow">Each question has a <q>Modify This Sum</q> button which allows you to select a sum of the required difficulty or format.<br>
                         Once all questions are in the required form, select Print as normal (eg: ctrl-p) and check the layout in print preview before printing.<br>
                         The solutions are placed, in order, following the final question<br>
                         This message and the <q>Modify This Sum</q> buttons will not appear in the final document.

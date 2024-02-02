@@ -735,8 +735,9 @@ function testsumshow(sumType, qnum) {
       document.getElementById('myCanvasqa' + qnum).width = '450';
       ctx2 = document.getElementById('myCanvasqa' + qnum).getContext('2d');
       sumData = trig(ctx);
-      sumData[0] = sumData[0] + '<br>'.repeat(10);    //Makes space for canvas between this and next q, in pre-print view
+      // sumData[0] = sumData[0] + '<br>'.repeat(10);    //Makes space for canvas between this and next q, in pre-print view
       ctx2.drawImage(document.getElementById('myCanvasq' + qnum), 0, 0);  //Shows q image in solution
+      sumData[1] = sumData[1].replace("<br>".repeat(16), "");     //Removes lead in <br>'s from solution
       break;
     case "prop":
       sumData = prop();
@@ -766,7 +767,7 @@ function testsumshow(sumType, qnum) {
       document.getElementById('myCanvasqa' + qnum).width = '500';
       ctx2 = document.getElementById('myCanvasqa' + qnum).getContext('2d');
       sumData = areavol(ctx);
-      sumData[0] = sumData[0] + '<br>'.repeat(6);    //Makes space for canvas between this and next q, in pre-print view
+      // sumData[0] = sumData[0] + '<br>'.repeat(6);    //Makes space for canvas between this and next q, in pre-print view
       sumData[1] = sumData[1].replace("<br>".repeat(13), "");     //Removes lead in <br>'s from solution
       ctx2.drawImage(document.getElementById('myCanvasq' + qnum), 0, 0);  //Shows q image in solution
       break;
@@ -783,83 +784,124 @@ function sumAuth(sumtype, qnum) {
   //    Inside this, 'aele1outer' & qnum
   //        Inside this, 'ai' & qnum and 'myCanvasqa' & qnum. These 2 in-line (from css in testqsheet)
   //    After aele1outer but still inside 'adiv' & qnum, 'myCanvasa' & qnum and 'aii' & qnum
-  var qdiv = document.createElement('div');
-  qdiv.id = 'qdiv' + qnum;
-  qdiv.classList.add('pagebreak');    //css in testQsheet used to add pagebreak in print version
-  qdiv.classList.add('wrapper');      //css in testQsheet used to put Q text, 'modify' btn and canvas in a row
-  qdiv.style.margin = '20px';
-  document.getElementById('q').appendChild(qdiv);
 
-  var qele = document.createElement('h3');
-  qele.id = 'q' + qnum;
-  qele.style.width = '50%';
-  qele.classList.add("qbtn");         //css testQsheet used to put Q text, 'modify' btn and canvas in a row
-  document.getElementById('qdiv' + qnum).appendChild(qele);
+  function createpage(type) {
+    if (type === 'q') {
+      var qdiv = document.createElement('div');
+      qdiv.id = 'qdiv' + qnum;
+      qdiv.classList.add('wrapper');      //css in testQsheet used to put Q text, 'modify' btn and canvas in a row
+      qdiv.style.margin = '20px';
+      if (!(qnum % 2 === 0)) {
+        document.getElementById('qpagediv' + qnum + (qnum + 1)).appendChild(qdiv);
+      } else {
+        qdiv.classList.add('midpage');
+        document.getElementById('qpagediv' + (qnum - 1) + qnum).appendChild(qdiv);
+      }
+      var qele = document.createElement('h3');
+      qele.id = 'q' + qnum;
+      qele.style.width = '50%';
+      qele.classList.add("qbtn");         //css testQsheet used to put Q text, 'modify' btn and canvas in a row
+      document.getElementById('qdiv' + qnum).appendChild(qele);
 
-  var button = document.createElement('button');
-  button.id = 'btn' + qnum;
-  button.classList.add("pagebreak");  //css in testQsheet used to hide button in print version
-  button.classList.add("qbtn");       //css testQsheet used to put Q text, 'modify' btn and canvas in a row
-  button.innerText = 'Modify This Question';
-  button.addEventListener('click', (event) => {
-    var whichQ = parseInt(event.target.id.replace('btn', ''));  //Gets the question number for use in element id
-    testsumshow(sumtype, whichQ);
-    document.getElementById('q' + whichQ).innerHTML = whichQ + '.  ' + sumData[0];
-    document.getElementById('ai' + (whichQ)).innerHTML = whichQ + '.  ' + sumData[0] + "<br>";
-    document.getElementById('aii' + (whichQ)).innerHTML = sumData[1];
-    eqnformat();                      //Re-runs mathjax formatting
-  })
-  document.getElementById("qdiv" + qnum).appendChild(button);
+      var button = document.createElement('button');
+      button.id = 'btn' + qnum;
+      button.classList.add("noshow");  //css in testQsheet used to hide button in print version
+      button.classList.add("qbtn");       //css testQsheet used to put Q text, 'modify' btn and canvas in a row
+      button.innerText = 'Modify This Question';
+      button.addEventListener('click', (event) => {
+        var whichQ = parseInt(event.target.id.replace('btn', ''));  //Gets the question number for use in element id
+        testsumshow(sumtype, whichQ);
+        document.getElementById('q' + whichQ).innerHTML = whichQ + '.  ' + sumData[0];
+        document.getElementById('ai' + (whichQ)).innerHTML = whichQ + '.  ' + sumData[0] + "<br>";
+        document.getElementById('aii' + (whichQ)).innerHTML = sumData[1];
+        eqnformat();                      //Re-runs mathjax formatting
+      })
+      document.getElementById("qdiv" + qnum).appendChild(button);
 
-  var canvasq = document.createElement("canvas");
-  canvasq.id = 'myCanvasq' + qnum;
-  canvasq.height = '0.5';
-  canvasq.width = '0.5';
-  canvasq.classList.add("qbtn");
-  canvasq.style.visibility = 'hidden';
-  document.getElementById('qdiv' + qnum).appendChild(canvasq);
+      var canvasq = document.createElement("canvas");
+      canvasq.id = 'myCanvasq' + qnum;
+      canvasq.height = '0.5';
+      canvasq.width = '0.5';
+      canvasq.classList.add("qbtn");
+      canvasq.style.visibility = 'hidden';
+      document.getElementById('qdiv' + qnum).appendChild(canvasq);
+    } else if (type === 'a') {
+      var adiv = document.createElement('div');
+      adiv.id = 'adiv' + qnum;
+      adiv.style.margin = '20px';
+      if (!(qnum % 2 === 0)) {
+        document.getElementById('apagediv' + qnum + (qnum + 1)).appendChild(adiv);
+      } else {
+        adiv.classList.add('midpage');
+        document.getElementById('apagediv' + (qnum - 1) + qnum).appendChild(adiv);
+      }
 
-  var adiv = document.createElement('div');
-  adiv.id = 'adiv' + qnum;
-  adiv.classList.add('pagebreak');    //css in testQsheet used to add pagebreak in print version
-  adiv.style.margin = '20px';
-  document.getElementById('a').appendChild(adiv);
+      var aele1outer = document.createElement("div");
+      aele1outer.id = 'aele1outer' + qnum;
+      aele1outer.classList.add('wrapper');      //css in testQsheet used to put Q text, 'modify' btn and canvas in a row
+      document.getElementById('adiv' + qnum).appendChild(aele1outer);
 
-  var aele1outer = document.createElement("div");
-  aele1outer.id = 'aele1outer' + qnum;
-  aele1outer.classList.add('wrapper');      //css in testQsheet used to put Q text, 'modify' btn and canvas in a row
-  document.getElementById('adiv' + qnum).appendChild(aele1outer);
+      var aele1 = document.createElement("h3");
+      aele1.id = 'ai' + (qnum);
+      aele1.style.width = '50%';
+      aele1.classList.add("qbtn");         //css in testQsheet used to put Q text, 'modify' btn and canvas in a row
+      document.getElementById('aele1outer' + qnum).appendChild(aele1);  //For answer section, question written in black
 
-  var aele1 = document.createElement("h3");
-  aele1.id = 'ai' + (qnum);
-  aele1.style.width = '50%';
-  aele1.classList.add("qbtn");         //css in testQsheet used to put Q text, 'modify' btn and canvas in a row
-  document.getElementById('aele1outer' + qnum).appendChild(aele1);  //For answer section, question written in black
+      var canvasqa = document.createElement("canvas");
+      canvasqa.id = 'myCanvasqa' + qnum;
+      canvasqa.height = '0.5';
+      canvasqa.width = '0.5';
+      canvasqa.style.visibility = 'hidden';
+      canvasqa.classList.add("qbtn");
+      document.getElementById('aele1outer' + qnum).appendChild(canvasqa);
 
-  var canvasqa = document.createElement("canvas");
-  canvasqa.id = 'myCanvasqa' + qnum;
-  canvasqa.height = '0.5';
-  canvasqa.width = '0.5';
-  canvasqa.style.visibility = 'hidden';
-  canvasqa.classList.add("qbtn");
-  document.getElementById('aele1outer' + qnum).appendChild(canvasqa);
+      var canvasa = document.createElement("canvas");
+      canvasa.id = 'myCanvasa' + qnum;
+      canvasa.height = '0.5';
+      canvasa.width = '0.5';
+      document.getElementById('adiv' + qnum).appendChild(canvasa);
 
-  var canvasa = document.createElement("canvas");
-  canvasa.id = 'myCanvasa' + qnum;
-  canvasa.height = '0.5';
-  canvasa.width = '0.5';
-  document.getElementById('adiv' + qnum).appendChild(canvasa);
-
-  var aele2 = document.createElement("h3");
-  aele2.id = 'aii' + (qnum);
-  aele2.style = "color:red";
-  aele2.style.margin = '20px';
-  document.getElementById('adiv' + qnum).appendChild(aele2);  //For answer section, solution written in red
-
+      var aele2 = document.createElement("h3");
+      aele2.id = 'aii' + (qnum);
+      aele2.style = "color:red";
+      aele2.style.margin = '20px';
+      document.getElementById('adiv' + qnum).appendChild(aele2);  //For answer section, solution written in red
+    }
+  }
+  if (!(qnum % 2 === 0)) {
+    var qpagediv = document.createElement('div');
+    qpagediv.id = 'qpagediv' + qnum + (qnum + 1);
+    qpagediv.classList.add('pagebreak');
+    document.getElementById('q').appendChild(qpagediv);
+  }
+  createpage('q');  
+  
+  if (!(qnum % 2 === 0)) {
+    var apagediv = document.createElement('div');
+    apagediv.id = 'apagediv' + qnum + (qnum + 1);
+    apagediv.classList.add('pagebreak');
+    document.getElementById('a').appendChild(apagediv);
+  }
+  createpage('a');
+  
   testsumshow(sumtype, qnum);
   document.getElementById('q' + qnum).innerHTML = qnum + ".  " + sumData[0];
   document.getElementById('ai' + (qnum)).innerHTML = qnum + ".  " + sumData[0] + '<br>';
   document.getElementById('aii' + (qnum)).innerHTML = sumData[1];
+  
+  if (qnum % 2 === 0) {
+    var adivoddsize = document.getElementById('adiv' + (qnum - 1)).offsetHeight;  // Height of odd-numbered answer div, inc question
+    var adivevensize = document.getElementById('adiv' + qnum).offsetHeight;   // Height of even-numbered answer div, inc question
+    if (adivoddsize > 300 || adivevensize > 300) {
+      document.getElementById('apagediv' + (qnum - 1) + qnum).style = 'page-break-after:avoid';   //Allow apagediv to stretch
+      document.getElementById('adiv' + (qnum - 1)).classList.add('pagebreak');  // Ensure odd and even answers on different pages
+      document.getElementById('adiv' + (qnum)).classList.remove('midpage');   // Remove requirement for even answer  to start at 50% height of apagediv
+      var page = document.createElement('div');
+      page.id = 'page' + qnum;
+      page.classList.add('pagebreak');
+      document.getElementById('a').appendChild(page);   // Add empty div after apagediv to force pagebreak
+    }
+  }
 }
 
 function testshow() {
