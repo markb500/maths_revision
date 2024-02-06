@@ -597,6 +597,13 @@ function QLimitRepeats(arr, x) {
   return arr;
 }
 
+function isCanvasBlank(canvas) {
+  // returns true if all color channels in each pixel are 0 (or "blank")
+  return !canvas.getContext('2d')
+    .getImageData(0, 0, canvas.width, canvas.height).data
+    .some(channel => channel !== 0);
+}
+
 function sumshow(sumType, h1, w1, h2, w2) {
   //Called by btn click in Index. Gets required sum data and sets up canvas if required.
   document.getElementById("myCanvas");
@@ -888,6 +895,25 @@ function sumAuth(sumtype, qnum) {
   document.getElementById('q' + qnum).innerHTML = qnum + ".  " + sumData[0];
   document.getElementById('ai' + (qnum)).innerHTML = qnum + ".  " + sumData[0] + '<br>';
   document.getElementById('aii' + (qnum)).innerHTML = sumData[1];
+  
+  if (document.getElementById('myCanvasq' + qnum).height > 1) {
+    if (isCanvasBlank(document.getElementById('myCanvasq' + qnum))) {
+      document.getElementById('myCanvasq' + qnum).height = "0.5";
+      document.getElementById('myCanvasq' + qnum).width = "0.5";
+    }
+  }
+  if (document.getElementById('myCanvasqa' + qnum).height > 1) {
+    if (isCanvasBlank(document.getElementById('myCanvasqa' + qnum))) {
+      document.getElementById('myCanvasqa' + qnum).height = "0.5";
+      document.getElementById('myCanvasqa' + qnum).width = "0.5";
+    }
+  }
+  if (document.getElementById('myCanvasa' + qnum).height > 1) {
+    if (isCanvasBlank(document.getElementById('myCanvasa' + qnum))) {
+      document.getElementById('myCanvasa' + qnum).height = "0.5";
+      document.getElementById('myCanvasa' + qnum).width = "0.5";
+    }
+  }
   
   if (qnum % 2 === 0) {
     var adivoddsize = document.getElementById('adiv' + (qnum - 1)).offsetHeight;  // Height of odd-numbered answer div, inc question
