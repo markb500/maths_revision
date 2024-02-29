@@ -261,22 +261,23 @@ function prop() {
                     intensityadj = rndgen(-90, 90, 0, 1, -1);
                 } while (intensityadj === 0 || intensity + intensityadj < 800 || intensity + intensityadj > 900);
                 distance = rndgen(10, 80, 0, 1, -1);
-                k = intensity * distance;
+                k = intensity * Math.pow(distance, 2);
             } while (k - dp(k, 0, -1) !== 0 || k === 1)  //Ensures k has no decimal places and isn't 1
             sumq += "The intensity (I) of an aircraft landing light is inversely proportional to the square of the distance (d) from the light.<br>";
             sumq += "a. Calculate the constant of proportionality if the intensity is " + intensity + "&nbsp;candela (cd) at a distance of " + distance + "&nbsp;m.<br>";
             sumq += "b. Use the constant of proportionality calculated above to find the distance at which the intensity is " + (intensity + intensityadj) + 
                         "&nbsp;cd, rounding your answer to 2 decimal places.";
-            suma += "$$\\begin{aligned}a.\\ \\ I&\\propto \\frac{1}{d}\\\\[5pt]";
-            suma += "I&=\\frac{k}{d}\\\\[5pt]";
-            suma += "Id&=k\\\\[5pt]";
-            suma += intensity + "\\times" + distance + "&=k\\\\[5pt]";
+            suma += "$$\\begin{aligned}a.\\ \\ I&\\propto \\frac{1}{d^2}\\\\[5pt]";
+            suma += "I&=\\frac{k}{d^2}\\\\[5pt]";
+            suma += "Id^2&=k\\\\[5pt]";
+            suma += intensity + "\\times" + distance + "^2&=k\\\\[5pt]";
             suma += "\\underline{\\mathbf{" + thouSep(k, "\\ ") + "}}&=k\\\\[5pt]";
-            suma += "b.\\ \\ I&=\\frac{k}{d}\\\\[5pt]";
-            suma += "Id&=k\\\\[5pt]";
-            suma += "d&=\\frac{k}{I}\\\\[5pt]";
-            suma += "&=\\frac{" + thouSep(k, "\\ ") + "}{" + dp((intensity + intensityadj), 2, -1) + "}\\\\[5pt]";
-            suma += "&=\\underline{\\mathbf{" + dp(k / (intensity + intensityadj), 2, 2) + "\\ m}}\\ (2\\ dp)";
+            suma += "b.\\ \\ I&=\\frac{k}{d^2}\\\\[5pt]";
+            suma += "Id^2&=k\\\\[5pt]";
+            suma += "d^2&=\\frac{k}{I}\\\\[5pt]";
+            suma += "d&=\\sqrt{\\frac{k}{I}}\\\\[5pt]";
+            suma += "&=\\sqrt{\\frac{" + thouSep(k, "\\ ") + "}{" + dp((intensity + intensityadj), 2, -1) + "}}\\\\[5pt]";
+            suma += "&=\\underline{\\mathbf{" + dp(Math.sqrt(k / (intensity + intensityadj)), 2, 2) + "\\ m}}\\ (2\\ dp)";
             suma += "\\end{aligned}$$";
             break;
         case 12:
@@ -286,20 +287,20 @@ function prop() {
                     distanceadj = rndgen(-65, 65, 0, 1, -1);
                 } while (distanceadj === 0 || distance + distanceadj < 10 || distance + distanceadj > 80);
                 intensity = rndgen(800, 900, 0, 5, -1);
-                k = intensity * distance;
+                k = intensity * Math.pow(distance, 2);
             } while (k - dp(k, 0, -1) !== 0 || k === 1)  //Ensures k has no decimal places and isn't 1
             sumq += "The intensity (I) of an aircraft landing light is inversely proportional to the square of the distance (d) from the light.<br>";
             sumq += "a. Calculate the constant of proportionality if the intensity is " + intensity + "&nbsp;candela (cd) at a distance of " + distance + "&nbsp;m.<br>";
             sumq += "b. Use the constant of proportionality calculated above to find the intensity of light at a distance of " + (distance + distanceadj) + 
                         "&nbsp;m, rounding your answer to 2 decimal places.";
-            suma += "$$\\begin{aligned}a.\\ \\ I&\\propto \\frac{1}{d}\\\\[5pt]";
-            suma += "I&=\\frac{k}{d}\\\\[5pt]";
-            suma += "Id&=k\\\\[5pt]";
-            suma += intensity + "\\times" + distance + "&=k\\\\[5pt]";
+            suma += "$$\\begin{aligned}a.\\ \\ I&\\propto \\frac{1}{d^2}\\\\[5pt]";
+            suma += "I&=\\frac{k}{d^2}\\\\[5pt]";
+            suma += "Id^2&=k\\\\[5pt]";
+            suma += intensity + "\\times" + distance + "^2&=k\\\\[5pt]";
             suma += "\\underline{\\mathbf{" + thouSep(k, "\\ ") + "}}&=k\\\\[5pt]";
-            suma += "b.\\ \\ I&=\\frac{k}{d}\\\\[5pt]";
-            suma += "&=\\frac{" + thouSep(k, "\\ ") + "}{" + (distance + distanceadj) + "}\\\\[5pt]";
-            suma += "&=\\underline{\\mathbf{" + thouSep(dp(k / (distance + distanceadj), 2, 2), "\\ ") + "\\ cd}}\\ (2\\ dp)";
+            suma += "b.\\ \\ I&=\\frac{k}{d^2}\\\\[5pt]";
+            suma += "&=\\frac{" + thouSep(k, "\\ ") + "}{" + (distance + distanceadj) + "^2}\\\\[5pt]";
+            suma += "&=\\underline{\\mathbf{" + thouSep(dp(k / (Math.pow(distance + distanceadj, 2)), 2, 2), "\\ ") + "\\ cd}}\\ (2\\ dp)";
             suma += "\\end{aligned}$$";
             break;
     }
