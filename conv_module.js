@@ -4,10 +4,10 @@ function conv() {
     var sum;
     sumq = "";
     suma = "";
-    sumarrconv = QLimitRepeats(sumarrconv, 6);   //Ensures no repeat question until at least 50% of questions shown
+    sumarrconv = QLimitRepeats(sumarrconv, 7);   //Ensures no repeat question until at least 50% of questions shown
     sum = sumarrconv[sumarrconv.length - 1];
     switch(sum) {
-        case 1:     //Absolute & relative error
+        case 1:     //Absolute & relative error - Kinetic Energy
             var notesLink = "images/20200504-MathsBook6ErrConvv1_3-APO.pdf#page=3";
             m = rndgen(10, 30, 0, 1, -1);
             v = rndgen(2, 8, 0, 1, -1);
@@ -39,11 +39,38 @@ function conv() {
                     keerr + "-" + ke + "}{" + ke + "}\\times100=\\underline{\\mathbf{" + 
                     dp(((keerr-ke)/ke)*100, 2, 2) + "\\ \\%\\ (2\\ dp)}}\\end{aligned}$$";
             break;
-        case 2:     //Conversion, quantity to mass, mass to quantity, mass to mass or quantity to quantity
-        case 3:
+        case 2: //Absolute & relative error - Power
+            var notesLink = "images/20200504-MathsBook6ErrConvv1_3-APO.pdf#page=3";
+            var I = rndgen(2, 13, 0, 1, -1);
+            var R = rndgen(50, 100, 0, 5, -1);
+            var Ierr = rndgen(2, 8, 0, 1, -1);
+            var Rerr = rndgen(3, 12, 0, 1, -1);
+            var Imax = dp(I * (1 + Ierr / 100), 3, -1);
+            var Rmax = dp(R * (1 + Rerr / 100), 3, -1);
+            var P = dp(Math.pow(I, 2) * R, 3, -1);
+            var Perr = dp(Math.pow(Imax, 2) * Rmax, 3, -1);
+            sumq += "Power in an electrical circuit can be calculated using the formula P=I<sup>2</sup>R<br>";
+            sumq += "where I is current in Amps (A) and R is resistance in Ohms (&Omega;). ";
+            sumq += "If the current of " + I + " A is known with an accuracy of &#177; " + Ierr + 
+                        " % and the resistance " + R + " &Omega; is known with an accuracy of &#177; " + Rerr + 
+                        " %, calculate the maximum possible absolute error and the maximum possible relative error " + 
+                        "percentage of the power, rounding each to 2 decimal places.";
+            suma += "$$\\begin{aligned}Expected\\ P&=I^2R\\\\[5pt]";
+            suma += "&=" + I + "^2\\times" + R + "\\\\[5pt]";
+            suma += "&=" + thouSep(P, "\\ ") + "\\ W\\\\[25pt]";
+            suma += "Max\\ value\\ I&=" + I + "\\times\\left(1+\\frac{" + Ierr + "}{100}\\right)=" + Imax + "\\ A\\\\[5pt]";
+            suma += "Max\\ value\\ R&=" + R + "\\times\\left(1+\\frac{" + Rerr + "}{100}\\right)=" + Rmax + "\\ \\Omega\\\\[5pt]";
+            suma += "Max\\ possible\\ P&=I^2R=" + Imax + "^2\\times" + Rmax + "=" + thouSep(Perr, "\\ ") + "\\ W\\\\[25pt]";
+            suma += "Absolute\\ error&=Actual-Expected=" + thouSep(Perr, "\\ ") + "-" + thouSep(P, "\\ ") + "=\\underline{\\mathbf{" + dp(Perr - P, 2, 2) + "\\ W\\ (2\\ dp)}}\\\\[10pt]";
+            suma += "Relative\\ error&=\\frac{Actual-Expected}{Expected}\\times100=\\frac{" + thouSep(Perr, "\\ ") + "-" + thouSep(P, "\\ ") + "}{" + thouSep(P, "\\ ") + "}\\times100=\\underline{\\mathbf{" + 
+                        dp(((Perr-P)/P)*100, 2, 2) + "\\ \\%\\ (2\\ dp)}}";
+            suma += "\\end{aligned}$$";
+            break;
+        case 3:     //Conversion, quantity to mass, mass to quantity, mass to mass or quantity to quantity
         case 4:
         case 5:
         case 6:
+        case 7:
             qdata = [   //Units convert from, units convert to, min qty, max qty, conversion factor, rd role in calc
                 ["Gallons (UK)", "Pounds", 500, 1500, 10.02, "mult"],
                 ["Pounds", "Gallons (UK)", 4000, 12000, 0.0998, "divide"],
