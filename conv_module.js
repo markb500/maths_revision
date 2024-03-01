@@ -49,7 +49,7 @@ function conv() {
             var Rmax = dp(R * (1 + Rerr / 100), 3, -1);
             var P = dp(Math.pow(I, 2) * R, 3, -1);
             var Perr = dp(Math.pow(Imax, 2) * Rmax, 3, -1);
-            sumq += "Power in an electrical circuit can be calculated<br>using the formula P=I<sup>2</sup>R";
+            sumq += "Power in an electrical circuit can be calculated<br>using the formula P=I<sup>2</sup>R<br>";
             sumq += "where I is current in Amps (A) and R is resistance in Ohms (&Omega;). ";
             sumq += "If the current of " + I + " A is known with an accuracy of &#177; " + Ierr + 
                         " % and the resistance of " + R + " &Omega; is known with an accuracy of &#177; " + Rerr + 
