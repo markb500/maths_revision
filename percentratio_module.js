@@ -66,22 +66,21 @@ function percentratio() {
                 sumq += "Without using a calculator, divide " + num1 + ratunits[iratunit] + 
                             " in the ratio " + rat1 + ":" + rat2 + ":" + rat3 + ".";
                 suma += "$$" + rat1 + "+" + rat2 + "+" + rat3 + "=" + (rat1 + rat2 + rat3) + "$$";
-                // suma += "$$" + dp(10.32, 0, -1) + 10.32.toFixed() + "$$";
-                suma += "$$" + num1 + "\\times \\frac{" + rat1 + "}{" + (rat1 + rat2 + rat3) + "}=" + 
+                suma += "$$ \\frac{" + num1 + "}{" + (rat1 + rat2 + rat3) + "} \\times" + rat1 + "=" + 
                             dp(num1 * (rat1 / (rat1 + rat2 + rat3)), 0, -1) + ratunits[iratunit + 4] + "$$";
-                suma += "$$" + num1 + "\\times \\frac{" + rat2 + "}{" + (rat1 + rat2 + rat3) + "}=" + 
+                suma += "$$ \\frac{" + num1 + "}{" + (rat1 + rat2 + rat3) + "} \\times" + rat2 + "=" + 
                             dp(num1 * (rat2 / (rat1 + rat2 + rat3)), 0, -1) + ratunits[iratunit + 4] + "$$";
-                suma += "$$" + num1 + "\\times \\frac{" + rat3 + "}{" + (rat1 + rat2 + rat3) + "}=" + 
+                suma += "$$ \\frac{" + num1 + "}{" + (rat1 + rat2 + rat3) + "} \\times" + rat3 + "=" + 
                             dp(num1 * (rat3 / (rat1 + rat2 + rat3)), 0, -1) + ratunits[iratunit + 4] + "$$";
             } else {
                 sumq += "Without using a calculator, divide " + ratunits[iratunit] + num1.toFixed(2) + 
                             " in the ratio " + rat1 + ":" + rat2 + ":" + rat3 + ".";
                 suma += "$$" + rat1 + "+" + rat2 + "+" + rat3 + "=" + (rat1 + rat2 + rat3) + "$$";
-                suma += "$$" + num1 + "\\times \\frac{" + rat1 + "}{" + (rat1 + rat2 + rat3) + "}=" + ratunits[iratunit + 4] + 
+                suma += "$$ \\frac{" + num1 + "}{" + (rat1 + rat2 + rat3) + "} \\times" + rat1 + "=" + ratunits[iratunit + 4] + 
                             dp(num1 * (rat1 / (rat1 + rat2 + rat3)), 2, 2) + "$$";
-                suma += "$$" + num1 + "\\times \\frac{" + rat2 + "}{" + (rat1 + rat2 + rat3) + "}=" + ratunits[iratunit + 4] + 
+                suma += "$$ \\frac{" + num1 + "}{" + (rat1 + rat2 + rat3) + "} \\times" + rat2 + "=" + ratunits[iratunit + 4] + 
                             dp(num1 * (rat2 / (rat1 + rat2 + rat3)), 2, 2) + "$$";
-                suma += "$$" + num1 + "\\times \\frac{" + rat3 + "}{" + (rat1 + rat2 + rat3) + "}=" + ratunits[iratunit + 4] + 
+                suma += "$$ \\frac{" + num1 + "}{" + (rat1 + rat2 + rat3) + "} \\times" + rat3 + "=" + ratunits[iratunit + 4] + 
                             dp(num1 * (rat3 / (rat1 + rat2 + rat3)), 2, 2) + "$$";
             }
             break;
