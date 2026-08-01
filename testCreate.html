@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Designer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body { padding: 20px; }
+    .topic-list { max-height: 420px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; }
+    .list-group-item { cursor: grab; user-select: none; }
+    .list-group-item.dragging { opacity: 0.5; background: #e9ecef; }
+    .list-group-item.drag-over { border-top: 3px solid #007bff; }
+  </style>
+</head>
+<body>
+  <h3>Test Designer</h3>
+  <p>Click topics on the left to add them. Drag items in the right-hand list to change the order.</p>
+
+  <div class="row">
+    <div class="col-md-5">
+      <h5>Available topics</h5>
+      <div id="available" class="list-group topic-list">
+        <button class="list-group-item list-group-item-action" data-topic="Non-Calculator Maths">Non-Calculator Maths</button>
+        <button class="list-group-item list-group-item-action" data-topic="Fractions">Fractions</button>
+        <button class="list-group-item list-group-item-action" data-topic="Percentages &amp; Ratios">Percentages & Ratios</button>
+        <button class="list-group-item list-group-item-action" data-topic="Indices">Indices</button>
+        <button class="list-group-item list-group-item-action" data-topic="Number Form">Number Form</button>
+        <button class="list-group-item list-group-item-action" data-topic="HCF/LCM">HCF/LCM</button>
+        <button class="list-group-item list-group-item-action" data-topic="Algebra: Solve Equation">Algebra: Solve Equation</button>
+        <button class="list-group-item list-group-item-action" data-topic="Quadratics">Quadratics</button>
+        <button class="list-group-item list-group-item-action" data-topic="Transposition I">Transposition I</button>
+        <button class="list-group-item list-group-item-action" data-topic="Transposition II">Transposition II</button>
+        <button class="list-group-item list-group-item-action" data-topic="Errors &amp; Conversions">Errors & Conversions</button>
+        <button class="list-group-item list-group-item-action" data-topic="RA Triangle Trigonometry">RA Triangle Trigonometry</button>
+        <button class="list-group-item list-group-item-action" data-topic="Proportionality">Proportionality</button>
+        <button class="list-group-item list-group-item-action" data-topic="Sin/Cos Graphs">Sin/Cos Graphs</button>
+        <button class="list-group-item list-group-item-action" data-topic="Simultaneous Equations">Simultaneous Equations</button>
+        <button class="list-group-item list-group-item-action" data-topic="Surface Area &amp; Volume">Surface Area & Volume</button>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <h5>Test order <small class="text-muted">(drag to reorder)</small></h5>
+      <div id="selected" class="list-group topic-list"></div>
+      <button id="clearBtn" class="btn btn-outline-secondary btn-sm mt-2">Clear list</button>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button id="createBtn" class="btn btn-primary">Create Test</button>
+    <button class="btn btn-outline-secondary" onclick="window.close();">Cancel</button>
+  </div>
+
+  <script>
+    const available = document.getElementById('available');
+    const selected = document.getElementById('selected');
+    let testArr = [];
+    let dragSrc = null;
+
+    // Add topic from left list
+    available.addEventListener('click', (e) => {
+      if (!e.target.matches('button')) return;
+      const topic = e.target.dataset.topic;
+      testArr.push(topic);
+      addSelectedItem(topic);
+    });
+
+    function addSelectedItem(topic) {
+      const item = document.createElement('button');
+      item.className = 'list-group-item list-group-item-action';
+      item.textContent = topic;
+      item.draggable = true;
+
+      // Remove on click (optional – keep if you want click-to-remove)
+      item.addEventListener('click', (e) => {
+        // Only remove if it was a plain click, not the end of a drag
+        if (e.detail === 0) return; // ignore synthetic clicks from drag
+        const idx = Array.from(selected.children).indexOf(item);
+        if (idx > -1) {
+          testArr.splice(idx, 1);
+          item.remove();
+        }
+      });
+
+      // Drag events
+      item.addEventListener('dragstart', (e) => {
+        dragSrc = item;
+        item.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      item.addEventListener('dragend', () => {
+        item.classList.remove('dragging');
+        selected.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+        dragSrc = null;
+        // Rebuild testArr from current DOM order
+        testArr = Array.from(selected.children).map(el => el.textContent);
+      });
+
+      item.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      });
+
+      item.addEventListener('dragenter', (e) => {
+        e.preventDefault();
+        if (item !== dragSrc) item.classList.add('drag-over');
+      });
+
+      item.addEventListener('dragleave', () => {
+        item.classList.remove('drag-over');
+      });
+
+      item.addEventListener('drop', (e) => {
+        e.preventDefault();
+        item.classList.remove('drag-over');
+        if (dragSrc && dragSrc !== item) {
+          const children = Array.from(selected.children);
+          const from = children.indexOf(dragSrc);
+          const to = children.indexOf(item);
+          if (from < to) {
+            selected.insertBefore(dragSrc, item.nextSibling);
+          } else {
+            selected.insertBefore(dragSrc, item);
+          }
+        }
+      });
+
+      selected.appendChild(item);
+    }
+
+    // Clear list
+    document.getElementById('clearBtn').onclick = () => {
+      testArr = [];
+      selected.innerHTML = '';
+    };
+
+    // Create test
+    document.getElementById('createBtn').onclick = () => {
+      // Ensure array matches current visual order
+      testArr = Array.from(selected.children).map(el => el.textContent);
+      if (testArr.length === 0) {
+        alert('Please add at least one topic.');
+        return;
+      }
+      sessionStorage.setItem('testArr', JSON.stringify(testArr));
+      window.open('index.html?test=1', 'testView');
+      window.close();
+    };
+  </script>
+</body>
+</html>

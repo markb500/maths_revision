@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Maths Revision App</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=STIX+Two+Math" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script 
+    id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      "fast-preview": { disabled: true },
+      tex2jax: { preview: "none" }
+    });
+  </script>
+
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+<div class="py-3 jumbotron bg-transparent text-center" style="margin-bottom:0; background-image:url(images/typhoon_line.png); 
+                background-size:50%; background-repeat:no-repeat; background-position:right center">
+  <img id="cosbadge" width="98" height="135" class="float-left" src="images/Cosbadge.png" alt="cosbadge">
+  <h1><br>Maths Revision Questions<br><br></h1>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      "fast-preview": {disabled: true},
+      tex2jax: {preview: "none"}
+    });
+</script>
+
+<div class="container" style="margin-top:30px">
+  <div class="row">
+    <div class="col-md-3">
+      <p id="topicInstruction">Select a question topic. Each click generates a new question.</p>
+
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="noncalc">Non-Calculator Maths</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="fracs">Fractions</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="percentratio">Percentages & Ratios</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="indices">Indices</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="numform">Number Form</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="hcflcm">HCF/LCM</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="solve1">Algebra: Solve Equation</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="quadratics">Quadratics</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="transposeI">Transposition I</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="transposeII">Transposition II</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="conv">Errors & Conversions</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="trig">RA Triangle Trigonometry</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="prop">Proportionality</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="sincosgraph">Sin/Cos Graphs</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="simultaneous">Simultaneous Equations</button>
+      <button class="btn btn-outline-primary btn-sm btn-block topic-btn" data-topic="areavol">Surface Area & Volume</button>
+      <button id="testdesign" class="btn btn-outline-primary btn-sm btn-block mt-2"onclick="window.open('testCreate.html','testCreate');">Test Designer</button>
+      <a href="MathsHelp/userhelp.html" target="_blank">
+        <button id="userhelp" class="btn btn-outline-primary btn-sm mt-2">User Help</button>
+      </a>
+      <div>
+      <p><br>Select background colour.</p>
+      <select id="colourSelect">
+        <option value="#ffffff">White</option>
+        <option value="hsla(220,60%,70%,0.3)">Blue</option>
+        <option value="hsla(0,60%,70%,0.3)">Red</option>
+        <option value="hsla(120,60%,70%,0.3)">Green</option>
+      </select>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <h3 id="q"></h3>
+      <p>
+        <a id="noteslink" style="visibility:hidden" href="#">Link to Training Notes</a>
+      </p>
+      <!-- 'views' variable managed in the eqnformat() function in maths_utils_module -->
+      <button id="btnSoln" class="btn btn-outline-primary btn-sm m-3" style="visibility:hidden">
+      <span class="font-weight-bold">Show/Hide Solution</span><br>Views: <span id="viewCount">0</span>
+      </button>
+      <div style="clear: both; margin-top: 20px;">
+        <canvas id="myCanvas" width="0.5" height="0.5" style="border:none; display:block; margin: 0 auto;"></canvas>
+        <canvas id="myCanvas2" width="0.5" height="0.5" style="border:none;"></canvas>
+      </div>
+      <h4 id="a" style="color:red; clear: both; margin-top: 20px;"></h4>
+    </div>
+  </div>
+  <footer class="container-fluid text-center">
+  
+    <a href="https://librecounter.org/referer/show" target="_blank">
+    <img src="https://librecounter.org/counter.svg" referrerPolicy="unsafe-url" />
+    </a>
+  
+    <p>Designed to aid revision for the maths element of the RAF Aerospace Eng Tech Course.</p>
+    <p>Designed by Mark Butler, APO, RAF Cosford</p>
+  </footer>
+</div>
+</body>
+</html>
