@@ -1,7 +1,7 @@
 // js/generators/simultaneous.js
-import * as utils from '../utils.js';
+// Clean ES module
+import { rndgen, dp, gcd2, cfchk } from '../utils.js';
 
-// ---------- helpers ----------
 function scaleSet(x, y) {
   //For each scale, determines if +ve or -ve and sets scale steps
   const xpositive = x > 0;
@@ -39,19 +39,19 @@ function coordTab(x, y, xcf1, ycf1, c1, xcf2, ycf2, c2, xscale, xpositive, sumTy
   }
 
   if (sumType === 1) {
-    ytab11 = utils.dp((c1 - xcf1 * xtab11) / ycf1, 1, -1);
+    ytab11 = dp((c1 - xcf1 * xtab11) / ycf1, 1, -1);
     ytab12 = y;
-    ytab13 = utils.dp((c1 - xcf1 * xtab13) / ycf1, 1, -1);
-    ytab21 = utils.dp((c2 - xcf2 * xtab21) / ycf2, 1, -1);
+    ytab13 = dp((c1 - xcf1 * xtab13) / ycf1, 1, -1);
+    ytab21 = dp((c2 - xcf2 * xtab21) / ycf2, 1, -1);
     ytab22 = y;
-    ytab23 = utils.dp((c2 - xcf2 * xtab23) / ycf2, 1, -1);
+    ytab23 = dp((c2 - xcf2 * xtab23) / ycf2, 1, -1);
   } else {
-    ytab11 = utils.dp(xcf1 * xtab11 + c1, 1, -1);
+    ytab11 = dp(xcf1 * xtab11 + c1, 1, -1);
     ytab12 = y;
-    ytab13 = utils.dp(xcf1 * xtab13 + c1, 1, -1);
-    ytab21 = utils.dp(xcf2 * xtab21 + c2, 1, -1);
+    ytab13 = dp(xcf1 * xtab13 + c1, 1, -1);
+    ytab21 = dp(xcf2 * xtab21 + c2, 1, -1);
     ytab22 = y;
-    ytab23 = utils.dp(xcf2 * xtab23 + c2, 1, -1);
+    ytab23 = dp(xcf2 * xtab23 + c2, 1, -1);
   }
 
   return {
@@ -216,14 +216,14 @@ export function generate() {
   let ltr1, ltr2, ltr1txt, ltr2txt;
   let scale, tab;
 
-  switch (utils.rndgen(1, 4, 0, 1, -1)) {
+  switch (rndgen(1, 4, 0, 1, -1)) {
     case 1: ltr1 = "x"; ltr2 = "y"; ltr1txt = "x"; ltr2txt = "y"; break;
     case 2: ltr1 = "s"; ltr2 = "t"; ltr1txt = "s"; ltr2txt = "t"; break;
     case 3: ltr1 = "a"; ltr2 = "b"; ltr1txt = "a"; ltr2txt = "b"; break;
     case 4: ltr1 = "\\omega"; ltr2 = "\\varepsilon"; ltr1txt = "ω"; ltr2txt = "ε"; break;
   }
 
-  const method = utils.rndgen(1, 2, 0, 1, -1); // 1 = elimination, 2 = substitution
+  const method = rndgen(1, 2, 0, 1, -1); // 1 = elimination, 2 = substitution
 
   // Generation with constraints + outside-point rejection
   if (method === 1) {
@@ -231,22 +231,22 @@ export function generate() {
     do {
       do {
         do {
-          y = utils.rndgen(-6, 6, 0, 1, -1);
+          y = rndgen(-6, 6, 0, 1, -1);
         } while (y === 0 || Math.abs(y) === 1);
 
-        do { xcf1 = utils.rndgen(-9, 9, 0, 1, -1); } while (xcf1 === 0);
-        do { ycf1 = utils.rndgen(-9, 9, 0, 1, -1); } while (ycf1 === 0);
-        do { c1  = utils.rndgen(-5, 25, 0, 1, -1); } while (c1 === 0);
+        do { xcf1 = rndgen(-9, 9, 0, 1, -1); } while (xcf1 === 0);
+        do { ycf1 = rndgen(-9, 9, 0, 1, -1); } while (ycf1 === 0);
+        do { c1  = rndgen(-5, 25, 0, 1, -1); } while (c1 === 0);
 
         x = (c1 - ycf1 * y) / xcf1;
       } while (!Number.isInteger(x) || x === 0 || Math.abs(x) === 1);
 
       do {
-        xcf2 = utils.rndgen(-9, 9, 0, 1, -1);
+        xcf2 = rndgen(-9, 9, 0, 1, -1);
       } while (xcf2 === 0 || Math.abs(xcf2) === Math.abs(xcf1));
 
       do {
-        ycf2 = utils.rndgen(-9, 9, 0, 1, -1);
+        ycf2 = rndgen(-9, 9, 0, 1, -1);
       } while (ycf2 === 0 || Math.abs(ycf2) === Math.abs(ycf1));
 
       c2 = xcf2 * x + ycf2 * y;
@@ -276,22 +276,22 @@ export function generate() {
     // Question
     sumq = "Solve the simultaneous equations, using graphical and algebraic methods.";
     sumq += `$$\\begin{alignat}{2}
-              ${utils.cfchk(xcf1, ltr1, 1, 1)}${utils.cfchk(ycf1, ltr2, 1, 0)}&=${c1}\\qquad\\qquad &&eqn\\ 1\\\\[5pt]
-              ${utils.cfchk(xcf2, ltr1, 1, 1)}${utils.cfchk(ycf2, ltr2, 1, 0)}&=${c2}&&eqn\\ 2
+              ${cfchk(xcf1, ltr1, 1, 1)}${cfchk(ycf1, ltr2, 1, 0)}&=${c1}\\qquad\\qquad &&eqn\\ 1\\\\[5pt]
+              ${cfchk(xcf2, ltr1, 1, 1)}${cfchk(ycf2, ltr2, 1, 0)}&=${c2}&&eqn\\ 2
               \\end{alignat}$$`;
 
     // Tables
     suma = `<div class="row" style="margin-bottom:15px;">
               <table style="display:inline-block; margin-right:40px; border-collapse:collapse;">
                 <tr><td colspan="4" style="color:#0000ff; font-weight:bold;">
-                  ${utils.cfchk(xcf1, ltr1txt, 1, 1)}${utils.cfchk(ycf1, ltr2txt, 1, 0)}=${c1}
+                  ${cfchk(xcf1, ltr1txt, 1, 1)}${cfchk(ycf1, ltr2txt, 1, 0)}=${c1}
                 </td></tr>
                 <tr><td>${ltr1txt}</td><td>${tab.x11}</td><td>${tab.x12}</td><td>${tab.x13}</td></tr>
                 <tr><th>${ltr2txt}</th><td>${tab.y11}</td><td>${tab.y12}</td><td>${tab.y13}</td></tr>
               </table>
               <table style="display:inline-block; border-collapse:collapse;">
                 <tr><td colspan="4" style="color:#00aa00; font-weight:bold;">
-                  ${utils.cfchk(xcf2, ltr1txt, 1, 1)}${utils.cfchk(ycf2, ltr2txt, 1, 0)}=${c2}
+                  ${cfchk(xcf2, ltr1txt, 1, 1)}${cfchk(ycf2, ltr2txt, 1, 0)}=${c2}
                 </td></tr>
                 <tr><td>${ltr1txt}</td><td>${tab.x21}</td><td>${tab.x22}</td><td>${tab.x23}</td></tr>
                 <tr><th>${ltr2txt}</th><td>${tab.y21}</td><td>${tab.y22}</td><td>${tab.y23}</td></tr>
@@ -302,21 +302,21 @@ export function generate() {
     let h;
     if (Math.abs(xcf1) * Math.abs(xcf2) <= Math.abs(ycf1) * Math.abs(ycf2)) {
       // Eliminate x
-      h = utils.gcd2(Math.abs(xcf1), Math.abs(xcf2));
+      h = gcd2(Math.abs(xcf1), Math.abs(xcf2));
       const m1 = Math.abs(xcf2) / h;
       const m2 = Math.abs(xcf1) / h;
 
       suma += `$$\\begin{alignat}{2}
-                ${utils.cfchk(xcf1 * m1, ltr1, 1, 1)}${utils.cfchk(ycf1 * m1, ltr2, 1, 0)}&=${c1 * m1}
+                ${cfchk(xcf1 * m1, ltr1, 1, 1)}${cfchk(ycf1 * m1, ltr2, 1, 0)}&=${c1 * m1}
                   &&\\quad\\text{eqn 1}\\times ${m1}\\\\[5pt]
-                ${utils.cfchk(xcf2 * m2, ltr1, 1, 1)}${utils.cfchk(ycf2 * m2, ltr2, 1, 0)}&=${c2 * m2}
+                ${cfchk(xcf2 * m2, ltr1, 1, 1)}${cfchk(ycf2 * m2, ltr2, 1, 0)}&=${c2 * m2}
                   &&\\quad\\text{eqn 2}\\times ${m2}\\\\[5pt]`;
 
       if ((xcf1 > 0 && xcf2 > 0) || (xcf1 < 0 && xcf2 < 0)) {
         // same signs → subtract
         const yCoeff = ycf1 * m1 - ycf2 * m2;
         const cDiff  = c1 * m1 - c2 * m2;
-        suma += `${utils.cfchk(yCoeff, ltr2, 1, 1)}&=${cDiff}
+        suma += `${cfchk(yCoeff, ltr2, 1, 1)}&=${cDiff}
                   &&\\quad\\text{eqn 1 - eqn 2}\\\\[5pt]`;
         if (Math.abs(yCoeff) !== 1) {
           suma += `${ltr2}&=\\dfrac{${cDiff}}{${yCoeff}}\\\\[5pt]`;
@@ -326,7 +326,7 @@ export function generate() {
         // opposite signs → add
         const yCoeff = ycf1 * m1 + ycf2 * m2;
         const cSum   = c1 * m1 + c2 * m2;
-        suma += `${utils.cfchk(yCoeff, ltr2, 1, 1)}&=${cSum}
+        suma += `${cfchk(yCoeff, ltr2, 1, 1)}&=${cSum}
                   &&\\quad\\text{eqn 1 + eqn 2}\\\\[5pt]`;
         if (Math.abs(yCoeff) !== 1) {
           suma += `${ltr2}&=\\dfrac{${cSum}}{${yCoeff}}\\\\[5pt]`;
@@ -335,9 +335,9 @@ export function generate() {
       }
 
       // Substitute back
-      suma += `${utils.cfchk(xcf1, ltr1, 1, 1)}${utils.cfchk(ycf1, "", 0, 0)}\\times${y}&=${c1}
+      suma += `${cfchk(xcf1, ltr1, 1, 1)}${cfchk(ycf1, "", 0, 0)}\\times${y}&=${c1}
                 &&\\quad\\text{substitute ${ltr2} into eqn 1}\\\\[5pt]
-              ${utils.cfchk(xcf1, ltr1, 1, 1)}${utils.cfchk(ycf1 * y, "", 0, 0)}&=${c1}\\\\[5pt]`;
+              ${cfchk(xcf1, ltr1, 1, 1)}${cfchk(ycf1 * y, "", 0, 0)}&=${c1}\\\\[5pt]`;
       if (Math.abs(xcf1) === 1) {
         suma += `${ltr1}&=${x}\\end{alignat}$$`;
       } else {
@@ -347,20 +347,20 @@ export function generate() {
 
     } else {
       // Eliminate y (mirror of the above)
-      h = utils.gcd2(Math.abs(ycf1), Math.abs(ycf2));
+      h = gcd2(Math.abs(ycf1), Math.abs(ycf2));
       const m1 = Math.abs(ycf2) / h;
       const m2 = Math.abs(ycf1) / h;
 
       suma += `$$\\begin{alignat}{2}
-                ${utils.cfchk(xcf1 * m1, ltr1, 1, 1)}${utils.cfchk(ycf1 * m1, ltr2, 1, 0)}&=${c1 * m1}
+                ${cfchk(xcf1 * m1, ltr1, 1, 1)}${cfchk(ycf1 * m1, ltr2, 1, 0)}&=${c1 * m1}
                   &&\\quad\\text{eqn 1}\\times ${m1}\\\\[5pt]
-                ${utils.cfchk(xcf2 * m2, ltr1, 1, 1)}${utils.cfchk(ycf2 * m2, ltr2, 1, 0)}&=${c2 * m2}
+                ${cfchk(xcf2 * m2, ltr1, 1, 1)}${cfchk(ycf2 * m2, ltr2, 1, 0)}&=${c2 * m2}
                   &&\\quad\\text{eqn 2}\\times ${m2}\\\\[5pt]`;
 
       if ((ycf1 > 0 && ycf2 > 0) || (ycf1 < 0 && ycf2 < 0)) {
         const xCoeff = xcf1 * m1 - xcf2 * m2;
         const cDiff  = c1 * m1 - c2 * m2;
-        suma += `${utils.cfchk(xCoeff, ltr1, 1, 1)}&=${cDiff}
+        suma += `${cfchk(xCoeff, ltr1, 1, 1)}&=${cDiff}
                   &&\\quad\\text{eqn 1 - eqn 2}\\\\[5pt]`;
         if (Math.abs(xCoeff) !== 1) {
           suma += `${ltr1}&=\\dfrac{${cDiff}}{${xCoeff}}\\\\[5pt]`;
@@ -369,7 +369,7 @@ export function generate() {
       } else {
         const xCoeff = xcf1 * m1 + xcf2 * m2;
         const cSum   = c1 * m1 + c2 * m2;
-        suma += `${utils.cfchk(xCoeff, ltr1, 1, 1)}&=${cSum}
+        suma += `${cfchk(xCoeff, ltr1, 1, 1)}&=${cSum}
                   &&\\quad\\text{eqn 1 + eqn 2}\\\\[5pt]`;
         if (Math.abs(xCoeff) !== 1) {
           suma += `${ltr1}&=\\dfrac{${cSum}}{${xCoeff}}\\\\[5pt]`;
@@ -378,9 +378,9 @@ export function generate() {
       }
 
       // Substitute back
-      suma += `${utils.cfchk(xcf1, "", 0, 0)}\\times${x}${utils.cfchk(ycf1, ltr2, 1, 0)}&=${c1}
+      suma += `${cfchk(xcf1, "", 0, 0)}\\times${x}${cfchk(ycf1, ltr2, 1, 0)}&=${c1}
                 &&\\quad\\text{substitute ${ltr1} into eqn 1}\\\\[5pt]
-              ${xcf1 * x}${utils.cfchk(ycf1, ltr2, 1, 0)}&=${c1}\\\\[5pt]`;
+              ${xcf1 * x}${cfchk(ycf1, ltr2, 1, 0)}&=${c1}\\\\[5pt]`;
       if (Math.abs(ycf1) === 1) {
         suma += `${ltr2}&=${y}\\end{alignat}$$`;
       } else {
@@ -393,21 +393,21 @@ export function generate() {
     let valid = false;
     do {
       do {
-        xcf1 = utils.rndgen(-9, 9, 0, 1, -1);
+        xcf1 = rndgen(-9, 9, 0, 1, -1);
       } while (xcf1 === 0);
 
       do {
-        x = utils.rndgen(-9, 9, 0, 1, -1);
+        x = rndgen(-9, 9, 0, 1, -1);
       } while (x === 0 || Math.abs(x) === 1);
 
       do {
-        c1 = utils.rndgen(-5, 25, 0, 1, -1);
+        c1 = rndgen(-5, 25, 0, 1, -1);
       } while (c1 === 0);
 
       y = xcf1 * x + c1;
 
       do {
-        xcf2 = utils.rndgen(-9, 9, 0, 1, -1);
+        xcf2 = rndgen(-9, 9, 0, 1, -1);
       } while (xcf2 === 0 || xcf2 === xcf1);
 
       c2 = y - xcf2 * x;
@@ -446,22 +446,22 @@ export function generate() {
     // ----- Question -----
     sumq = "Solve the simultaneous equations, using graphical and algebraic methods.";
     sumq += `$$\\begin{aligned}
-              ${ltr2}&=${utils.cfchk(xcf1, ltr1, 1, 1)}${utils.cfchk(c1, "", 0, 0)}\\\\
-              ${ltr2}&=${utils.cfchk(xcf2, ltr1, 1, 1)}${utils.cfchk(c2, "", 0, 0)}
+              ${ltr2}&=${cfchk(xcf1, ltr1, 1, 1)}${cfchk(c1, "", 0, 0)}\\\\
+              ${ltr2}&=${cfchk(xcf2, ltr1, 1, 1)}${cfchk(c2, "", 0, 0)}
               \\end{aligned}$$`;
 
     // ----- Colour-matched tables -----
     suma = `<div class="row" style="margin-bottom:15px;">
               <table style="display:inline-block; margin-right:40px; border-collapse:collapse;">
                 <tr><td colspan="4" style="color:#0000ff; font-weight:bold;">
-                  ${ltr2txt}=${utils.cfchk(xcf1, ltr1txt, 1, 1)}${utils.cfchk(c1, "", 0, 0)}
+                  ${ltr2txt}=${cfchk(xcf1, ltr1txt, 1, 1)}${cfchk(c1, "", 0, 0)}
                 </td></tr>
                 <tr><td>${ltr1txt}</td><td>${tab.x11}</td><td>${tab.x12}</td><td>${tab.x13}</td></tr>
                 <tr><th>${ltr2txt}</th><td>${tab.y11}</td><td>${tab.y12}</td><td>${tab.y13}</td></tr>
               </table>
               <table style="display:inline-block; border-collapse:collapse;">
                 <tr><td colspan="4" style="color:#00aa00; font-weight:bold;">
-                  ${ltr2txt}=${utils.cfchk(xcf2, ltr1txt, 1, 1)}${utils.cfchk(c2, "", 0, 0)}
+                  ${ltr2txt}=${cfchk(xcf2, ltr1txt, 1, 1)}${cfchk(c2, "", 0, 0)}
                 </td></tr>
                 <tr><td>${ltr1txt}</td><td>${tab.x21}</td><td>${tab.x22}</td><td>${tab.x23}</td></tr>
                 <tr><th>${ltr2txt}</th><td>${tab.y21}</td><td>${tab.y22}</td><td>${tab.y23}</td></tr>
@@ -470,18 +470,18 @@ export function generate() {
 
     // ----- Algebraic solution (substitution) -----
     suma += `$$\\begin{aligned}
-              ${utils.cfchk(xcf1, ltr1, 1, 1)}${utils.cfchk(c1, "", 0, 0)}
-              &=${utils.cfchk(xcf2, ltr1, 1, 1)}${utils.cfchk(c2, "", 0, 0)}\\\\[5pt]`;
+              ${cfchk(xcf1, ltr1, 1, 1)}${cfchk(c1, "", 0, 0)}
+              &=${cfchk(xcf2, ltr1, 1, 1)}${cfchk(c2, "", 0, 0)}\\\\[5pt]`;
 
     if (xcf1 - xcf2 !== 0) {
-      suma += `${utils.cfchk(xcf1 - xcf2, ltr1, 1, 1)}&=${c2 - c1}\\\\[5pt]`;
+      suma += `${cfchk(xcf1 - xcf2, ltr1, 1, 1)}&=${c2 - c1}\\\\[5pt]`;
       if (Math.abs(xcf1 - xcf2) !== 1) {
         suma += `${ltr1}&=\\dfrac{${c2 - c1}}{${xcf1 - xcf2}}\\\\[5pt]`;
       }
       suma += `${ltr1}&=${x}\\\\[10pt]`;
     }
 
-    suma += `${ltr2}&=${xcf1}\\times${x}${utils.cfchk(c1, "", 0, 0)}\\\\[5pt]
+    suma += `${ltr2}&=${xcf1}\\times${x}${cfchk(c1, "", 0, 0)}\\\\[5pt]
             ${ltr2}&=${y}
             \\end{aligned}$$`;
   }

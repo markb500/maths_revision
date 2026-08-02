@@ -1,13 +1,13 @@
 // js/generators/numform.js
-import * as utils from '../utils.js';
+// Clean ES module
+import { rndgen, dp } from '../utils.js';
 
-// Local helpers (from original utils)
 function sciengnot(num, pwr) {
   const logten = Math.floor(Math.log10(Math.abs(num)));
-  const scinum = utils.dp(num / Math.pow(10, logten), 5, -1);
+  const scinum = dp(num / Math.pow(10, logten), 5, -1);
   const scipwr = pwr + logten;
   const scimod = scipwr - 3 * Math.floor(scipwr / 3);
-  const engnum = utils.dp(scinum * Math.pow(10, scimod), 5, -1);
+  const engnum = dp(scinum * Math.pow(10, scimod), 5, -1);
   const engpwr = scipwr - scimod;
   return [scinum, scipwr, engnum, engpwr];
 }
@@ -19,18 +19,18 @@ function pwrzero(num, pwr) {
 
 export function generate() {
   let sumq = "", suma = "";
-  const tmp = utils.rndgen(1, 2, 0, 1, -1);
+  const tmp = rndgen(1, 2, 0, 1, -1);
 
   if (tmp === 1) { // multiply
     let num1, num2;
     do {
-      num1 = utils.rndgen(10.5, 500, 1, 0.1, -1);
-      num2 = utils.rndgen(0.5, 4.5, 1, 0.1, -1);
-    } while (num1 === 1 || num2 - utils.dp(num2, 0, -1) === 0);
+      num1 = rndgen(10.5, 500, 1, 0.1, -1);
+      num2 = rndgen(0.5, 4.5, 1, 0.1, -1);
+    } while (num1 === 1 || num2 - dp(num2, 0, -1) === 0);
 
-    const pwr1 = utils.rndgen(-5, 5, 0, 1, -1);
-    const pwr2 = utils.rndgen(-5, 5, 0, 1, -1);
-    const num = utils.dp(num1 * num2, 2, -1);
+    const pwr1 = rndgen(-5, 5, 0, 1, -1);
+    const pwr2 = rndgen(-5, 5, 0, 1, -1);
+    const num = dp(num1 * num2, 2, -1);
     const pwr = pwr1 + pwr2;
     const results = sciengnot(num, pwr);
 
@@ -45,18 +45,18 @@ export function generate() {
   } else { // divide
     let num1, num2;
     do {
-      num1 = utils.rndgen(10.5, 500, 1, 0.1, -1);
-      num2 = utils.rndgen(0.5, 4.5, 1, 0.1, -1);
+      num1 = rndgen(10.5, 500, 1, 0.1, -1);
+      num2 = rndgen(0.5, 4.5, 1, 0.1, -1);
     } while (
       num1 === 1 ||
-      num2 - utils.dp(num2, 0, -1) === 0 ||
-      (num1 / num2) - utils.dp(num1 / num2, 0, -1) === 0 ||
-      (num1 / num2) - utils.dp(num1 / num2, 2, -1) !== 0
+      num2 - dp(num2, 0, -1) === 0 ||
+      (num1 / num2) - dp(num1 / num2, 0, -1) === 0 ||
+      (num1 / num2) - dp(num1 / num2, 2, -1) !== 0
     );
 
-    const pwr1 = utils.rndgen(-5, 5, 0, 1, -1);
-    const pwr2 = utils.rndgen(-5, 5, 0, 1, -1);
-    const num = utils.dp(num1 / num2, 2, -1);
+    const pwr1 = rndgen(-5, 5, 0, 1, -1);
+    const pwr2 = rndgen(-5, 5, 0, 1, -1);
+    const num = dp(num1 / num2, 2, -1);
     const pwr = pwr1 - pwr2;
     const results = sciengnot(num, pwr);
 

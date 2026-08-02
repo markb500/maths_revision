@@ -1,13 +1,14 @@
 // js/generators/transposeII.js
-import * as utils from '../utils.js';
+// Clean ES module
+import { QLimitRepeats } from '../utils.js';
 
-let sumarrtranspose2 = [];
+let recentIds = [];
 
 export function generate() {
   let sumq = "", suma = "";
 
-  sumarrtranspose2 = utils.QLimitRepeats(sumarrtranspose2, 20);
-  const sum = sumarrtranspose2[sumarrtranspose2.length - 1];
+  recentIds = QLimitRepeats(recentIds, 20);
+  const sum = recentIds[recentIds.length - 1];
 
   switch (sum) {
         case 1:

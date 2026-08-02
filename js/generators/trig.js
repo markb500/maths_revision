@@ -1,5 +1,6 @@
 // js/generators/trig.js
-import * as utils from '../utils.js';
+// Clean ES module
+import { rndgen, dp } from '../utils.js';
 
 export function generate() {
   let sumq = "", suma = "";
@@ -7,19 +8,19 @@ export function generate() {
   let left = 50, top = 25, right, bottom;
 
   // Units
-  switch (utils.rndgen(1, 3, 0, 1, -1)) {
+  switch (rndgen(1, 3, 0, 1, -1)) {
     case 1: units = " m"; unitsmath = "\\ m"; break;
     case 2: units = " cm"; unitsmath = "\\ cm"; break;
     case 3: units = " mm"; unitsmath = "\\ mm"; break;
   }
 
   do {
-    ang = utils.rndgen(25, 70, 0, 1, -1);
+    ang = rndgen(25, 70, 0, 1, -1);
   } while (ang === 45);
 
-  adj = utils.rndgen(5, 150, 2, 0.01, -1);
-  opp = utils.dp(adj * Math.tan(ang * Math.PI / 180), 2, -1);
-  hyp = utils.dp(adj / Math.cos(ang * Math.PI / 180), 2, -1);
+  adj = rndgen(5, 150, 2, 0.01, -1);
+  opp = dp(adj * Math.tan(ang * Math.PI / 180), 2, -1);
+  hyp = dp(adj / Math.cos(ang * Math.PI / 180), 2, -1);
 
   if (ang < 45) {
     right = left + 300;
@@ -29,7 +30,7 @@ export function generate() {
     right = adj * 300 / opp + left;
   }
 
-  const showType = utils.rndgen(1, 6, 0, 1, -1);
+  const showType = rndgen(1, 6, 0, 1, -1);
 
   // Common drawing function
   const drawTriangle = (ctx, labels) => {
@@ -70,8 +71,8 @@ export function generate() {
         { text: "Hyp", x: (right + left) / 2 - 5, y: (bottom + top) / 2 - 5, align: "right" }
       ];
       sumq = "For the right-angled triangle shown, find the missing side (rounded to 2 decimal places) and the indicated angle (rounded to 2 significant figures).<br><br>";
-      suma = `$$\\begin{aligned}Hyp&=\\sqrt{Adj^2+Opp^2}=\\sqrt{${adj}^2+${opp}^2}=\\underline{\\mathbf{${utils.dp(Math.sqrt(adj**2 + opp**2), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
-             $$\\begin{aligned}\\theta&=\\tan^{-1}\\left(\\frac{Opp}{Adj}\\right)=\\tan^{-1}\\left(\\frac{${opp}}{${adj}}\\right)=\\underline{\\mathbf{${utils.dp(Math.atan(opp / adj) * 180 / Math.PI, 0, -1)}^\\circ\\ (2\\ sf)}}\\end{aligned}$$`;
+      suma = `$$\\begin{aligned}Hyp&=\\sqrt{Adj^2+Opp^2}=\\sqrt{${adj}^2+${opp}^2}=\\underline{\\mathbf{${dp(Math.sqrt(adj**2 + opp**2), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
+             $$\\begin{aligned}\\theta&=\\tan^{-1}\\left(\\frac{Opp}{Adj}\\right)=\\tan^{-1}\\left(\\frac{${opp}}{${adj}}\\right)=\\underline{\\mathbf{${dp(Math.atan(opp / adj) * 180 / Math.PI, 0, -1)}^\\circ\\ (2\\ sf)}}\\end{aligned}$$`;
       break;
 
     case 2: // adj + hyp → find opp + angle
@@ -82,8 +83,8 @@ export function generate() {
         { text: hyp + units, x: (right + left) / 2 - 5, y: (bottom + top) / 2 - 5, align: "right" }
       ];
       sumq = "For the right-angled triangle shown, find the missing side (rounded to 2 decimal places) and the indicated angle (rounded to 2 significant figures).<br><br>";
-      suma = `$$\\begin{aligned}Opp&=\\sqrt{Hyp^2-Adj^2}=\\sqrt{${hyp}^2-${adj}^2}=\\underline{\\mathbf{${utils.dp(Math.sqrt(hyp**2 - adj**2), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
-             $$\\begin{aligned}\\theta&=\\cos^{-1}\\left(\\frac{Adj}{Hyp}\\right)=\\cos^{-1}\\left(\\frac{${adj}}{${hyp}}\\right)=\\underline{\\mathbf{${utils.dp(Math.acos(adj / hyp) * 180 / Math.PI, 0, -1)}^\\circ\\ (2\\ sf)}}\\end{aligned}$$`;
+      suma = `$$\\begin{aligned}Opp&=\\sqrt{Hyp^2-Adj^2}=\\sqrt{${hyp}^2-${adj}^2}=\\underline{\\mathbf{${dp(Math.sqrt(hyp**2 - adj**2), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
+             $$\\begin{aligned}\\theta&=\\cos^{-1}\\left(\\frac{Adj}{Hyp}\\right)=\\cos^{-1}\\left(\\frac{${adj}}{${hyp}}\\right)=\\underline{\\mathbf{${dp(Math.acos(adj / hyp) * 180 / Math.PI, 0, -1)}^\\circ\\ (2\\ sf)}}\\end{aligned}$$`;
       break;
     case 3:     //3-opp hyp
             case 3: // opp + hyp → find adj + angle
@@ -94,8 +95,8 @@ export function generate() {
         { text: hyp + units, x: (right + left) / 2 - 5, y: (bottom + top) / 2 - 5, align: "right" }
       ];
       sumq = "For the right-angled triangle shown, find the missing side (rounded to 2 decimal places) and the indicated angle (rounded to 2 significant figures).<br><br>";
-      suma = `$$\\begin{aligned}Adj&=\\sqrt{Hyp^2-Opp^2}=\\sqrt{${hyp}^2-${opp}^2}=\\underline{\\mathbf{${utils.dp(Math.sqrt(hyp**2 - opp**2), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
-            $$\\begin{aligned}\\theta&=\\sin^{-1}\\left(\\frac{Opp}{Hyp}\\right)=\\sin^{-1}\\left(\\frac{${opp}}{${hyp}}\\right)=\\underline{\\mathbf{${utils.dp(Math.asin(opp / hyp) * 180 / Math.PI, 0, -1)}^\\circ\\ (2\\ sf)}}\\end{aligned}$$`;
+      suma = `$$\\begin{aligned}Adj&=\\sqrt{Hyp^2-Opp^2}=\\sqrt{${hyp}^2-${opp}^2}=\\underline{\\mathbf{${dp(Math.sqrt(hyp**2 - opp**2), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
+            $$\\begin{aligned}\\theta&=\\sin^{-1}\\left(\\frac{Opp}{Hyp}\\right)=\\sin^{-1}\\left(\\frac{${opp}}{${hyp}}\\right)=\\underline{\\mathbf{${dp(Math.asin(opp / hyp) * 180 / Math.PI, 0, -1)}^\\circ\\ (2\\ sf)}}\\end{aligned}$$`;
       break;
     case 4:     //4-ang adj
             case 4: // ang + adj → find opp + hyp
@@ -106,8 +107,8 @@ export function generate() {
         { text: "Hyp", x: (right + left) / 2 - 5, y: (bottom + top) / 2 - 5, align: "right" }
       ];
       sumq = "For the right-angled triangle shown, find the length of the two missing sides, rounding your answers to 2 decimal places.<br><br>";
-      suma = `$$\\begin{aligned}Opp&=Adj\\times\\tan(\\theta)=${adj}\\times\\tan(${ang})=\\underline{\\mathbf{${utils.dp(adj * Math.tan(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
-            $$\\begin{aligned}Hyp&=\\frac{Adj}{\\cos(\\theta)}=\\frac{${adj}}{\\cos(${ang})}=\\underline{\\mathbf{${utils.dp(adj / Math.cos(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$`;
+      suma = `$$\\begin{aligned}Opp&=Adj\\times\\tan(\\theta)=${adj}\\times\\tan(${ang})=\\underline{\\mathbf{${dp(adj * Math.tan(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
+            $$\\begin{aligned}Hyp&=\\frac{Adj}{\\cos(\\theta)}=\\frac{${adj}}{\\cos(${ang})}=\\underline{\\mathbf{${dp(adj / Math.cos(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$`;
       break;
     case 5:     //5-ang opp
             case 5: // ang + opp → find adj + hyp
@@ -118,8 +119,8 @@ export function generate() {
         { text: "Hyp", x: (right + left) / 2 - 5, y: (bottom + top) / 2 - 5, align: "right" }
       ];
       sumq = "For the right-angled triangle shown, find the length of the two missing sides, rounding your answers to 2 decimal places.<br><br>";
-      suma = `$$\\begin{aligned}Adj&=\\frac{Opp}{\\tan(\\theta)}=\\frac{${opp}}{\\tan(${ang})}=\\underline{\\mathbf{${utils.dp(opp / Math.tan(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
-            $$\\begin{aligned}Hyp&=\\frac{Opp}{\\sin(\\theta)}=\\frac{${opp}}{\\sin(${ang})}=\\underline{\\mathbf{${utils.dp(opp / Math.sin(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$`;
+      suma = `$$\\begin{aligned}Adj&=\\frac{Opp}{\\tan(\\theta)}=\\frac{${opp}}{\\tan(${ang})}=\\underline{\\mathbf{${dp(opp / Math.tan(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
+            $$\\begin{aligned}Hyp&=\\frac{Opp}{\\sin(\\theta)}=\\frac{${opp}}{\\sin(${ang})}=\\underline{\\mathbf{${dp(opp / Math.sin(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$`;
       break;
     case 6:     //6-ang hyp
             case 6: // ang + hyp → find adj + opp
@@ -130,8 +131,8 @@ export function generate() {
         { text: hyp + units, x: (right + left) / 2 - 5, y: (bottom + top) / 2 - 5, align: "right" }
       ];
       sumq = "For the right-angled triangle shown, find the length of the two missing sides, rounding your answers to 2 decimal places.<br><br>";
-      suma = `$$\\begin{aligned}Adj&=Hyp\\times\\cos(\\theta)=${hyp}\\times\\cos(${ang})=\\underline{\\mathbf{${utils.dp(hyp * Math.cos(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
-            $$\\begin{aligned}Opp&=Hyp\\times\\sin(\\theta)=${hyp}\\times\\sin(${ang})=\\underline{\\mathbf{${utils.dp(hyp * Math.sin(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$`;
+      suma = `$$\\begin{aligned}Adj&=Hyp\\times\\cos(\\theta)=${hyp}\\times\\cos(${ang})=\\underline{\\mathbf{${dp(hyp * Math.cos(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$
+            $$\\begin{aligned}Opp&=Hyp\\times\\sin(\\theta)=${hyp}\\times\\sin(${ang})=\\underline{\\mathbf{${dp(hyp * Math.sin(ang * Math.PI / 180), 2, 2)}${unitsmath}\\ (2\\ dp)}}\\end{aligned}$$`;
       break;
 
     default:

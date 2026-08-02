@@ -1,8 +1,9 @@
 // js/generators/hcflcm.js
-import * as utils from '../utils.js';
+// Clean ES module
+import { rndgen, gcd, lcm, chkpwr } from '../utils.js';
 
 let prevnum = 0;
-let term1 = [], term2 = [], term3 = [], hcf = [], lcm = [];
+let term1 = [], term2 = [], term3 = [], hcf = [], lcmArr = [];
 
 function primeFactors(n) {
   let arr = [];
@@ -22,12 +23,6 @@ function primeExponents(arr) {
   const count = {};
   arr.forEach(i => { count[i] = (count[i] || 0) + 1; });
   return count;
-}
-
-function chkpwr(ltr, pwr) {
-  if (pwr === 0) return "";
-  if (pwr === 1) return ltr;
-  return ltr + "^" + pwr;
 }
 
 function primeTree(ctx, term, primefacs, primesexp, x, y) {
@@ -77,12 +72,12 @@ export function generate() {
   let ltrsel, sign1, sign2;
 
   do {
-    hcf[0] = utils.rndgen(2, 11, 0, 1, -1);
-    term1[0] = hcf[0] * utils.rndgen(1, 8, 0, 1, -1);
-    term2[0] = hcf[0] * utils.rndgen(1, 8, 0, 1, -1);
-    term3[0] = hcf[0] * utils.rndgen(1, 8, 0, 1, -1);
-    lcm[0] = utils.lcm([term1[0], term2[0], term3[0]]);
-    hcf[0] = utils.gcd([term1[0], term2[0], term3[0]]);
+    hcf[0] = rndgen(2, 11, 0, 1, -1);
+    term1[0] = hcf[0] * rndgen(1, 8, 0, 1, -1);
+    term2[0] = hcf[0] * rndgen(1, 8, 0, 1, -1);
+    term3[0] = hcf[0] * rndgen(1, 8, 0, 1, -1);
+    lcmArr[0] = lcm([term1[0], term2[0], term3[0]]);
+    hcf[0] = gcd([term1[0], term2[0], term3[0]]);
   } while (
     term1[0] === term2[0] || term1[0] === term3[0] || term2[0] === term3[0] ||
     hcf[0] === term1[0] || hcf[0] === term2[0] || hcf[0] === term3[0] ||
@@ -97,16 +92,16 @@ export function generate() {
   const primesExp3 = primeExponents(primeFacs3);
 
   for (let i = 2; i < 9; i += 2) {
-    term1[i] = utils.rndgen(0, 6, 0, 1, -1);
-    term2[i] = utils.rndgen(0, 6, 0, 1, -1);
-    term3[i] = utils.rndgen(0, 6, 0, 1, -1);
+    term1[i] = rndgen(0, 6, 0, 1, -1);
+    term2[i] = rndgen(0, 6, 0, 1, -1);
+    term3[i] = rndgen(0, 6, 0, 1, -1);
   }
 
-  sign1 = utils.rndgen(1, 2, 0, 1, -1) === 1 ? "+" : "-";
-  sign2 = utils.rndgen(1, 2, 0, 1, -1) === 1 ? "+" : "-";
+  sign1 = rndgen(1, 2, 0, 1, -1) === 1 ? "+" : "-";
+  sign2 = rndgen(1, 2, 0, 1, -1) === 1 ? "+" : "-";
 
   do {
-    ltrsel = utils.rndgen(1, 3, 0, 1, -1);
+    ltrsel = rndgen(1, 3, 0, 1, -1);
   } while (prevnum === ltrsel);
   prevnum = ltrsel;
 
@@ -122,8 +117,8 @@ export function generate() {
   for (let j = 2; j < 9; j += 2) {
     hcf[j - 1] = term1[j - 1];
     hcf[j] = Math.min(term1[j], term2[j], term3[j]);
-    lcm[j - 1] = term1[j - 1];
-    lcm[j] = Math.max(term1[j], term2[j], term3[j]);
+    lcmArr[j - 1] = term1[j - 1];
+    lcmArr[j] = Math.max(term1[j], term2[j], term3[j]);
   }
 
   sumq = "Find the HCF & LCM, without using a calculator, and factorise the expression.";
@@ -136,8 +131,8 @@ export function generate() {
 
   suma = "$$\\begin{aligned}HCF&=" + hcf[0] + chkpwr(hcf[1], hcf[2]) + chkpwr(hcf[3], hcf[4]) +
          chkpwr(hcf[5], hcf[6]) + chkpwr(hcf[7], hcf[8]) + "\\\\" +
-         "LCM&=" + lcm[0] + chkpwr(lcm[1], lcm[2]) + chkpwr(lcm[3], lcm[4]) +
-         chkpwr(lcm[5], lcm[6]) + chkpwr(lcm[7], lcm[8]) + "\\\\" +
+         "LCM&=" + lcmArr[0] + chkpwr(lcmArr[1], lcmArr[2]) + chkpwr(lcmArr[3], lcmArr[4]) +
+         chkpwr(lcmArr[5], lcmArr[6]) + chkpwr(lcmArr[7], lcmArr[8]) + "\\\\" +
          "&" + hcf[0] + chkpwr(hcf[1], hcf[2]) + chkpwr(hcf[3], hcf[4]) +
          chkpwr(hcf[5], hcf[6]) + chkpwr(hcf[7], hcf[8]) +
          "\\left(" + (term1[0]/hcf[0]) + chkpwr(term1[1], term1[2]-hcf[2]) +

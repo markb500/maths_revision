@@ -1,5 +1,6 @@
 // js/generators/fracs.js
-import * as utils from '../utils.js';
+// Clean ES module
+import { rndgen, gcd2, lcm2, lcm } from '../utils.js';
 
 export function generate() {
   let sumq = "", suma = "";
@@ -7,11 +8,11 @@ export function generate() {
   let op1, op2, sign1, sign2, comdenom, gcd, tmp;
   let sign1cx = false, sign2cx = false, anscx = false;
 
-  sign1 = utils.rndgen(1, 4, 0, 1, -1);
+  sign1 = rndgen(1, 4, 0, 1, -1);
   if (sign1 < 3) {
-    sign2 = utils.rndgen(1, 4, 0, 1, -1);
+    sign2 = rndgen(1, 4, 0, 1, -1);
   } else {
-    sign2 = utils.rndgen(3, 4, 0, 1, -1);
+    sign2 = rndgen(3, 4, 0, 1, -1);
   }
 
   switch (sign1) {
@@ -44,19 +45,19 @@ export function generate() {
       }
       anscx = false;
 
-      f1[0] = utils.rndgen(1, 4, 0, 1, -1);
-      f2[0] = utils.rndgen(1, 4, 0, 1, -1);
-      f3[0] = utils.rndgen(1, 4, 0, 1, -1);
-      f1[2] = utils.rndgen(2, 9, 0, 1, -1);
-      f2[2] = utils.rndgen(2, 9, 0, 1, -1);
-      f3[2] = utils.rndgen(2, 9, 0, 1, -1);
-      f1[1] = utils.rndgen(1, f1[2] - 1, 0, 1, -1);
-      f2[1] = utils.rndgen(1, f2[2] - 1, 0, 1, -1);
-      f3[1] = utils.rndgen(1, f3[2] - 1, 0, 1, -1);
+      f1[0] = rndgen(1, 4, 0, 1, -1);
+      f2[0] = rndgen(1, 4, 0, 1, -1);
+      f3[0] = rndgen(1, 4, 0, 1, -1);
+      f1[2] = rndgen(2, 9, 0, 1, -1);
+      f2[2] = rndgen(2, 9, 0, 1, -1);
+      f3[2] = rndgen(2, 9, 0, 1, -1);
+      f1[1] = rndgen(1, f1[2] - 1, 0, 1, -1);
+      f2[1] = rndgen(1, f2[2] - 1, 0, 1, -1);
+      f3[1] = rndgen(1, f3[2] - 1, 0, 1, -1);
     } while (
-      utils.gcd2(f1[1], f1[2]) !== 1 ||
-      utils.gcd2(f2[1], f2[2]) !== 1 ||
-      utils.gcd2(f3[1], f3[2]) !== 1 ||
+      gcd2(f1[1], f1[2]) !== 1 ||
+      gcd2(f2[1], f2[2]) !== 1 ||
+      gcd2(f3[1], f3[2]) !== 1 ||
       (f1[0] * f1[2] + f1[1]) - (f2[0] * f2[2] + f2[1]) === 0 ||
       (f1[0] * f1[2] + f1[1]) - (f3[0] * f3[2] + f3[1]) === 0 ||
       (f2[0] * f2[2] + f2[1]) - (f3[0] * f3[2] + f3[1]) === 0 ||
@@ -69,7 +70,7 @@ export function generate() {
             f2[0] + "\\frac{" + f2[1] + "}{" + f2[2] + "}" + op2 +
             f3[0] + "\\frac{" + f3[1] + "}{" + f3[2] + "}$$";
 
-    comdenom = utils.lcm([f1[2], f2[2], f3[2]]);
+    comdenom = lcm([f1[2], f2[2], f3[2]]);
 
     if (sign1 < 3 && sign2 < 3) {
       // + and - calculations
@@ -133,67 +134,67 @@ export function generate() {
               "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]"
           }
 
-          gcd = utils.gcd2(f1[1], f1[2]);   //Check all cancelling options
+          gcd = gcd2(f1[1], f1[2]);   //Check all cancelling options
           while(gcd > 1) {
               f1[1] = f1[1] / gcd;
               f1[2] = f1[2] / gcd;
-              gcd = utils.gcd2(f1[1], f1[2]);
+              gcd = gcd2(f1[1], f1[2]);
               anscx = true;
           }
-          gcd = utils.gcd2(f2[1], f2[2]);
+          gcd = gcd2(f2[1], f2[2]);
           while(gcd > 1) {
               f2[1] = f2[1] / gcd;
               f2[2] = f2[2] / gcd;
-              gcd = utils.gcd2(f2[1], f2[2]);
+              gcd = gcd2(f2[1], f2[2]);
               anscx = true;
           }
-          gcd = utils.gcd2(f3[1], f3[2]);
+          gcd = gcd2(f3[1], f3[2]);
           while(gcd > 1) {
               f3[1] = f3[1] / gcd;
               f3[2] = f3[2] / gcd;
-              gcd = utils.gcd2(f3[1], f3[2]);
+              gcd = gcd2(f3[1], f3[2]);
               anscx = true;
           }
-          gcd = utils.gcd2(f1[1], f2[2]);
+          gcd = gcd2(f1[1], f2[2]);
           while(gcd > 1) {
               f1[1] = f1[1] / gcd;
               f2[2] = f2[2] / gcd;
-              gcd = utils.gcd2(f1[1], f2[2]);
+              gcd = gcd2(f1[1], f2[2]);
               anscx = true;
           }
-          gcd = utils.gcd2(f1[1], f3[2]);
+          gcd = gcd2(f1[1], f3[2]);
           while(gcd > 1) {
               f1[1] = f1[1] / gcd;
               f3[2] = f3[2] / gcd;
-              gcd = utils.gcd2(f1[1], f3[2]);
+              gcd = gcd2(f1[1], f3[2]);
               anscx = true;
           }
-          gcd = utils.gcd2(f2[1], f3[2]);
+          gcd = gcd2(f2[1], f3[2]);
           while(gcd > 1) {
               f2[1] = f2[1] / gcd;
               f3[2] = f3[2] / gcd;
-              gcd = utils.gcd2(f2[1], f3[2]);
+              gcd = gcd2(f2[1], f3[2]);
               anscx = true;
           }
-          gcd = utils.gcd2(f3[1], f1[2]);
+          gcd = gcd2(f3[1], f1[2]);
           while(gcd > 1) {
               f3[1] = f3[1] / gcd;
               f1[2] = f1[2] / gcd;
-              gcd = utils.gcd2(f3[1], f1[2]);
+              gcd = gcd2(f3[1], f1[2]);
               anscx = true;
           }
-          gcd = utils.gcd2(f3[1], f2[2]);
+          gcd = gcd2(f3[1], f2[2]);
           while(gcd > 1) {
               f3[1] = f3[1] / gcd;
               f2[2] = f2[2] / gcd;
-              gcd = utils.gcd2(f3[1], f2[2]);
+              gcd = gcd2(f3[1], f2[2]);
               anscx = true;
           }
-          gcd = utils.gcd2(f2[1], f1[2]);
+          gcd = gcd2(f2[1], f1[2]);
           while(gcd > 1) {
               f2[1] = f2[1] / gcd;
               f1[2] = f1[2] / gcd;
-              gcd = utils.gcd2(f2[1], f1[2]);
+              gcd = gcd2(f2[1], f1[2]);
               anscx = true;
           }
           ans1[0] = 0;
@@ -225,32 +226,32 @@ export function generate() {
           "\\frac{" + f3[1] + "}{" + f3[2] + "}\\\\[5pt]"
       }
 
-      gcd = utils.gcd2(f2[1], f2[2]);   //Check all cancelling options
+      gcd = gcd2(f2[1], f2[2]);   //Check all cancelling options
       while(gcd > 1) {
           f2[1] = f2[1] / gcd;
           f2[2] = f2[2] / gcd;
-          gcd = utils.gcd2(f2[1], f2[2]);
+          gcd = gcd2(f2[1], f2[2]);
           anscx = true;
       }
-      gcd = utils.gcd2(f3[1], f3[2]);
+      gcd = gcd2(f3[1], f3[2]);
       while(gcd > 1) {
           f3[1] = f3[1] / gcd;
           f3[2] = f3[2] / gcd;
-          gcd = utils.gcd2(f3[1], f3[2]);
+          gcd = gcd2(f3[1], f3[2]);
           anscx = true;
       }
-      gcd = utils.gcd2(f2[1], f3[2]);
+      gcd = gcd2(f2[1], f3[2]);
       while(gcd > 1) {
           f2[1] = f2[1] / gcd;
           f3[2] = f3[2] / gcd;
-          gcd = utils.gcd2(f2[1], f3[2]);
+          gcd = gcd2(f2[1], f3[2]);
           anscx = true;
       }
-      gcd = utils.gcd2(f3[1], f2[2]);
+      gcd = gcd2(f3[1], f2[2]);
       while(gcd > 1) {
           f3[1] = f3[1] / gcd;
           f2[2] = f2[2] / gcd;
-          gcd = utils.gcd2(f3[1], f2[2]);
+          gcd = gcd2(f3[1], f2[2]);
           anscx = true;
       }
       if(anscx) {     //For the rare 'no cancelling' case
@@ -266,7 +267,7 @@ export function generate() {
       suma += "&=" + f1[0] + "\\frac{" + f1[1] + "}{" + f1[2] + "}" + op1 + 
               "\\frac{" + ans2[1] + "}{" + ans2[2] + "}\\\\[5pt]";
 
-      comdenom = utils.lcm2(f1[2], ans2[2]);    //Do + or - part of sum
+      comdenom = lcm2(f1[2], ans2[2]);    //Do + or - part of sum
       suma += "&=" + f1[0] + "+\\frac{(\\frac{" + comdenom + "}{" + f1[2] + "}\\times" + f1[1] + ")" + op1 + 
               "(\\frac{" + comdenom + "}{" + ans2[2] + "}\\times" + ans2[1] + ")}{" + comdenom + "}\\\\[5pt]";
 
@@ -330,11 +331,11 @@ export function generate() {
       anstot[1] = anstot[1] % anstot[2];
       anscx = true;
   }
-  gcd = utils.gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]))
+  gcd = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]))
   while(gcd > 1) {        //Check if frac cancels
       anstot[1] = anstot[1] / gcd;
       anstot[2] = anstot[2] / gcd;
-      gcd = utils.gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]));
+      gcd = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]));
       anscx = true;
   }
 

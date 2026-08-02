@@ -1,5 +1,6 @@
 // js/generators/quadratics.js
-import * as utils from '../utils.js';
+// Clean ES module
+import { rndgen, cfchk } from '../utils.js';
 
 export function generate() {
   let sumq = "", suma = "";
@@ -7,8 +8,8 @@ export function generate() {
 
   do {
     a = 1;
-    b = utils.rndgen(-30, 30, 0, 1, -1);
-    c = utils.rndgen(-30, 30, 0, 1, -1);
+    b = rndgen(-30, 30, 0, 1, -1);
+    c = rndgen(-30, 30, 0, 1, -1);
 
     if (b ** 2 - 4 * a * c >= 0) {
       x1 = (-b + Math.sqrt(b ** 2 - 4 * a * c)) / (2 * a);
@@ -27,16 +28,16 @@ export function generate() {
 
   sumq = "Factorise the following and find the values of x.<br />";
   if (b === 0) {
-    sumq += "$$x^2" + utils.cfchk(c, "", 1, 0) + "=0$$";
+    sumq += "$$x^2" + cfchk(c, "", 1, 0) + "=0$$";
   } else {
-    sumq += "$$x^2" + utils.cfchk(b, "x", 1, 0) + utils.cfchk(c, "", 1, 0) + "=0$$<br />";
+    sumq += "$$x^2" + cfchk(b, "x", 1, 0) + cfchk(c, "", 1, 0) + "=0$$<br />";
   }
 
-  suma = "$$\\begin{aligned}(x" + utils.cfchk(-1 * x1, "", 1, 0) + ")(x" + utils.cfchk(-1 * x2, "", 1, 0) +
-         ")&=0 \\\\[15pt] (x" + utils.cfchk(-1 * x1, "", 1, 0) + ")&=0 \\ \\ \\ \\ so\\  x=" + x1;
+  suma = "$$\\begin{aligned}(x" + cfchk(-1 * x1, "", 1, 0) + ")(x" + cfchk(-1 * x2, "", 1, 0) +
+         ")&=0 \\\\[15pt] (x" + cfchk(-1 * x1, "", 1, 0) + ")&=0 \\ \\ \\ \\ so\\  x=" + x1;
 
   if (x1 !== x2) {
-    suma += "  \\\\[5pt] or\\ (x" + utils.cfchk(-1 * x2, "", 1, 0) + ")&=0 \\ \\ \\ \\ so\\  x=" + x2 + "\\end{aligned}$$";
+    suma += "  \\\\[5pt] or\\ (x" + cfchk(-1 * x2, "", 1, 0) + ")&=0 \\ \\ \\ \\ so\\  x=" + x2 + "\\end{aligned}$$";
   } else {
     suma += "\\end{aligned}$$";
   }

@@ -1,7 +1,8 @@
 // js/generators/sincosgraph.js
-import * as utils from '../utils.js';
+// Clean ES module
+import { QLimitRepeats, images } from '../utils.js';
 
-let sumarrsincos = [];
+let recentIds = [];
 
 // Map of case → image variable name (these are already pre-loaded in index.html)
 const graphImages = {
@@ -75,8 +76,8 @@ const graphTitles = {
 };
 
 export function generate() {
-  sumarrsincos = utils.QLimitRepeats(sumarrsincos, 32);
-  const sum = sumarrsincos[sumarrsincos.length - 1];
+  recentIds = QLimitRepeats(recentIds, 32);
+  const sum = recentIds[recentIds.length - 1];
 
   const title = graphTitles[sum] || "y = Sin(θ)";
   const imgName = graphImages[sum] || 'ysinx';
@@ -96,7 +97,7 @@ export function generate() {
       withSolution: true,          // show graph with the solution
       draw: (ctx) => {
         // The images are already loaded as global variables in index.html
-        const img = window[imgName];
+        const img = images[imgName];
         if (img && img.complete) {
           ctx.drawImage(img, 0, 0, 600, 600);
         } else {
