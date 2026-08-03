@@ -128,7 +128,7 @@ function generateQuestion(topic) {
     canvas.width = 0.5;
   }
 
-  window.eqnformat('q');
+  utils.eqnformat('q');
   views = 0;
   updateViewCount();
   document.getElementById('btnSoln').style.visibility = 'visible';
@@ -144,7 +144,7 @@ function toggleSolution() {
   if (aDiv.innerHTML === '') {
     // Show solution
     aDiv.innerHTML = currentSumData.solution;
-    window.eqnformat('a');
+    utils.eqnformat('a');
     views++;
     updateViewCount();
 
@@ -382,9 +382,9 @@ function runTestMode() {
       }
 
       // Re-typeset
-      if (window.eqnformat) {
-        window.eqnformat('q');
-        window.eqnformat('a');
+      if (utils.eqnformat) {
+        utils.eqnformat('q');
+        utils.eqnformat('a');
       } else if (window.MathJax) {
         MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
       }
@@ -394,9 +394,9 @@ function runTestMode() {
   });
 
   // Final MathJax pass
-  if (window.eqnformat) {
-    window.eqnformat('q');
-    window.eqnformat('a');
+  if (utils.eqnformat) {
+    utils.eqnformat('q');
+    utils.eqnformat('a');
   } else if (window.MathJax) {
     MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
   }
