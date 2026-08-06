@@ -26,13 +26,6 @@ let currentSumData = null;
 let views = 0;
 let SolnWin = null;
 
-// document.addEventListener('DOMContentLoaded', () => {
-//   // your code for attaching listeners
-//   document.querySelectorAll('.topic-btn').forEach(btn => {
-//     btn.addEventListener('click', () => generateQuestion(btn.dataset.topic));
-//   });
-// });
-
 document.addEventListener('DOMContentLoaded', () => {
   utils.loadImages();
   initSecretCode();
