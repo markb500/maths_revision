@@ -9,7 +9,7 @@ export function generate() {
   let units = "", unitsmath = "";
   let a, b, c, d, e, f, g;
   let left = 75, top = 25, right = left + 350, bottom = top + 200;
-  let imgName = "cubtri";
+  let imgName;
   let satri, sacub, satube, saend, sacub2, satri2, salgcyl, sasmcyl, sahd, sacone;
   let vtri, vcub, vtube, vcub2, vtri2, vlgcyl, vsmcyl, vhd, vcone;
 
