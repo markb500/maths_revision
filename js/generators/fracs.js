@@ -85,57 +85,98 @@ function fractionsValid(f1, f2, f3, sign1, sign2) {
   return true;
 }
 
+
 /**
- * Final mixed-number tidy (improper, sign, cancel) — same rules as original.
- * @returns {{ ans: number[], changed: boolean }}
+ * Format a mixed number for MathJax solution lines.
+ * Negative fractional part shown as whole-rac{num}{den} (e.g. 3-rac{17}{42}).
+ */
+function formatMixedTex(a) {
+  const [w, n, d] = a;
+  const FR = '\\frac{';
+  if (d === 0 || n === 0) return String(w);
+  if (w === 0) {
+    if (n < 0) return '-' + FR + Math.abs(n) + '}{' + d + '}';
+    return FR + n + '}{' + d + '}';
+  }
+  if (n < 0 && w > 0) return w + '-' + FR + Math.abs(n) + '}{' + d + '}';
+  if (n < 0 && w < 0) return w + FR + Math.abs(n) + '}{' + d + '}';
+  return w + FR + n + '}{' + d + '}';
+}
+
+/**
+ * Final mixed-number tidy (improper, sign, cancel).
+ * Returns intermediate display steps so e.g. 4 - 59/42 → 3 - 17/42 → 2 25/42.
+ * Only records a step when the MathJax string actually changes (avoids duplicates).
+ * @returns {{ ans: number[], changed: boolean, steps: string[] }}
  */
 function finalSimplify(ans1) {
   let anscx = false;
+  const steps = [];
   const ans = [ans1[0], ans1[1], ans1[2]];
+  let prevTex = formatMixedTex(ans);
 
-  if (Math.abs(ans[1]) > Math.abs(ans[2])) {
+  function record(a) {
+    const tex = formatMixedTex(a);
+    if (tex !== prevTex) {
+      steps.push(tex);
+      prevTex = tex;
+      return true;
+    }
+    return false;
+  }
+
+  // Extract whole units when |numerator| >= |denominator|
+  if (ans[2] !== 0 && Math.abs(ans[1]) >= Math.abs(ans[2])) {
     ans[0] += (ans[1] - (ans[1] % ans[2])) / ans[2];
     ans[1] = ans[1] % ans[2];
-    anscx = true;
+    if (record(ans)) anscx = true;
   }
 
   let anstot;
   if (ans[1] < 0 && ans[0] > 0) {
+    // Borrow: 3 - 17/42 → 2 + 25/42
     anstot = [ans[0] - 1, ans[2] + ans[1], ans[2]];
-    anscx = true;
+    if (record(anstot)) anscx = true;
   } else if (ans[1] < 0 && ans[0] < 0) {
+    // Normalise sign of fractional part; often same on-screen as previous line
     anstot = [ans[0], Math.abs(ans[1]), ans[2]];
-    anscx = true;
+    if (record(anstot)) anscx = true;
   } else if (ans[0] < 0 && ans[1] > 0) {
+    // -1 + 5/12 → 0 - 7/12 (value -7/12), not the ambiguous "-1 5/12"
     anstot = [ans[0] + 1, ans[1] - ans[2], ans[2]];
-    anscx = true;
-  } else if (ans[1] === ans[2]) {
+    if (record(anstot)) anscx = true;
+  } else if (ans[1] === ans[2] && ans[2] !== 0) {
     anstot = [ans[0] + 1, 0, 0];
-    anscx = true;
+    if (record(anstot)) anscx = true;
   } else if (ans[2] === 1) {
     anstot = [ans[0] + ans[1], 0, 0];
-    anscx = true;
+    if (record(anstot)) anscx = true;
   } else {
     anstot = [ans[0], ans[1], ans[2]];
   }
 
-  if (anstot[1] > anstot[2] && anstot[2] !== 0) {
+  if (anstot[2] !== 0 && Math.abs(anstot[1]) > Math.abs(anstot[2])) {
     anstot[0] += (anstot[1] - (anstot[1] % anstot[2])) / anstot[2];
     anstot[1] = anstot[1] % anstot[2];
-    anscx = true;
+    if (record(anstot)) anscx = true;
   }
 
   if (anstot[2] !== 0) {
     let g = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]));
+    let cancelled = false;
     while (g > 1) {
       anstot[1] /= g;
       anstot[2] /= g;
       g = gcd2(Math.abs(anstot[1]), Math.abs(anstot[2]));
+      cancelled = true;
+    }
+    if (cancelled) {
       anscx = true;
+      record(anstot);
     }
   }
 
-  return { ans: anstot, changed: anscx };
+  return { ans: anstot, changed: anscx || steps.length > 0, steps };
 }
 
 export function generate() {
@@ -510,28 +551,21 @@ export function generate() {
   );
   // Keeps figures manageable; mixed +/− with ×/÷ avoids trivial common denominators
 
-  if (ans1[0] === 0) {
-    suma += '&=\\frac{' + ans1[1] + '}{' + ans1[2] + '}\\\\[5pt]';
-  } else {
-    suma += '&=' + ans1[0] + '\\frac{' + ans1[1] + '}{' + ans1[2] + '}\\\\[5pt]';
-  }
+  // Combined result, then only *changing* tidy steps
+  const startTex = formatMixedTex(ans1);
+  suma += '&=' + startTex + '\\\\[5pt]';
 
-  const { ans: anstot, changed: anscx } = finalSimplify(ans1);
+  const { ans: anstot, changed: anscx, steps } = finalSimplify(ans1);
 
-  if (anscx) {
-    if (anstot[0] === 0 && anstot[1] !== 0 && anstot[2] !== 0) {
-      suma += '&=\\frac{' + anstot[1] + '}{' + anstot[2] + '}\\end{aligned}$$';
-    } else if (anstot[1] === 0 || anstot[2] === 0) {
-      suma += '&=' + anstot[0] + '\\end{aligned}$$';
+  if (anscx && steps.length) {
+    const toShow = steps.filter((s) => s !== startTex);
+    if (toShow.length) {
+      for (let i = 0; i < toShow.length; i++) {
+        const isLast = i === toShow.length - 1;
+        suma += '&=' + toShow[i] + (isLast ? '\\end{aligned}$$' : '\\\\[5pt]');
+      }
     } else {
-      suma +=
-        '&=' +
-        anstot[0] +
-        '\\frac{' +
-        anstot[1] +
-        '}{' +
-        anstot[2] +
-        '}\\end{aligned}$$';
+      suma += '\\end{aligned}$$';
     }
   } else {
     suma += '\\end{aligned}$$';
