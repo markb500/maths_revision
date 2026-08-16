@@ -2,6 +2,9 @@
 import { registry } from './registry.js';
 import * as utils from './utils.js';
 
+import * as fracs from './generators/fracs.js';
+window.fracs = fracs;
+
 // Display name → registry key
 const topicMap = {
   "Non-Calculator Maths": "noncalc",
