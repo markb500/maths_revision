@@ -18,9 +18,10 @@ Aligned in structure and conventions with the **Science Revision** and **Radar R
 8. [Test Designer](#test-designer)
 9. [Teacher solution window](#teacher-solution-window)
 10. [Print layout](#print-layout)
-11. [Adding or changing a topic](#adding-or-changing-a-topic)
-12. [Coding conventions](#coding-conventions)
-13. [Troubleshooting](#troubleshooting)
+11. [Fixture tests (maintainers)](#fixture-tests-maintainers)
+12. [Adding or changing a topic](#adding-or-changing-a-topic)
+13. [Coding conventions](#coding-conventions)
+14. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -66,13 +67,17 @@ Maths Revision/
 ├── testCreate.html         Test Designer (topic list + order)
 ├── SolnWin.html            Teacher-only solution window
 ├── README.md               This documentation
+├── GENERATORS.md           Per-topic generator notes (maintainers)
 ├── css/
 │   └── main.css            Layout, canvas, print rules
 ├── js/
 │   ├── app.js              UI, single-question mode, test mode, SolnWin sync
 │   ├── registry.js         Topic key → generator module
 │   ├── utils.js            Shared maths/helpers + image preload
-│   └── generators/         One module per topic (see Topics)
+│   ├── generators/         One module per topic (see Topics)
+│   └── test/               Node fixture runners (maintainers)
+│       ├── runFracsFixtures.mjs
+│       └── runNoncalcFixtures.mjs
 ├── images/                 PNG diagrams + training-notes PDFs
 └── MathsHelp/
     └── userhelp.html       End-user help text
@@ -104,7 +109,7 @@ Display names on buttons are mapped to registry keys in `app.js` (`topicMap`).
 Every generator is an ES module that exports:
 
 ```js
-export function generate() {
+export function generate(options = {}) {
   return {
     question: string,      // HTML + optional \( \) / $$ $$ MathJax
     solution: string,      // HTML + MathJax worked solution
@@ -115,10 +120,13 @@ export function generate() {
       withSolution: boolean,  // true → draw on solution reveal / overlay
       draw: (ctx) => void,
       questionDraw?: (ctx) => void   // optional separate question diagram
-    }
+    },
+    meta?: object          // only when options.fixture is set (see Fixture tests)
   };
 }
 ```
+
+Production UI always calls `generate()` with no arguments. Maintainers may pass `{ fixture: 'name' }` where a generator defines `FIXTURES` (see [Fixture tests](#fixture-tests-maintainers)).
 
 ### Conventions
 
@@ -127,8 +135,6 @@ export function generate() {
 - Prefer `images[name]` for PNGs (after `loadImages()`), not `window[name]`.
 - Known values in solutions: put each on its own line (e.g. `\(u=…\)<br>`) so they stack vertically.
 - Multi-part solutions (a/b/c or i/ii): each part should start on a new line (`<br>` or `\\` inside `aligned`).
-
----
 
 ## Topics
 
@@ -214,6 +220,72 @@ Use the browser Print dialog (or “Save as PDF”) from test mode for a paper t
 
 ---
 
+## Fixture tests (maintainers)
+
+Some generators support **deterministic fixtures**: fixed inputs that exercise particular branches without `rndgen`. This is for regression checks only — students still get random questions.
+
+### Pattern
+
+```js
+export const FIXTURES = {
+  'case-1': { /* fixed inputs */ },
+};
+
+export function generate(options = {}) {
+  const fx = typeof options.fixture === 'string'
+    ? FIXTURES[options.fixture]
+    : options.fixture || null;
+  // if fx: use fixed values; else existing random path
+  // …
+  const result = { question, solution, notesLink };
+  if (fx) {
+    result.meta = { /* caseId, numbers, final, … */ };
+  }
+  return result;
+}
+```
+
+- **`generate()`** — production (random).
+- **`generate({ fixture: 'name' })`** — one named scenario; no random (and retry loops that would hang on bad fixtures are skipped via `!fx` guards where needed).
+- **`meta`** — plain data for assertions (not shown in the student UI).
+
+Currently instrumented:
+
+| Generator | Fixtures | Node runner |
+|-----------|----------|-------------|
+| `fracs.js` | Operator-path sets (`add-add`, `mul-mul`, …) | `js/test/runFracsFixtures.mjs` |
+| `noncalc.js` | One set per case (`case-1` … `case-5`) | `js/test/runNoncalcFixtures.mjs` |
+
+### Running the Node runners
+
+Requires [Node.js](https://nodejs.org). From the **Maths Revision** folder (not inside the browser):
+
+```bash
+node js/test/runFracsFixtures.mjs
+node js/test/runNoncalcFixtures.mjs
+```
+
+Each runner imports the generator, calls every fixture, and checks `meta` and/or substrings in `solution` (e.g. a final `\mathbf{…}` value). Exit code `0` = all passed; non-zero = failures listed in the terminal.
+
+To see the exact solution string when writing new `solutionIncludes` checks, temporarily expose the module in `app.js` (`window.fracs = fracs`), hard-refresh, then in the browser console:
+
+```js
+const r = fracs.generate({ fixture: 'add-add' });
+console.log(JSON.stringify(r.solution));
+```
+
+Remove the `window.*` line afterwards.
+
+### Adding fixtures to another generator
+
+1. Export `FIXTURES` and accept `options` in `generate()`.
+2. When `fx` is set, force case id / numbers; keep the random path for normal use.
+3. Attach `meta` only when `fx` is set.
+4. Add `js/test/runYourTopicFixtures.mjs` mirroring the fracs/noncalc runners.
+5. Document the fixture names in [GENERATORS.md](GENERATORS.md).
+
+---
+
 ## Adding or changing a topic
 
 1. **Create** `js/generators/mytopic.js` with `export function generate()` returning the standard object.
@@ -254,6 +326,8 @@ Use the browser Print dialog (or “Save as PDF”) from test mode for a paper t
 | MathJax not rendering | Typeset not queued | Ensure `eqnformat` runs after HTML insert |
 | Solution values on one line | Inline `\(...\)` without breaks | Add `<br>` after each known-value line |
 | Test won’t create | JS error in `app.js` test path | Check browser console; verify registry keys |
+| Fixture runner fails | Wrong cwd or missing Node | Run from Maths Revision root; `node -v`; check `FIXTURES` names |
+| Fixture hangs | Retry `while` without `!fx` guard | Skip validation/size loops when `fx` is set |
 
 ---
 

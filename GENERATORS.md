@@ -9,11 +9,14 @@ Per-topic notes for maintainers. Each file lives under `js/generators/` and expo
   question: string,
   solution: string,
   notesLink: string,
-  canvas?: { width, height, withSolution, draw, questionDraw? }
+  canvas?: { width, height, withSolution, draw, questionDraw? },
+  meta?: object   // only when generate({ fixture }) is used
 }
 ```
 
 **Repeat limiting:** where listed, `QLimitRepeats(recentIds, n)` avoids immediate repeats of the same case id (pool size `n`).
+
+**Fixture tests:** `fracs.js` and `noncalc.js` export `FIXTURES` and accept `generate({ fixture: 'name' })`. Node runners live under `js/test/` — see the main [README](README.md#fixture-tests-maintainers).
 
 ---
 
@@ -25,8 +28,25 @@ Per-topic notes for maintainers. Each file lives under `js/generators/` and expo
 | **Notes PDF** | Maths Book 1 Basic Numeracy (varies by case, ~p.7+) |
 | **Cases** | 5 (`QLimitRepeats` 5) |
 | **Canvas** | No |
+| **Fixtures** | Yes — `FIXTURES` + `generate({ fixture })` |
 
 **Behaviour:** Random expression to evaluate without a calculator (decimals, directed numbers, combinations of × ÷ + −). Solution shows ordered working. Uses `cfchk` / `dp` for tidy MathJax.
+
+**Fixtures (maintainers):** Named sets force a case and fixed `a`…`e` (no `rndgen`).
+
+| Fixture name | Case | Intent |
+|--------------|------|--------|
+| `case-1` | 1 | `a × (b + c) / d` |
+| `case-2` | 2 | `(a + b) / c × d` |
+| `case-3` | 3 | `a / (b + c) × d` |
+| `case-4` | 4 | `a + b(c + d) / e` |
+| `case-5` | 5 | `a / b + c(d + e)` |
+
+```bash
+node js/test/runNoncalcFixtures.mjs
+```
+
+`meta` on fixture runs: `{ fixture, caseId, a, b, c, d, e }`. Runner asserts final values via `solutionIncludes` (e.g. `\mathbf{4}`).
 
 ---
 
@@ -38,6 +58,7 @@ Per-topic notes for maintainers. Each file lives under `js/generators/` and expo
 | **Notes PDF** | Book 1 Basic Numeracy `#page=22` |
 | **Cases** | Continuous random (no numbered switch); operators constrained |
 | **Canvas** | No |
+| **Fixtures** | Yes — `FIXTURES` + `generate({ fixture })` |
 
 **Behaviour:** Three **mixed numbers**, two operators.
 
@@ -45,6 +66,7 @@ Per-topic notes for maintainers. Each file lives under `js/generators/` and expo
 - If the first operator is × or ÷, the second is also × or ÷.
 - Fractions in lowest terms; improper values of the three mixed numbers are not equal; adjacent +/− pairs avoid equal denominators.
 - Outer retry if intermediate answer parts exceed 75 in absolute value, or if a mixed ± with ×/÷ would use a trivial common denominator.
+- When a **fixture** is active, validation/size retry loops are skipped (`!fx` guards) so bad fixture data cannot hang.
 
 **Solution paths**
 
@@ -52,7 +74,23 @@ Per-topic notes for maintainers. Each file lives under `js/generators/` and expo
 2. Both ×/÷ — improper fractions, ÷ → × reciprocal, cancel, multiply, simplify.
 3. ± then ×/÷ — multiply/divide the last pair first, then ± with the first mixed number.
 
-**Internal structure (refactored):** `OP` / `OP_TEX` constants; `randomMixed`, `fractionsValid`, `cancelSelf` / `cancelAcross` / `cancelInPlace`, `flipForDivide`, `finalSimplify`. Outer retry limits and solution wording match the original training app.
+**Internal structure (refactored):** `OP` / `OP_TEX` constants; `randomMixed`, `fractionsValid`, `cancelSelf` / `cancelAcross` / `cancelInPlace`, `flipForDivide`, `formatMixedTex`, `finalSimplify` (optional intermediate tidy steps). Outer retry limits and solution wording match the original training app.
+
+**Fixtures (maintainers):** Fixed mixed numbers + operators for each solution path.
+
+| Fixture name | Path exercised |
+|--------------|----------------|
+| `add-add` | Both + |
+| `sub-sub-borrow` | Both − (tidy / borrow style intermediates) |
+| `mul-mul` | Both × (cancel) |
+| `div-mul` | ÷ then × (reciprocal) |
+| `sub-then-mul` | − then × (mixed operators) |
+
+```bash
+node js/test/runFracsFixtures.mjs
+```
+
+`meta` on fixture runs: `{ fixture, f1, f2, f3, sign1, sign2, ans1, final }`. Runner can assert `meta.final` and/or `solutionIncludes` substrings.
 
 ---
 
@@ -277,6 +315,7 @@ Do not casually change scale/grid logic — it was tuned to match the original p
 3. **MathJax** — prefer `aligned` for multi-step algebra; use `<br>` after standalone known-value `\(...\)` lines.
 4. **Imports** — avoid naming locals `lcm`, `gcd`, etc. the same as imports (`lcmArr` pattern in `hcflcm.js`).
 5. **Images** — new PNGs need an entry in `utils.js` `imageSources` and a matching file under `images/`.
+6. **Fixtures** — when adding `FIXTURES`, guard retry `while` loops with `!fx` so fixed inputs cannot loop forever; document names in this file and add a runner under `js/test/`.
 
 ---
 
