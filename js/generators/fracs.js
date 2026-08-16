@@ -88,7 +88,7 @@ function fractionsValid(f1, f2, f3, sign1, sign2) {
 
 /**
  * Format a mixed number for MathJax solution lines.
- * Negative fractional part shown as whole-rac{num}{den} (e.g. 3-rac{17}{42}).
+ * Negative fractional part shown as whole-frac{num}{den} (e.g. 3-frac{17}{42}).
  */
 function formatMixedTex(a) {
   const [w, n, d] = a;
@@ -179,8 +179,80 @@ function finalSimplify(ans1) {
   return { ans: anstot, changed: anscx || steps.length > 0, steps };
 }
 
-export function generate() {
-  let { sign1, sign2, op1, op2 } = pickOperators();
+
+/**
+ * Named input sets for deterministic checks (no random).
+ * Use: generate({ fixture: 'add-add' })
+ * Mixed numbers are [whole, numerator, denominator].
+ */
+export const FIXTURES = {
+  // Both addition — common denominator path
+  'add-add': {
+    f1: [1, 1, 2],
+    f2: [2, 1, 3],
+    f3: [1, 1, 6],
+    sign1: OP.ADD,
+    sign2: OP.ADD,
+  },
+  // Both subtraction — improper/borrow tidy path (4 - 59/42 style intermediate)
+  'sub-sub-borrow': {
+    f1: [4, 1, 2],
+    f2: [1, 2, 3],
+    f3: [1, 5, 6],
+    sign1: OP.SUB,
+    sign2: OP.SUB,
+  },
+  // Both multiply — cancel path
+  'mul-mul': {
+    f1: [1, 1, 2],
+    f2: [2, 1, 3],
+    f3: [1, 1, 4],
+    sign1: OP.MUL,
+    sign2: OP.MUL,
+  },
+  // Divide then multiply — reciprocal path
+  'div-mul': {
+    f1: [2, 1, 4],
+    f2: [1, 1, 2],
+    f3: [2, 1, 3],
+    sign1: OP.DIV,
+    sign2: OP.MUL,
+  },
+  // First +/−, second ×/÷ — mixed operator path
+  'sub-then-mul': {
+    f1: [3, 1, 2],
+    f2: [1, 1, 3],
+    f3: [1, 1, 4],
+    sign1: OP.SUB,
+    sign2: OP.MUL,
+  },
+  // First +/−, second ×/÷ — mixed operator path
+  'sub-mul-borrow': {
+    f1: [4, 7, 9],
+    f2: [0, 3, 2],
+    f3: [0, 7, 3],
+    sign1: OP.SUB,
+    sign2: OP.MUL,
+  },
+};
+
+export function generate(options = {}) {
+  const fx = typeof options.fixture === 'string'
+    ? FIXTURES[options.fixture]
+    : options.fixture || null;
+  if (typeof options.fixture === 'string' && !fx) {
+    throw new Error('Unknown fracs fixture: ' + options.fixture);
+  }
+
+  let sign1, sign2, op1, op2;
+  if (fx) {
+    sign1 = fx.sign1;
+    sign2 = fx.sign2;
+    op1 = OP_TEX[sign1];
+    op2 = OP_TEX[sign2];
+  } else {
+    ({ sign1, sign2, op1, op2 } = pickOperators());
+  }
   let sign1cx = false;
   let sign2cx = false;
 
@@ -208,10 +280,16 @@ export function generate() {
         sign2cx = false;
       }
 
-      f1 = randomMixed();
-      f2 = randomMixed();
-      f3 = randomMixed();
-    } while (!fractionsValid(f1, f2, f3, sign1, sign2));
+      if (fx) {
+        f1 = fx.f1.slice();
+        f2 = fx.f2.slice();
+        f3 = fx.f3.slice();
+      } else {
+        f1 = randomMixed();
+        f2 = randomMixed();
+        f3 = randomMixed();
+      }
+    } while (!fx && !fractionsValid(f1, f2, f3, sign1, sign2));
 
     sumq +=
       'Calculate, without using a calculator, giving your answer in its simplest form. Show all your working.';
@@ -544,10 +622,12 @@ export function generate() {
       }
     }
   } while (
-    Math.abs(ans1[0]) > 75 ||
-    Math.abs(ans1[1]) > 75 ||
-    Math.abs(ans1[2]) > 75 ||
-    (sign1 < 3 && sign2 > 2 && (comdenom === f1[2] || comdenom === ans2[2]))
+    !fx && (
+      Math.abs(ans1[0]) > 75 ||
+      Math.abs(ans1[1]) > 75 ||
+      Math.abs(ans1[2]) > 75 ||
+      (sign1 < 3 && sign2 > 2 && (comdenom === f1[2] || comdenom === ans2[2]))
+    )
   );
   // Keeps figures manageable; mixed +/− with ×/÷ avoids trivial common denominators
 
@@ -571,9 +651,22 @@ export function generate() {
     suma += '\\end{aligned}$$';
   }
 
-  return {
+  const result = {
     question: sumq,
     solution: suma,
     notesLink: NOTES
   };
+  if (fx) {
+    result.meta = {
+      fixture: typeof options.fixture === 'string' ? options.fixture : '(custom)',
+      f1: f1.slice(),
+      f2: f2.slice(),
+      f3: f3.slice(),
+      sign1,
+      sign2,
+      ans1: ans1.slice(),
+      final: anstot.slice()
+    };
+  }
+  return result;
 }
